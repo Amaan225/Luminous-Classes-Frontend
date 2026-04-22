@@ -15,7 +15,7 @@ function TutorPortal() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/jobs');
+        const response = await axios.get('https://luminous-classes-backend.onrender.com/api/jobs');
         setJobs(response.data);
       } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -29,7 +29,7 @@ function TutorPortal() {
   const submitApplication = async (e, jobId) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/applications', { ...appData, jobId });
+      await axios.post('https://luminous-classes-backend.onrender.com/api/applications', { ...appData, jobId });
       alert("Application sent successfully! The parent will contact you.");
       setApplyingTo(null);
       setAppData({ tutorName: '', tutorPhone: '', pitch: '' });

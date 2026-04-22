@@ -13,7 +13,7 @@ function ParentPortal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/jobs', formData);
+      await axios.post('https://luminous-classes-backend.onrender.com/api/jobs', formData);
       setFormData({ parentName: '', subject: '', grade: '', location: '', salary: '', contactNumber: '', requirements: '' });
       alert("Job posted successfully! Tutors will be notified.");
     } catch (error) {

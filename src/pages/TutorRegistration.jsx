@@ -12,7 +12,7 @@ function TutorRegistration() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/tutors', formData);
+      await axios.post('https://luminous-classes-backend.onrender.com/api/tutors', formData);
       alert("Registration successful! Please wait for admin approval before applying to jobs.");
       navigate('/'); // Send them back to the home page
     } catch (error) {

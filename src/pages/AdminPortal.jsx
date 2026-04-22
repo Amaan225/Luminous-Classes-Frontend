@@ -11,18 +11,18 @@ function AdminPortal() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const jobsRes = await axios.get('http://localhost:5000/api/jobs');
+        const jobsRes = await axios.get('https://luminous-classes-backend.onrender.com/api/jobs');
         setJobs(jobsRes.data);
       } catch (e) { console.error(e); }
 
       try {
-        const appsRes = await axios.get('http://localhost:5000/api/applications');
+        const appsRes = await axios.get('https://luminous-classes-backend.onrender.com/api/applications');
         setApplications(appsRes.data);
       } catch (e) { console.error(e); }
 
       // Fetch Tutors
       try {
-        const tutorsRes = await axios.get('http://localhost:5000/api/tutors');
+        const tutorsRes = await axios.get('https://luminous-classes-backend.onrender.com/api/tutors');
         setTutors(tutorsRes.data);
       } catch (e) { console.error(e); }
     };
@@ -31,7 +31,7 @@ function AdminPortal() {
 
   const handleDeleteJob = async (id) => {
     if (window.confirm("Delete this job?")) {
-      await axios.delete(`http://localhost:5000/api/jobs/${id}`);
+      await axios.delete(`https://luminous-classes-backend.onrender.com/api/jobs/${id}`);
       setJobs(jobs.filter(job => job._id !== id));
     }
   };
@@ -39,7 +39,7 @@ function AdminPortal() {
   // THE MAGIC APPROVE FUNCTION
   const handleApproveTutor = async (id) => {
     try {
-      await axios.patch(`http://localhost:5000/api/tutors/${id}/approve`);
+      await axios.patch(`https://luminous-classes-backend.onrender.com/api/tutors/${id}/approve`);
       // Update the screen instantly
       setTutors(tutors.map(t => t._id === id ? { ...t, status: 'approved' } : t));
     } catch (error) {
