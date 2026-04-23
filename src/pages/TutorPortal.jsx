@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function TutorPortal() {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [applyingTo, setApplyingTo] = useState(null); 
   const [appData, setAppData] = useState({ tutorName: '', tutorPhone: '', pitch: '' });
 
@@ -14,13 +15,17 @@ function TutorPortal() {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      try {
-        const response = await axios.get('https://luminous-classes-backend.onrender.com/api/jobs');
-        setJobs(response.data);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
-    };
+    setIsLoading(true); // <--- TELL REACT WE ARE WAITING
+    try {
+      const response = await axios.get('https://luminous-classes-backend.onrender.com/api/jobs');
+      setJobs(response.data);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    } finally {
+      setIsLoading(false); // <--- TELL REACT WE ARE DONE (even if it fails)
+    }
+  };
+    
     fetchJobs();
   }, []);
 
@@ -83,9 +88,14 @@ function TutorPortal() {
 
       {/* --- RENDER THE FILTERED JOBS (Not the full jobs array!) --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredJobs.length === 0 ? (
-          <div className="col-span-full py-10 text-center bg-gray-50 rounded-xl border border-gray-200 text-gray-500 text-lg">
-            No jobs match your current filters. Try searching something else!
+        {isLoading ? (
+          <div className="col-span-full py-12 text-center bg-blue-50 rounded-xl border border-blue-100 shadow-sm animate-pulse">
+            <p className="text-xl font-bold text-blue-600 mb-2"> Connecting to Luminous Servers...</p>
+            <p className="text-sm text-blue-500">Waking up the database. This usually takes about 15 seconds on the first load!</p>
+          </div>
+        ) : filteredJobs.length === 0 ? (
+          <div className="col-span-full py-10 text-center bg-gray-50 rounded-xl border text-gray-500 text-lg">
+            No jobs match your current filters.
           </div>
         ) : (
           filteredJobs.map((job) => (
