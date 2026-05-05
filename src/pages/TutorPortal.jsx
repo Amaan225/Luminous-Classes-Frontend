@@ -13,18 +13,25 @@ function TutorPortal() {
   const [filterSubject, setFilterSubject] = useState('');
   const [filterArea, setFilterArea] = useState('');
 
+  // --- MODAL STATE VARIABLES ---
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [transactionId, setTransactionId] = useState('');
+  const [tutorPhone, setTutorPhone] = useState('');
+  const [paymentStatus, setPaymentStatus] = useState('idle');
+
   useEffect(() => {
     const fetchJobs = async () => {
-    setIsLoading(true); // <--- TELL REACT WE ARE WAITING
-    try {
-      const response = await axios.get('https://luminous-classes-backend.onrender.com/api/jobs');
-      setJobs(response.data);
-    } catch (error) {
-      console.error("Error fetching jobs:", error);
-    } finally {
-      setIsLoading(false); // <--- TELL REACT WE ARE DONE (even if it fails)
-    }
-  };
+      setIsLoading(true); 
+      try {
+        const response = await axios.get('https://luminous-classes-backend.onrender.com/api/jobs');
+        setJobs(response.data);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      } finally {
+        setIsLoading(false); 
+      }
+    };
     
     fetchJobs();
   }, []);
@@ -45,13 +52,9 @@ function TutorPortal() {
   };
 
   // --- 2. THE FILTER ENGINE ---
-  // This looks at all jobs and only keeps the ones that match what the user typed
   const filteredJobs = jobs.filter(job => {
-    // We make everything lowercase so "Math" and "math" match perfectly
     const matchesSubject = job.subject.toLowerCase().includes(filterSubject.toLowerCase());
     const matchesArea = job.location.toLowerCase().includes(filterArea.toLowerCase());
-    
-    // Only return the job if it matches BOTH the subject AND the area typed
     return matchesSubject && matchesArea;
   });
 
@@ -86,7 +89,7 @@ function TutorPortal() {
         </div>
       </div>
 
-      {/* --- RENDER THE FILTERED JOBS (Not the full jobs array!) --- */}
+      {/* --- RENDER THE FILTERED JOBS --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading ? (
           <div className="col-span-full py-12 text-center bg-blue-50 rounded-xl border border-blue-100 shadow-sm animate-pulse">
@@ -106,25 +109,161 @@ function TutorPortal() {
               <p className="text-green-600 mb-4 font-bold">{job.salary}</p>
               
               {applyingTo === job._id ? (
-                <form onSubmit={(e) => submitApplication(e, job._id)} className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-col gap-3">
-                  <h4 className="font-semibold text-slate-700 text-sm">Submit Application</h4>
-                  <input type="text" name="tutorName" placeholder="Your Name" value={appData.tutorName} onChange={handleAppChange} required className="p-2 border rounded text-sm" />
-                  <input type="tel" name="tutorPhone" placeholder="Your WhatsApp" value={appData.tutorPhone} onChange={handleAppChange} required className="p-2 border rounded text-sm" />
-                  <textarea name="pitch" placeholder="Why are you a good fit?" value={appData.pitch} onChange={handleAppChange} required className="p-2 border rounded resize-none h-20 text-sm"></textarea>
+                <div className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-col gap-3">
+                  <h4 className="font-semibold text-slate-700 text-sm">Premium Lead</h4>
+                  <p className="text-xs text-slate-500 mb-2">This is a verified parent requirement. Unlock to get direct WhatsApp contact.</p>
+                  
                   <div className="flex gap-2 mt-2">
-                    <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold transition text-sm">Send</button>
-                    <button type="button" onClick={() => setApplyingTo(null)} className="flex-1 bg-gray-200 hover:bg-gray-300 text-slate-700 py-2 rounded font-semibold transition text-sm">Cancel</button>
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        setSelectedJob(job); 
+                        setIsModalOpen(true); 
+                      }} 
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold transition text-sm flex items-center justify-center gap-1"
+                    >
+                      <span>Unlock Contact</span>
+                      <span className="bg-blue-800 px-1.5 py-0.5 rounded text-xs">₹49</span>
+                    </button>
+                    
+                    <button 
+                      type="button" 
+                      onClick={() => setApplyingTo(null)} 
+                      className="flex-1 bg-gray-200 hover:bg-gray-300 text-slate-700 py-2 rounded font-semibold transition text-sm"
+                    >
+                      Cancel
+                    </button>
                   </div>
-                </form>
+                </div>
               ) : (
                 <button onClick={() => setApplyingTo(job._id)} className="w-full mt-2 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-lg transition border border-slate-200">
-                  Apply for this Job
+                  View Details
                 </button>
               )}
             </div>
           ))
         )}
       </div>
+
+      {/* ========================================= */}
+      {/* --- PAYMENT MODAL OVERLAY (THE VAULT DOOR) --- */}
+      {/* ========================================= */}
+      {isModalOpen && selectedJob && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
+            
+            {/* Header */}
+            <div className="bg-slate-900 p-6 text-center text-white">
+              <h3 className="text-2xl font-bold mb-1">Unlock Lead</h3>
+              <p className="text-slate-300 text-sm">Pay ₹49 to instantly unlock the parent's contact.</p>
+            </div>
+
+            <div className="p-6">
+              {paymentStatus === 'success' ? (
+                <div className="text-center py-6">
+                  <div className="text-green-500 text-5xl mb-4">✓</div>
+                  <h4 className="text-xl font-bold text-slate-800 mb-2">Request Submitted!</h4>
+                  <p className="text-slate-600 text-sm">The Admin will verify your payment and send the number to your WhatsApp shortly.</p>
+                  <button 
+                    onClick={() => { 
+                      setIsModalOpen(false); 
+                      setPaymentStatus('idle'); 
+                      setTransactionId('');
+                      setTutorPhone('');
+                    }}
+                    className="mt-6 w-full bg-slate-900 text-white py-3 rounded-xl font-semibold hover:bg-slate-800 transition"
+                  >
+                    Close
+                  </button>
+                </div>
+              ) : (
+                <>
+                  {/* QR Code Placeholder */}
+                  <div className="flex justify-center mb-6">
+                    <div className="w-48 h-48 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-sm text-center p-4">
+                       [ Insert Your UPI QR Image Here ]
+                    </div>
+                  </div>
+                  
+                  <p className="text-center text-sm font-semibold text-slate-700 mb-6">
+                    UPI ID: <span className="text-blue-600">yourname@upi</span>
+                  </p>
+
+                  {/* Input Fields */}
+                  <div className="space-y-4 mb-6">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-1">Your WhatsApp Number</label>
+                      <input 
+                        type="text" 
+                        placeholder="10-digit number"
+                        value={tutorPhone}
+                        onChange={(e) => setTutorPhone(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-1">12-Digit UPI Transaction ID</label>
+                      <input 
+                        type="text" 
+                        placeholder="e.g. 312345678901"
+                        value={transactionId}
+                        onChange={(e) => setTransactionId(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Buttons */}
+                  <div className="flex gap-3">
+                    <button 
+                      onClick={() => setIsModalOpen(false)}
+                      className="flex-1 px-4 py-3 text-slate-600 font-semibold rounded-xl hover:bg-slate-100 transition text-sm"
+                    >
+                      Cancel
+                    </button>
+                    <button 
+                      onClick={async () => {
+                        setPaymentStatus('submitting');
+                        try {
+                          const response = await fetch('https://luminous-classes-backend.onrender.com/api/unlocks', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              jobId: selectedJob._id,
+                              tutorPhone,
+                              transactionId
+                            })
+                          });
+                          
+                          if (response.ok) {
+                            setPaymentStatus('success');
+                          } else {
+                            alert("Something went wrong. Please try again.");
+                            setPaymentStatus('idle');
+                          }
+                        } catch (error) {
+                          console.error(error);
+                          alert("Failed to connect to server.");
+                          setPaymentStatus('idle');
+                        }
+                      }}
+                      disabled={transactionId.length < 5 || tutorPhone.length < 10 || paymentStatus === 'submitting'}
+                      className="flex-1 px-4 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 disabled:opacity-50 transition text-sm flex justify-center items-center"
+                    >
+                      {paymentStatus === 'submitting' ? (
+                        <span className="animate-pulse">Submitting...</span>
+                      ) : (
+                        'Submit Payment'
+                      )}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      
     </div>
   );
 }
