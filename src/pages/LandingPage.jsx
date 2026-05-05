@@ -10,8 +10,8 @@ function LandingPage() {
       {/* 1. THE HERO SECTION (The Hook)               */}
       {/* ========================================== */}
       <div className="min-h-screen flex flex-col items-center justify-center p-4 relative border-b border-gray-200">
-        <h1 className="text-5xl md:text-7xl font-extrabold text-slate-800 mb-4 tracking-tight text-center">
-          Luminous <span className="text-blue-600">Classes</span>
+        <h1 className="text-5xl md:text-7xl text-slate-800  mb-4 tracking-tight text-center">
+          Tutor <span className="  text-blue-600 font-fredericka">Kart</span>
         </h1>
         <p className="text-xl md:text-2xl text-gray-600 mb-12 text-center max-w-2xl font-light">
           Connecting dedicated parents with verified, top-tier university tutors in the area.
