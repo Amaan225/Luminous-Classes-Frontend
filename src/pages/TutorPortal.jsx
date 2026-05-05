@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import myQR from '../assets/my-qr.jpg'; // Make sure the extension matches your file!
 
 function TutorPortal() {
   const navigate = useNavigate();
@@ -178,15 +179,15 @@ function TutorPortal() {
                 </div>
               ) : (
                 <>
-                  {/* QR Code Placeholder */}
+                  {/* REAL QR CODE */}
                   <div className="flex justify-center mb-6">
-                    <div className="w-48 h-48 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-sm text-center p-4">
-                       [ Insert Your UPI QR Image Here ]
+                    <div className="w-48 h-48 bg-white rounded-xl border-2 border-slate-200 overflow-hidden shadow-sm p-2">
+                       <img src={myQR} alt="Scan to Pay" className="w-full h-full object-contain" />
                     </div>
                   </div>
                   
                   <p className="text-center text-sm font-semibold text-slate-700 mb-6">
-                    UPI ID: <span className="text-blue-600">yourname@upi</span>
+                    UPI ID: <span className="text-blue-600">amaank7007-1@okicici</span>
                   </p>
 
                   {/* Input Fields */}
