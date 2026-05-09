@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import myQR from '../assets/my-qr.jpg'; // Make sure the extension matches your file!
+
+// --- RAZORPAY SCRIPT LOADER ---
+const loadRazorpayScript = () => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
 
 function TutorPortal() {
   const navigate = useNavigate();
@@ -17,9 +27,9 @@ function TutorPortal() {
   // --- MODAL STATE VARIABLES ---
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
-  const [transactionId, setTransactionId] = useState('');
   const [tutorPhone, setTutorPhone] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('idle');
+  const [unlockedNumber, setUnlockedNumber] = useState(''); // Stores the real number!
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -39,6 +49,7 @@ function TutorPortal() {
 
   const handleAppChange = (e) => setAppData({ ...appData, [e.target.name]: e.target.value });
 
+  // Keep this for normal applications if you still have free jobs
   const submitApplication = async (e, jobId) => {
     e.preventDefault();
     try {
@@ -49,6 +60,91 @@ function TutorPortal() {
     } catch (error) {
       console.error("Error:", error);
       alert("Failed to send application.");
+    }
+  };
+
+  // --- THE RAZORPAY CHECKOUT ENGINE ---
+  const handleRazorpayPayment = async () => {
+    if (tutorPhone.length < 10) {
+      alert("Please enter a valid 10-digit WhatsApp number.");
+      return;
+    }
+
+    setPaymentStatus('submitting');
+
+    // 1. Load the Razorpay SDK
+    const res = await loadRazorpayScript();
+    if (!res) {
+      alert("Razorpay SDK failed to load. Check your connection.");
+      setPaymentStatus('idle');
+      return;
+    }
+
+    try {
+      // 2. Ask your Render backend to create an Order
+      const orderResponse = await fetch('https://luminous-classes-backend.onrender.com/api/payment/create-order', {
+        method: 'POST',
+      });
+      const orderData = await orderResponse.json();
+
+      if (!orderData.id) throw new Error("Failed to generate order ID");
+
+      // 3. Open the Razorpay Checkout Window
+      const options = {
+        key: "rzp_test_SnKrogol8BmLM1", // Your verified Test Key
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "Tutor Kart",
+        description: `Premium Lead Unlock: ${selectedJob.subject}`,
+        order_id: orderData.id,
+        prefill: {
+          contact: tutorPhone // Pre-fills the tutor's phone number
+        },
+        theme: {
+          color: "#2563EB" // Blue to match your UI
+        },
+        handler: async function (response) {
+          // 4. SUCCESS! Send the payment proof to your backend to unlock the number
+          try {
+            const verifyResponse = await fetch('https://luminous-classes-backend.onrender.com/api/unlocks', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                jobId: selectedJob._id,
+                tutorPhone: tutorPhone,
+                transactionId: response.razorpay_payment_id // Razorpay's verified ID
+              })
+            });
+            
+            const verifyData = await verifyResponse.json();
+            
+            if (verifyResponse.ok) {
+              setUnlockedNumber(verifyData.unlockedContact); // Grab the real number!
+              setPaymentStatus('success');
+            } else {
+              alert("Payment verified, but failed to fetch contact. Please contact Admin.");
+              setPaymentStatus('idle');
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Network error unlocking contact.");
+            setPaymentStatus('idle');
+          }
+        }
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+
+      // If user closes the window without paying, reset the button
+      paymentObject.on('payment.failed', function () {
+        setPaymentStatus('idle');
+      });
+
+    } catch (error) {
+      console.error(error);
+      alert("Could not initialize payment. Please try again later.");
+      setPaymentStatus('idle');
     }
   };
 
@@ -161,102 +257,73 @@ function TutorPortal() {
 
             <div className="p-6">
               {paymentStatus === 'success' ? (
-                <div className="text-center py-6">
-                  <div className="text-green-500 text-5xl mb-4">✓</div>
-                  <h4 className="text-xl font-bold text-slate-800 mb-2">Request Submitted!</h4>
-                  <p className="text-slate-600 text-sm">The Admin will verify your payment and send the number to your WhatsApp shortly.</p>
+                <div className="text-center py-4">
+                  <div className="text-green-500 text-5xl mb-2">✓</div>
+                  <h4 className="text-xl font-bold text-slate-800 mb-4">Lead Unlocked!</h4>
+                  
+                  {/* THE REVEALED NUMBER */}
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
+                    <p className="text-sm text-green-800 font-semibold mb-1">Parent's Contact Number</p>
+                    <p className="text-3xl font-bold text-green-700 tracking-wider">
+                      {unlockedNumber}
+                    </p>
+                  </div>
+                  
+                  <p className="text-slate-500 text-xs mb-6 px-4">
+                    Please mention you are calling from Tutor Kart. Note: Fake transactions or misconduct will result in an account ban.
+                  </p>
+
                   <button 
                     onClick={() => { 
                       setIsModalOpen(false); 
                       setPaymentStatus('idle'); 
-                      setTransactionId('');
                       setTutorPhone('');
+                      setUnlockedNumber('');
                     }}
-                    className="mt-6 w-full bg-slate-900 text-white py-3 rounded-xl font-semibold hover:bg-slate-800 transition"
+                    className="mt-2 w-full bg-slate-900 text-white py-3 rounded-xl font-semibold hover:bg-slate-800 transition"
                   >
-                    Close
+                    Close & Return
                   </button>
                 </div>
               ) : (
                 <>
-                  {/* REAL QR CODE */}
-                  <div className="flex justify-center mb-6">
-                    <div className="w-48 h-48 bg-white rounded-xl border-2 border-slate-200 overflow-hidden shadow-sm p-2">
-                       <img src={myQR} alt="Scan to Pay" className="w-full h-full object-contain" />
-                    </div>
-                  </div>
-                  
-                  <p className="text-center text-sm font-semibold text-slate-700 mb-6">
-                    UPI ID: <span className="text-blue-600">amaank7007-1@okicici</span>
-                  </p>
-
                   {/* Input Fields */}
-                  <div className="space-y-4 mb-6">
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Your WhatsApp Number</label>
-                      <input 
-                        type="text" 
-                        placeholder="10-digit number"
-                        value={tutorPhone}
-                        onChange={(e) => setTutorPhone(e.target.value)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">12-Digit UPI Transaction ID</label>
-                      <input 
-                        type="text" 
-                        placeholder="e.g. 312345678901"
-                        value={transactionId}
-                        onChange={(e) => setTransactionId(e.target.value)}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition text-sm"
-                      />
-                    </div>
+                  <div className="mb-8">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Enter your WhatsApp Number to receive updates:
+                    </label>
+                    <input 
+                      type="text" 
+                      placeholder="10-digit number"
+                      value={tutorPhone}
+                      onChange={(e) => setTutorPhone(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition text-lg tracking-wide"
+                    />
                   </div>
 
                   {/* Buttons */}
                   <div className="flex gap-3">
                     <button 
                       onClick={() => setIsModalOpen(false)}
-                      className="flex-1 px-4 py-3 text-slate-600 font-semibold rounded-xl hover:bg-slate-100 transition text-sm"
+                      className="flex-1 px-4 py-3 text-slate-600 font-semibold rounded-xl hover:bg-slate-100 transition"
                     >
                       Cancel
                     </button>
                     <button 
-                      onClick={async () => {
-                        setPaymentStatus('submitting');
-                        try {
-                          const response = await fetch('https://luminous-classes-backend.onrender.com/api/unlocks', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                              jobId: selectedJob._id,
-                              tutorPhone,
-                              transactionId
-                            })
-                          });
-                          
-                          if (response.ok) {
-                            setPaymentStatus('success');
-                          } else {
-                            alert("Something went wrong. Please try again.");
-                            setPaymentStatus('idle');
-                          }
-                        } catch (error) {
-                          console.error(error);
-                          alert("Failed to connect to server.");
-                          setPaymentStatus('idle');
-                        }
-                      }}
-                      disabled={transactionId.length < 5 || tutorPhone.length < 10 || paymentStatus === 'submitting'}
-                      className="flex-1 px-4 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 disabled:opacity-50 transition text-sm flex justify-center items-center"
+                      onClick={handleRazorpayPayment}
+                      disabled={tutorPhone.length < 10 || paymentStatus === 'submitting'}
+                      className="flex-1 px-4 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 disabled:opacity-50 transition flex justify-center items-center gap-2 shadow-lg shadow-blue-200"
                     >
                       {paymentStatus === 'submitting' ? (
-                        <span className="animate-pulse">Submitting...</span>
+                        <span className="animate-pulse">Loading Secure Checkout...</span>
                       ) : (
-                        'Submit Payment'
+                        <>Pay ₹49 Securely</>
                       )}
                     </button>
+                  </div>
+                  
+                  <div className="mt-6 flex justify-center items-center gap-2 opacity-50">
+                     <span className="text-xs font-semibold text-slate-500">Secured by Razorpay</span>
                   </div>
                 </>
               )}
