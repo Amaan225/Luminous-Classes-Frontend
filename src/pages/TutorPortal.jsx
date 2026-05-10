@@ -201,7 +201,10 @@ function TutorPortal() {
           filteredJobs.map((job) => (
             <div key={job._id} className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm relative overflow-hidden transition hover:shadow-md">
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500"></div>
-              <h3 className="text-xl font-bold text-slate-800 mb-2">{job.subject} - {job.grade}</h3>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">
+                 <span className="text-blue-600 mr-2">[{job.displayId}]</span> 
+                   {job.subject} - {job.grade}
+                </h3>
               <p className="text-gray-600 mb-1 font-medium"> {job.location}</p>
               <p className="text-green-600 mb-4 font-bold">{job.salary}</p>
               
