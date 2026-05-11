@@ -4,14 +4,14 @@ import { GraduationCap, Wallet, Zap } from 'lucide-react';
 
 function LandingPage() {
   return (
-    <div className=" font-sans min-h-screen">
+    <div className="font-sans min-h-screen">
       
       {/* ========================================== */}
       {/* 1. THE HERO SECTION (The Hook)               */}
       {/* ========================================== */}
       <div className="min-h-screen flex flex-col items-center justify-center p-4 relative border-b border-gray-200">
-        <h1 className="text-5xl md:text-7xl text-slate-800  mb-4 tracking-tight text-center">
-          Tutor <span className="  text-blue-600 font-fredericka">Kart</span>
+        <h1 className="text-5xl md:text-7xl text-slate-800 mb-4 tracking-tight text-center font-extrabold">
+          Tutor <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 font-fredericka">Kart</span>
         </h1>
         <p className="text-xl md:text-2xl text-gray-600 mb-12 text-center max-w-2xl font-light">
           Connecting dedicated parents with verified, top-tier university tutors in the area.
@@ -46,7 +46,9 @@ function LandingPage() {
       {/* ========================================== */}
       <div className="max-w-6xl mx-auto px-6 py-24">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-800 mb-4">A <h2 className='text-blue-600'>Smarter</h2> Way to Learn</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-800 mb-4">
+            A <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600'>Smarter</span> Way to Learn
+          </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto py-10">
             We stripped away the heavy agency fees to create a direct, transparent connection between great students and great teachers.
           </p>
@@ -54,43 +56,34 @@ function LandingPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           
-         {/* Detail Card 1 */}
-<div className="bg-white p-8 rounded-2xl shadow-sm border border-blue-500 text-center hover:shadow-md transition">
-  
-  {/* The new SVG Icon! Notice we can change the color using text-blue-600 */}
-  <GraduationCap className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-  
-  <h3 className="text-xl font-bold text-slate-800 mb-3">100% Verified Tutors</h3>
-  <p className="text-gray-600 leading-relaxed">Every tutor on our platform is a rigorously vetted university student. We check college IDs manually so you can trust who is teaching your child.</p>
-</div>
+          {/* Detail Card 1 */}
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-blue-500 text-center hover:shadow-md transition">
+            <GraduationCap className="w-16 h-16 text-blue-600 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-slate-800 mb-3">100% Verified Tutors</h3>
+            <p className="text-gray-600 leading-relaxed">Every tutor on our platform is a rigorously vetted university student. We check college IDs manually so you can trust who is teaching your child.</p>
+          </div>
 
-{/* Detail Card 2 */}
-<div className="bg-blue-500 p-8 rounded-2xl shadow-sm border text-center hover:shadow-md transition">
-  
-  <Wallet className="w-16 h-16 text-black-600 mx-auto mb-4" />
-  
-  <h3 className="text-xl font-bold text-white mb-3">Zero Agency Fees</h3>
-  <p className="text-white leading-relaxed">Traditional agencies take up to 50% of a teacher's salary. We don't. Tutors keep what they earn, which means parents get highly motivated educators.</p>
-</div>
+          {/* Detail Card 2 */}
+          <div className="bg-blue-500 p-8 rounded-2xl shadow-sm border text-center hover:shadow-md transition">
+            <Wallet className="w-16 h-16 text-white mx-auto mb-4" /> {/* Changed to white for better contrast on blue background */}
+            <h3 className="text-xl font-bold text-white mb-3">Zero Agency Fees</h3>
+            <p className="text-white leading-relaxed">Traditional agencies take up to 50% of a teacher's salary. We don't. Tutors keep what they earn, which means parents get highly motivated educators.</p>
+          </div>
 
-{/* Detail Card 3 */}
-<div className="bg-white p-8 rounded-2xl shadow-sm border border-blue-500 text-center hover:shadow-md transition">
-  
-  <Zap className="w-16 h-16 text-amber-500 mx-auto mb-4" />
-  
-  <h3 className="text-xl font-bold text-slate-800 mb-3">Instant Connections</h3>
-  <p className="text-gray-600 leading-relaxed">No endless waiting or middleman delays. Parents post a job, tutors apply, and you connect instantly via WhatsApp to discuss details.</p>
-</div>
+          {/* Detail Card 3 */}
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-blue-500 text-center hover:shadow-md transition">
+            <Zap className="w-16 h-16 text-amber-500 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-slate-800 mb-3">Instant Connections</h3>
+            <p className="text-gray-600 leading-relaxed">No endless waiting or middleman delays. Parents post a job, tutors apply, and you connect instantly via WhatsApp to discuss details.</p>
+          </div>
         </div>
       </div>
 
       {/* ========================================== */}
       {/* 3. THE FOOTER                                */}
       {/* ========================================== */}
-      <footer className=" text-slate-400 py-8 text-center">
-        <p className="mb-4">© 2026 Luminous Classes. Empowering Students.</p>
-        
-        
+      <footer className="text-slate-400 py-8 text-center">
+        <p className="mb-4">© 2026 Tutor Kart. Empowering Students.</p>
       </footer>
 
     </div>
