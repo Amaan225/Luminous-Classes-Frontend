@@ -87,13 +87,10 @@ function LandingPage() {
       {/* ========================================== */}
       {/* 3. THE FOOTER                                */}
       {/* ========================================== */}
-      <footer className="bg-slate-900 text-slate-400 py-8 text-center">
+      <footer className=" text-slate-400 py-8 text-center">
         <p className="mb-4">© 2026 Luminous Classes. Empowering Students.</p>
         
-        {/* --- YOUR SECRET ADMIN SHORTCUT --- */}
-        <Link to="/admin" className="text-slate-700 hover:text-slate-500 text-xs font-medium transition">
-          Admin Control Room
-        </Link>
+        
       </footer>
 
     </div>
