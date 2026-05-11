@@ -19,7 +19,7 @@ function AdminPortal() {
     if (isAuthenticated) {
       const fetchData = async () => {
         try {
-          const jobsRes = await axios.get('https://luminous-classes-backend.onrender.com/api/jobs');
+          const jobsRes = await axios.get('https://luminous-classes-backend.onrender.com/api/jobs?secret=amaan2026');
           setJobs(jobsRes.data);
         } catch (e) { console.error(e); }
 
