@@ -91,7 +91,7 @@ function TutorPortal() {
 
       // 3. Open the Razorpay Checkout Window
       const options = {
-        key: "rzp_test_SnKrogol8BmLM1", // Your verified Test Key
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: orderData.amount,
         currency: orderData.currency,
         name: "Tutor Kart",
