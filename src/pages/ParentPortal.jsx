@@ -58,7 +58,7 @@ function ParentPortal() {
 
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 text-sm text-slate-600 mb-8">
             <p className="font-semibold text-slate-800 mb-2 text-base">Need to make changes?</p>
-            <p>To edit details, update the salary, or close this listing once you hire a tutor, simply WhatsApp our Admin team at <span className="font-bold text-slate-900">Your Admin Number</span> with your Reference ID.</p>
+            <p>To edit details, update the salary, or close this listing once you hire a tutor, simply WhatsApp our Admin team at <span className="font-bold text-slate-900">+91 7007112372</span> with your Reference ID.</p>
           </div>
           
           <button 
