@@ -4,3 +4,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* --- PREMIUM DOT GRID BACKGROUND --- */
+.bg-dot-pattern {
+  /* Using Tailwind's blue-400 color (rgb 96 165 250) but faded to 20% opacity */
+  background-image: radial-gradient(rgba(96, 165, 250, 0.2) 2px, transparent 2px);
+  background-size: 30px 30px; /* Spacing between the dots */
+  background-color: #ffffff; /* Base background color */
+}

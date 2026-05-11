@@ -10,15 +10,18 @@ import AdminPortal from './pages/AdminPortal';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/parent" element={<ParentPortal />} />
-        <Route path="/tutor" element={<TutorPortal />} />
-        <Route path="/admin" element={<AdminPortal />} />
-        <Route path="/register" element={<TutorRegistration />} />
-      </Routes>
-    </BrowserRouter>
+    // --- THE PREMIUM WRAPPER ---
+    <div className="min-h-screen font-sans text-slate-800 bg-dot-pattern">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/parent" element={<ParentPortal />} />
+          <Route path="/tutor" element={<TutorPortal />} />
+          <Route path="/admin" element={<AdminPortal />} />
+          <Route path="/register" element={<TutorRegistration />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
