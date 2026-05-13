@@ -7,6 +7,7 @@ import LandingPage from './pages/LandingPage';
 import ParentPortal from './pages/ParentPortal';
 import TutorPortal from './pages/TutorPortal';
 import AdminPortal from './pages/AdminPortal';
+import Terms from './pages/Terms';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/tutor" element={<TutorPortal />} />
           <Route path="/admin" element={<AdminPortal />} />
           <Route path="/register" element={<TutorRegistration />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -79,11 +79,16 @@ function LandingPage() {
         </div>
       </div>
 
-      {/* ========================================== */}
+     {/* ========================================== */}
       {/* 3. THE FOOTER                                */}
       {/* ========================================== */}
-      <footer className="text-slate-400 py-8 text-center">
-        <p className="mb-4">© 2026 Tutor Kart. Empowering Students.</p>
+      <footer className="text-slate-500 py-8 text-center border-t border-slate-200 mt-12 bg-white">
+        <p className="mb-2 font-medium">© 2026 Tutor Kart. Empowering Students.</p>
+        <div className="flex justify-center gap-6 text-sm">
+          <Link to="/terms" className="hover:text-blue-600 transition">Terms & Conditions</Link>
+          <Link to="/terms" className="hover:text-blue-600 transition">Privacy Policy</Link>
+          <Link to="/terms" className="hover:text-blue-600 transition">Refund Policy</Link>
+        </div>
       </footer>
 
     </div>
