@@ -10,7 +10,7 @@ function LandingPage() {
       {/* 1. THE HERO SECTION (The Hook)               */}
       {/* ========================================== */}
       <div className="min-h-screen flex flex-col items-center justify-center p-4 relative border-b border-gray-200">
-        <h1 className="text-5xl md:text-7xl text-slate-800 mb-4 tracking-tight text-center font-extrabold">
+        <h1 className="text-5xl md:text-7xl text-slate-800 bg-gradient-to-r from-yellow-500 to-white mb-4 tracking-tight text-center font-extrabold">
           Tuto₹<span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-700 "> 49</span>
         </h1>
         <p className="text-xl md:text-2xl text-gray-600 mb-12 text-center max-w-2xl font-light">
