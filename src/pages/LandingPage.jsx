@@ -11,7 +11,7 @@ function LandingPage() {
       {/* ========================================== */}
       <div className="min-h-screen flex flex-col items-center justify-center p-4 relative border-b border-gray-200">
         <h1 className="text-5xl md:text-7xl text-slate-800 mb-4 tracking-tight text-center font-extrabold">
-          Tutor <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 font-fredericka">Kart</span>
+          Tuto₹<span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-700 "> 49</span>
         </h1>
         <p className="text-xl md:text-2xl text-gray-600 mb-12 text-center max-w-2xl font-light">
           Connecting dedicated parents with verified, top-tier university tutors in the area.
@@ -24,7 +24,7 @@ function LandingPage() {
           </Link>
 
           <Link to="/tutor" className="flex-1 bg-white hover:bg-gray-50 text-slate-800 border-2 border-blue-500 text-center py-6 px-8 rounded-2xl shadow-lg transition duration-300 transform hover:-translate-y-1">
-            <h2 className="text-2xl font-bold mb-2">I am a Tutor</h2>
+            <h2 className="text-2xl font-bold mb-2">I am a Tuto₹</h2>
             <p className="text-gray-500 text-sm">Browse local jobs and apply directly to parents.</p>
           </Link>
         </div>
