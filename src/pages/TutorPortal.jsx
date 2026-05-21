@@ -17,10 +17,9 @@ function TutorPortal() {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [applyingTo, setApplyingTo] = useState(null); 
   const [appData, setAppData] = useState({ tutorName: '', tutorPhone: '', pitch: '' });
 
-  // --- 1. NEW STATE FOR FILTERS ---
+  // --- FILTER STATE ---
   const [filterSubject, setFilterSubject] = useState('');
   const [filterArea, setFilterArea] = useState('');
 
@@ -29,7 +28,7 @@ function TutorPortal() {
   const [selectedJob, setSelectedJob] = useState(null);
   const [tutorPhone, setTutorPhone] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('idle');
-  const [unlockedNumber, setUnlockedNumber] = useState(''); // Stores the real number!
+  const [unlockedNumber, setUnlockedNumber] = useState('');
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -47,22 +46,6 @@ function TutorPortal() {
     fetchJobs();
   }, []);
 
-  const handleAppChange = (e) => setAppData({ ...appData, [e.target.name]: e.target.value });
-
-  // Keep this for normal applications if you still have free jobs
-  const submitApplication = async (e, jobId) => {
-    e.preventDefault();
-    try {
-      await axios.post('https://luminous-classes-backend.onrender.com/api/applications', { ...appData, jobId });
-      alert("Application sent successfully! The parent will contact you.");
-      setApplyingTo(null);
-      setAppData({ tutorName: '', tutorPhone: '', pitch: '' });
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Failed to send application.");
-    }
-  };
-
   // --- THE RAZORPAY CHECKOUT ENGINE ---
   const handleRazorpayPayment = async () => {
     if (tutorPhone.length < 10) {
@@ -72,7 +55,6 @@ function TutorPortal() {
 
     setPaymentStatus('submitting');
 
-    // 1. Load the Razorpay SDK
     const res = await loadRazorpayScript();
     if (!res) {
       alert("Razorpay SDK failed to load. Check your connection.");
@@ -81,7 +63,6 @@ function TutorPortal() {
     }
 
     try {
-      // 2. Ask your Render backend to create an Order
       const orderResponse = await fetch('https://luminous-classes-backend.onrender.com/api/payment/create-order', {
         method: 'POST',
       });
@@ -89,22 +70,20 @@ function TutorPortal() {
 
       if (!orderData.id) throw new Error("Failed to generate order ID");
 
-      // 3. Open the Razorpay Checkout Window
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "Tutor Kart",
+        name: "Tutor49",
         description: `Premium Lead Unlock: ${selectedJob.subject}`,
         order_id: orderData.id,
         prefill: {
-          contact: tutorPhone // Pre-fills the tutor's phone number
+          contact: tutorPhone
         },
         theme: {
-          color: "#2563EB" // Blue to match your UI
+          color: "#2C1810" // Updated to match vintage theme
         },
         handler: async function (response) {
-          // 4. SUCCESS! Send the payment proof to your backend to unlock the number
           try {
             const verifyResponse = await fetch('https://luminous-classes-backend.onrender.com/api/unlocks', {
               method: 'POST',
@@ -112,14 +91,14 @@ function TutorPortal() {
               body: JSON.stringify({
                 jobId: selectedJob._id,
                 tutorPhone: tutorPhone,
-                transactionId: response.razorpay_payment_id // Razorpay's verified ID
+                transactionId: response.razorpay_payment_id
               })
             });
             
             const verifyData = await verifyResponse.json();
             
             if (verifyResponse.ok) {
-              setUnlockedNumber(verifyData.unlockedContact); // Grab the real number!
+              setUnlockedNumber(verifyData.unlockedContact);
               setPaymentStatus('success');
             } else {
               alert("Payment verified, but failed to fetch contact. Please contact Admin.");
@@ -136,7 +115,6 @@ function TutorPortal() {
       const paymentObject = new window.Razorpay(options);
       paymentObject.open();
 
-      // If user closes the window without paying, reset the button
       paymentObject.on('payment.failed', function () {
         setPaymentStatus('idle');
       });
@@ -148,7 +126,6 @@ function TutorPortal() {
     }
   };
 
-  // --- 2. THE FILTER ENGINE ---
   const filteredJobs = jobs.filter(job => {
     const matchesSubject = job.subject.toLowerCase().includes(filterSubject.toLowerCase());
     const matchesArea = job.location.toLowerCase().includes(filterArea.toLowerCase());
@@ -167,84 +144,113 @@ function TutorPortal() {
           <p className="text-gray-600">Find your next student.</p>
         </div>
 
-        {/* --- 3. THE SEARCH BAR UI --- */}
         <div className="mt-4 md:mt-0 flex gap-3 w-full md:w-auto">
           <input 
             type="text" 
             placeholder=" Filter by Subject..." 
             value={filterSubject}
             onChange={(e) => setFilterSubject(e.target.value)}
-            className="p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-400 bg-white shadow-sm flex-1"
+            className="p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#2C1810] bg-white shadow-sm flex-1"
           />
           <input 
             type="text" 
             placeholder=" Filter by Area..." 
             value={filterArea}
             onChange={(e) => setFilterArea(e.target.value)}
-            className="p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-400 bg-white shadow-sm flex-1"
+            className="p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#2C1810] bg-white shadow-sm flex-1"
           />
         </div>
       </div>
 
-      {/* --- RENDER THE FILTERED JOBS --- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* --- RENDER THE FILTERED VINTAGE TICKETS --- */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {isLoading ? (
-          <div className="col-span-full py-12 text-center bg-blue-50 rounded-xl border border-blue-100 shadow-sm animate-pulse">
-            <p className="text-xl font-bold text-blue-600 mb-2"> Connecting to Luminous Servers...</p>
-            <p className="text-sm text-blue-500">Waking up the database. This usually takes about 15 seconds on the first load!</p>
+          <div className="col-span-full py-12 text-center bg-[#FDF8E7] rounded-xl border border-[#2C1810]/20 shadow-sm animate-pulse">
+            <p className="text-xl font-bold text-[#2C1810] mb-2"> Fetching Local Requirements...</p>
           </div>
         ) : filteredJobs.length === 0 ? (
           <div className="col-span-full py-10 text-center bg-gray-50 rounded-xl border text-gray-500 text-lg">
             No jobs match your current filters.
           </div>
         ) : (
-          filteredJobs.map((job) => (
-            <div key={job._id} className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm relative overflow-hidden transition hover:shadow-md">
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500"></div>
-             <h3 className="text-xl font-bold text-slate-800 mb-2">
-              {/* The '&&' means it will only render this span if job.displayId exists */}
-               {job.displayId && (
-                 <span className="text-blue-600 mr-2">[{job.displayId}]</span>
-                  )}
-                 {job.subject} - {job.grade}
-                </h3>
-              <p className="text-gray-600 mb-1 font-medium"> {job.location}</p>
-              <p className="text-green-600 mb-4 font-bold">{job.salary}</p>
-              
-              {applyingTo === job._id ? (
-                <div className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-col gap-3">
-                  <h4 className="font-semibold text-slate-700 text-sm">Premium Lead</h4>
-                  <p className="text-xs text-slate-500 mb-2">This is a verified parent requirement. Unlock to get direct WhatsApp contact.</p>
+          filteredJobs.map((job) => {
+            // Dynamic check based on your MongoDB schema (defaults to premium if missing)
+            const isPremium = job.leadType === 'premium' || !job.leadType;
+            const displayId = job.displayId || job._id.substring(0, 6).toUpperCase();
+            
+            return (
+              <div key={job._id} className="flex w-full drop-shadow-xl group hover:-translate-y-1 transition-transform duration-300">
+                {/* MAIN TICKET BODY */}
+                <div className="flex-grow bg-[#FDF8E7] text-[#2C1810] p-6 rounded-l-lg border-2 border-r-0 border-[#2C1810] relative">
                   
-                  <div className="flex gap-2 mt-2">
+                  <div className="flex justify-between items-start mb-4 border-b-2 border-dashed border-[#2C1810] pb-2">
+                    <div>
+                      <h2 className="text-2xl font-black uppercase tracking-widest" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.1)' }}>
+                        STUDENT LEAD
+                      </h2>
+                      <p className="text-xs font-bold tracking-widest opacity-80 mt-1">TK-{displayId}</p>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-xs font-bold uppercase tracking-wider block opacity-70">Price</span>
+                      <span className="text-xl font-black">₹49</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 mb-4 font-mono text-sm uppercase font-bold">
+                    <div>
+                      <span className="block opacity-50 text-[10px]">Target Level</span>
+                      <span>{job.grade} - {job.subject}</span>
+                    </div>
+                    <div>
+                      <span className="block opacity-50 text-[10px]">Location Zone</span>
+                      <span> {job.location}</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#f0e4cc] p-3 rounded border border-[#2C1810]/20 mb-4 relative min-h-[60px]">
+                    <span className="absolute -top-2 left-2 bg-[#FDF8E7] px-1 text-[10px] font-bold uppercase tracking-wider text-[#2C1810]/60">
+                      Parent Notes
+                    </span>
+                    <p className="italic text-xs leading-relaxed mt-1">
+                      "{job.requirements || job.parentDescription || "Standard home tuition requirement verified by Tutor49."}"
+                    </p>
+                  </div>
+
+                  <div className="flex justify-between items-center mt-2">
+                    <p className="text-[10px] uppercase font-bold opacity-60 max-w-[150px] leading-tight">
+                      Verified requirement. Unlock for direct WhatsApp.
+                    </p>
                     <button 
-                      type="button" 
                       onClick={() => {
-                        setSelectedJob(job); 
-                        setIsModalOpen(true); 
-                      }} 
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold transition text-sm flex items-center justify-center gap-1"
+                        setSelectedJob(job);
+                        setIsModalOpen(true);
+                      }}
+                      className="px-6 py-2 text-sm font-bold uppercase bg-[#2C1810] text-[#FDF8E7] rounded shadow-[2px_2px_0px_rgba(0,0,0,0.3)] hover:translate-y-px hover:shadow-[1px_1px_0px_rgba(0,0,0,0.3)] transition-all whitespace-nowrap"
                     >
-                      <span>Unlock Contact</span>
-                      <span className="bg-blue-800 px-1.5 py-0.5 rounded text-xs">₹49</span>
-                    </button>
-                    
-                    <button 
-                      type="button" 
-                      onClick={() => setApplyingTo(null)} 
-                      className="flex-1 bg-gray-200 hover:bg-gray-300 text-slate-700 py-2 rounded font-semibold transition text-sm"
-                    >
-                      Cancel
+                      Unlock Contact
                     </button>
                   </div>
                 </div>
-              ) : (
-                <button onClick={() => setApplyingTo(job._id)} className="w-full mt-2 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-lg transition border border-slate-200">
-                  View Details
-                </button>
-              )}
-            </div>
-          ))
+
+                {/* TICKET STUB */}
+                <div className="w-16 md:w-20 bg-[#FDF8E7] border-2 border-l-2 border-dashed border-[#2C1810] rounded-r-lg flex flex-col justify-center items-center relative overflow-hidden">
+                  <div className={`w-full py-2 text-center border-b-2 border-dashed border-[#2C1810] ${isPremium ? 'bg-green-700' : 'bg-orange-600'} text-[#FDF8E7]`}>
+                    <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest leading-tight px-1">
+                      {isPremium ? '0% COMM' : '25% FEE'}
+                    </p>
+                  </div>
+                  <div className="flex-grow flex items-center justify-center py-4">
+                    <h3 className="text-lg md:text-xl font-black tracking-[0.2em] uppercase text-[#2C1810]" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}>
+                      {isPremium ? 'PREMIUM' : 'CLASSIC'}
+                    </h3>
+                  </div>
+                  <div className="w-full text-center py-2 border-t-2 border-dashed border-[#2C1810]">
+                    <span className="text-[8px] font-mono font-bold tracking-widest">{displayId}</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })
         )}
       </div>
 
@@ -252,31 +258,31 @@ function TutorPortal() {
       {/* --- PAYMENT MODAL OVERLAY (THE VAULT DOOR) --- */}
       {/* ========================================= */}
       {isModalOpen && selectedJob && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-[#FDF8E7] border-4 border-[#2C1810] rounded-xl shadow-[8px_8px_0px_rgba(44,24,16,1)] max-w-md w-full overflow-hidden">
             
-            {/* Header */}
-            <div className="bg-slate-900 p-6 text-center text-white">
-              <h3 className="text-2xl font-bold mb-1">Unlock Lead</h3>
-              <p className="text-slate-300 text-sm">Pay ₹49 to instantly unlock the parent's contact.</p>
+            <div className="bg-[#2C1810] p-6 text-center text-[#FDF8E7] border-b-4 border-[#2C1810]">
+              <h3 className="text-2xl font-black uppercase tracking-widest mb-1">Unlock Lead</h3>
+              <p className="text-[#FDF8E7]/80 text-xs font-bold uppercase">Pay ₹49 to instantly reveal the parent's contact.</p>
             </div>
 
             <div className="p-6">
               {paymentStatus === 'success' ? (
                 <div className="text-center py-4">
-                  <div className="text-green-500 text-5xl mb-2">✓</div>
-                  <h4 className="text-xl font-bold text-slate-800 mb-4">Lead Unlocked!</h4>
+                  <div className="text-green-700 text-5xl mb-2 font-black">✓</div>
+                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810] mb-4">Lead Unlocked!</h4>
                   
-                  {/* THE REVEALED NUMBER */}
-                  <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
-                    <p className="text-sm text-green-800 font-semibold mb-1">Parent's Contact Number</p>
-                    <p className="text-3xl font-bold text-green-700 tracking-wider">
+                  <div className="bg-[#f0e4cc] border-2 border-[#2C1810] rounded-lg p-6 mb-6 relative">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#FDF8E7] px-2 text-xs font-black uppercase tracking-wider text-[#2C1810] border-2 border-[#2C1810]">
+                      Parent Contact
+                    </span>
+                    <p className="text-3xl font-black text-[#2C1810] tracking-wider mt-2">
                       {unlockedNumber}
                     </p>
                   </div>
                   
-                  <p className="text-slate-500 text-xs mb-6 px-4">
-                    Please mention you are calling from Tutor Kart. Note: Fake transactions or misconduct will result in an account ban.
+                  <p className="text-[#2C1810]/70 text-xs font-bold mb-6 px-4 uppercase leading-relaxed">
+                    Mention Tutor49 when calling. Misconduct will result in a permanent ban.
                   </p>
 
                   <button 
@@ -286,50 +292,44 @@ function TutorPortal() {
                       setTutorPhone('');
                       setUnlockedNumber('');
                     }}
-                    className="mt-2 w-full bg-slate-900 text-white py-3 rounded-xl font-semibold hover:bg-slate-800 transition"
+                    className="w-full bg-[#2C1810] text-[#FDF8E7] py-3 rounded font-black uppercase tracking-widest hover:translate-y-px transition-transform"
                   >
-                    Close & Return
+                    Close Window
                   </button>
                 </div>
               ) : (
                 <>
-                  {/* Input Fields */}
                   <div className="mb-8">
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Enter your WhatsApp Number to receive updates:
+                    <label className="block text-xs font-black uppercase tracking-wider text-[#2C1810] mb-2">
+                      Enter your WhatsApp Number:
                     </label>
                     <input 
                       type="text" 
                       placeholder="10-digit number"
                       value={tutorPhone}
                       onChange={(e) => setTutorPhone(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none transition text-lg tracking-wide"
+                      className="w-full px-4 py-3 rounded bg-white border-2 border-[#2C1810] focus:ring-0 focus:outline-none focus:border-blue-600 transition-colors text-lg font-bold tracking-widest text-center"
                     />
                   </div>
 
-                  {/* Buttons */}
                   <div className="flex gap-3">
                     <button 
                       onClick={() => setIsModalOpen(false)}
-                      className="flex-1 px-4 py-3 text-slate-600 font-semibold rounded-xl hover:bg-slate-100 transition"
+                      className="flex-1 px-4 py-3 text-[#2C1810] font-black uppercase tracking-wider border-2 border-[#2C1810] rounded hover:bg-[#2C1810]/5 transition"
                     >
                       Cancel
                     </button>
                     <button 
                       onClick={handleRazorpayPayment}
                       disabled={tutorPhone.length < 10 || paymentStatus === 'submitting'}
-                      className="flex-1 px-4 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 disabled:opacity-50 transition flex justify-center items-center gap-2 shadow-lg shadow-blue-200"
+                      className="flex-[2] px-4 py-3 bg-[#2C1810] text-[#FDF8E7] font-black uppercase tracking-wider rounded disabled:opacity-50 transition shadow-[4px_4px_0px_rgba(0,0,0,0.2)] hover:translate-y-px hover:shadow-[2px_2px_0px_rgba(0,0,0,0.2)]"
                     >
                       {paymentStatus === 'submitting' ? (
-                        <span className="animate-pulse">Loading Secure Checkout...</span>
+                        <span className="animate-pulse">Loading...</span>
                       ) : (
                         <>Pay ₹49 Securely</>
                       )}
                     </button>
-                  </div>
-                  
-                  <div className="mt-6 flex justify-center items-center gap-2 opacity-50">
-                     <span className="text-xs font-semibold text-slate-500">Secured by Razorpay</span>
                   </div>
                 </>
               )}
