@@ -5,7 +5,7 @@ import { GraduationCap, Wallet, Zap } from 'lucide-react';
 function LandingPage() {
   return (
     // FULL PAGE VINTAGE WRAPPER
-    <div className="min-h-screen bg-[#FDF8E7] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7]">
+    <div className="min-h-screen bg-[#f3f1ec] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7]">
       
       {/* ========================================== */}
       {/* 1. THE HERO SECTION (The Hook)               */}

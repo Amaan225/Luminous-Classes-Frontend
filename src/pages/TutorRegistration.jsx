@@ -61,14 +61,14 @@ function TutorRegistration() {
               className="w-full px-4 py-4 rounded-none bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)] text-xl" 
             />
             
-            <input type="email" name="email" placeholder="UNIVERSITY OR GMAIL ADDRESS" value={formData.email} onChange={handleChange} required 
+            <input type="email" name="email" placeholder=" GMAIL ADDRESS" value={formData.email} onChange={handleChange} required 
               className="w-full px-4 py-4 rounded-none bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)] text-xl" 
             />
             
             <input type="tel" name="phone" placeholder="WHATSAPP NUMBER" value={formData.phone} onChange={handleChange} required 
               className="w-full px-4 py-4 rounded-none bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)] text-xl" 
             />
-            <input type="text" name="collegeId" placeholder="ENROLLMENT/ROLL NUMBER" value={formData.collegeId} onChange={handleChange} required 
+            <input type="text" name="collegeId" placeholder="Aadhar Number" value={formData.collegeId} onChange={handleChange} required 
               className="w-full px-4 py-4 rounded-none bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)] text-xl" 
             />
             

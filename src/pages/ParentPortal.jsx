@@ -86,7 +86,7 @@ function ParentPortal() {
 
   // --- THE VINTAGE FORM UI ---
   return (
-    <div className="min-h-screen bg-[#FDF8E7] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7] p-4 md:p-8">
+    <div className="min-h-screen bg-[#f3f1ec] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7] p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
         
         <button 

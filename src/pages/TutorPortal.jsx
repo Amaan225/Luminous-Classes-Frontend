@@ -81,7 +81,7 @@ function TutorPortal() {
           contact: tutorPhone
         },
         theme: {
-          color: "#2C1810" // Matches vintage theme
+          color: "#2C1810" 
         },
         handler: async function (response) {
           try {
@@ -133,11 +133,9 @@ function TutorPortal() {
   });
 
   return (
-    // FULL PAGE VINTAGE WRAPPER
-    <div className="min-h-screen bg-[#fffbef] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7]">
+    <div className="min-h-screen bg-[#f3f1ec] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7]">
       <div className="max-w-6xl mx-auto p-4 md:p-8">
         
-        {/* VINTAGE BACK BUTTON */}
         <button 
           onClick={() => navigate('/')} 
           className="mb-8 px-5 py-2 border-2 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] hover:bg-[#2C1810] hover:text-[#FDF8E7] transition-colors shadow-[2px_2px_0px_rgba(44,24,16,1)] hover:translate-y-px hover:shadow-[1px_1px_0px_rgba(44,24,16,1)]"
@@ -145,7 +143,6 @@ function TutorPortal() {
           &larr; Back to Home
         </button>
         
-        {/* VINTAGE HEADER AREA */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-10 border-b-4 border-dashed border-[#2C1810] pb-8">
           <div className="mb-6 md:mb-0">
             <h1 className="text-4xl md:text-5xl font-black uppercase tracking-widest text-[#2C1810] mb-2 drop-shadow-[3px_3px_0px_rgba(0,0,0,0.15)]">
@@ -156,7 +153,6 @@ function TutorPortal() {
             </p>
           </div>
 
-          {/* VINTAGE SEARCH BARS */}
           <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
             <input 
               type="text" 
@@ -175,7 +171,6 @@ function TutorPortal() {
           </div>
         </div>
 
-        {/* --- RENDER THE FILTERED VINTAGE TICKETS --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {isLoading ? (
             <div className="col-span-full py-16 text-center bg-[#f0e4cc] rounded-lg border-4 border-dashed border-[#2C1810] shadow-[8px_8px_0px_rgba(44,24,16,1)] animate-pulse">
@@ -213,20 +208,30 @@ function TutorPortal() {
                         <p className="text-xs font-bold tracking-widest opacity-80 mt-1">TK-{displayId}</p>
                       </div>
                       <div className="text-right">
-                        <span className="text-xs font-bold uppercase tracking-wider block opacity-70">Price</span>
+                        <span className="text-xs font-bold uppercase tracking-wider block opacity-70">Unlock</span>
                         <span className="text-xl font-black">₹49</span>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2 mb-4 font-mono text-sm uppercase font-bold">
+                    <div className="grid grid-cols-2 gap-3 mb-4 font-mono text-sm uppercase font-bold">
                       <div>
                         <span className="block opacity-50 text-[10px]">Target Level</span>
                         <span>{job.grade} - {job.subject}</span>
                       </div>
                       <div>
                         <span className="block opacity-50 text-[10px]">Location Zone</span>
-                        <span> {job.location}</span>
+                        <span>📍 {job.location}</span>
                       </div>
+                      
+                      {/* --- THE NEW SALARY ROW --- */}
+                      <div className="col-span-2 flex items-center justify-between border-t-2 border-dashed border-[#2C1810]/30 pt-3 mt-1">
+                        <span className="block opacity-60 text-[11px] tracking-widest">Est. Budget</span>
+                        <span className="text-lg font-black tracking-wider text-green-600">
+                          ₹{job.salary} <span className="text-[10px] opacity-70 tracking-widest font-bold text-black">/ MO</span>
+                        </span>
+                      </div>
+                      {/* -------------------------- */}
+                      
                     </div>
 
                     <div className="bg-[#f0e4cc] p-3 rounded border border-[#2C1810]/20 mb-4 relative min-h-[60px]">
@@ -240,7 +245,7 @@ function TutorPortal() {
 
                     <div className="flex justify-between items-center mt-2">
                       <p className="text-[10px] uppercase font-bold opacity-60 max-w-[150px] leading-tight">
-                        Verified requirement. Unlock for direct Call.
+                        Verified requirement. Unlock for direct Contact.
                       </p>
                       <button 
                         onClick={() => {
@@ -258,7 +263,7 @@ function TutorPortal() {
                   <div className="w-16 md:w-20 bg-[#FDF8E7] border-2 border-l-2 border-dashed border-[#2C1810] rounded-r-lg flex flex-col justify-center items-center relative overflow-hidden">
                     <div className={`w-full py-2 text-center border-b-2 border-dashed border-[#2C1810] ${isPremium ? 'bg-green-700' : 'bg-orange-600'} text-[#FDF8E7]`}>
                       <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest leading-tight px-1">
-                        {isPremium ? '0% COMM' : '25% FEE'}
+                        {isPremium ? '0% COMM' : '50% COMM.'}
                       </p>
                     </div>
                     <div className="flex-grow flex items-center justify-center py-4">
@@ -276,9 +281,6 @@ function TutorPortal() {
           )}
         </div>
 
-        {/* ========================================= */}
-        {/* --- PAYMENT MODAL OVERLAY (THE VAULT DOOR) --- */}
-        {/* ========================================= */}
         {isModalOpen && selectedJob && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2C1810]/80 backdrop-blur-sm p-4">
             <div className="bg-[#FDF8E7] border-4 border-[#2C1810] rounded-xl shadow-[12px_12px_0px_rgba(0,0,0,0.5)] max-w-md w-full overflow-hidden transform transition-all">
@@ -341,12 +343,16 @@ function TutorPortal() {
                       >
                         Cancel
                       </button>
-                      <button
+                      <button 
                         onClick={handleRazorpayPayment}
-                        disabled={paymentStatus === 'submitting'}
-                        className="flex-1 px-4 py-4 text-white bg-[#2C1810] font-black uppercase tracking-wider border-4 border-[#2C1810] shadow-[4px_4px_0px_rgba(44,24,16,1)] hover:translate-y-px hover:shadow-[2px_2px_0px_rgba(44,24,16,1)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={tutorPhone.length < 10 || paymentStatus === 'submitting'}
+                        className="flex-[2] px-4 py-4 bg-[#2C1810] text-[#FDF8E7] font-black uppercase tracking-wider border-4 border-[#2C1810] shadow-[4px_4px_0px_rgba(44,24,16,1)] disabled:opacity-50 hover:translate-y-px hover:shadow-[2px_2px_0px_rgba(44,24,16,1)] transition-all flex justify-center items-center"
                       >
-                        {paymentStatus === 'submitting' ? 'Processing...' : 'Pay ₹49'}
+                        {paymentStatus === 'submitting' ? (
+                          <span className="animate-pulse">Loading...</span>
+                        ) : (
+                          <>Pay ₹49 Securely</>
+                        )}
                       </button>
                     </div>
                   </>
@@ -355,6 +361,7 @@ function TutorPortal() {
             </div>
           </div>
         )}
+        
       </div>
     </div>
   );
