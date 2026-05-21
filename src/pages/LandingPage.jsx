@@ -120,7 +120,24 @@ function LandingPage() {
       {/* ========================================== */}
       <footer className="bg-[#2C1810] text-[#FDF8E7] py-12 text-center border-t-8 border-[#2C1810]">
         <h2 className="text-3xl font-black uppercase tracking-widest mb-6">TUTO₹49</h2>
-        <p className="mb-8 font-bold uppercase tracking-widest text-xs opacity-70">© 2026. Empowering Students in Lucknow.</p>
+        
+        {/* --- NEW VINTAGE SUPPORT SECTION --- */}
+        <div className="mb-8 inline-block border-2 border-dashed border-[#FDF8E7]/30 p-4">
+          <p className="text-[10px] font-black uppercase tracking-widest text-[#FDF8E7]/60 mb-2">
+            OFFICIAL SUPPORT DESK
+          </p>
+          <a 
+            href="mailto:tutor49.official@gmail.com" 
+            className="text-sm md:text-base font-black tracking-widest hover:text-[#f0e4cc] transition-colors border-b-2 border-[#FDF8E7] pb-1"
+          >
+            TUTOR49.OFFICIAL@GMAIL.COM
+          </a>
+        </div>
+        {/* ------------------------------------ */}
+
+        <p className="mb-8 font-bold uppercase tracking-widest text-xs opacity-70">
+          © 2026. Empowering Students in Lucknow.
+        </p>
         
         <div className="flex flex-col sm:flex-row justify-center gap-6 text-xs font-black uppercase tracking-widest">
           <Link to="/terms" className="hover:text-[#f0e4cc] hover:underline transition-colors">Terms & Conditions</Link>

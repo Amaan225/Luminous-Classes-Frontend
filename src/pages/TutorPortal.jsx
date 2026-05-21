@@ -240,7 +240,7 @@ function TutorPortal() {
 
                     <div className="flex justify-between items-center mt-2">
                       <p className="text-[10px] uppercase font-bold opacity-60 max-w-[150px] leading-tight">
-                        Verified requirement. Unlock for direct WhatsApp.
+                        Verified requirement. Unlock for direct Call.
                       </p>
                       <button 
                         onClick={() => {
