@@ -4,90 +4,128 @@ import { GraduationCap, Wallet, Zap } from 'lucide-react';
 
 function LandingPage() {
   return (
-    <div className="font-sans min-h-screen">
+    // FULL PAGE VINTAGE WRAPPER
+    <div className="min-h-screen bg-[#FDF8E7] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7]">
       
       {/* ========================================== */}
       {/* 1. THE HERO SECTION (The Hook)               */}
       {/* ========================================== */}
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 relative border-b border-gray-200">
-        <h1 className="text-5xl md:text-7xl text-slate-800 bg-gradient-to-r from-yellow-500 to-white mb-4 tracking-tight text-center font-extrabold">
-          Tuto₹<span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-700 "> 49</span>
+      <div className="min-h-[90vh] flex flex-col items-center justify-center p-4 relative border-b-8 border-double border-[#2C1810]">
+        
+        {/* Vintage Top Label */}
+        <div className="border-4 border-[#2C1810] px-4 py-1 mb-8 bg-[#f0e4cc] transform -rotate-2 shadow-[2px_2px_0px_rgba(44,24,16,1)]">
+          <span className="font-black uppercase tracking-widest text-xs"> LUCKNOW'S DIRECT NETWORK</span>
+        </div>
+
+        <h1 
+          className="text-7xl md:text-9xl text-[#2C1810] mb-6 tracking-tighter text-center font-black uppercase"
+          style={{ textShadow: '6px 6px 0px rgba(0,0,0,0.15)' }}
+        >
+          TUTO₹49
         </h1>
-        <p className="text-xl md:text-2xl text-gray-600 mb-12 text-center max-w-2xl font-light">
-          Connecting dedicated parents with verified, top-tier university tutors in the area.
+        
+        <p className="text-sm md:text-base text-[#2C1810]/80 mb-12 text-center max-w-2xl font-bold uppercase tracking-widest leading-relaxed">
+          Connecting dedicated parents with verified, top-tier university tutors in the area. No hidden agencies.
         </p>
         
-        <div className="flex flex-col md:flex-row gap-6 w-full max-w-3xl justify-center z-10">
-          <Link to="/parent" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-center py-6 px-8 rounded-2xl shadow-lg transition duration-300 transform hover:-translate-y-1">
-            <h2 className="text-2xl font-bold mb-2">I am a Parent</h2>
-            <p className="text-blue-100 text-sm">Post a requirement and find verified tutors instantly.</p>
+        <div className="flex flex-col md:flex-row gap-6 w-full max-w-4xl justify-center z-10 px-4">
+          {/* Parent Button (Dark Theme) */}
+          <Link 
+            to="/parent" 
+            className="flex-1 bg-[#2C1810] text-[#FDF8E7] border-4 border-[#2C1810] text-center py-6 px-8 shadow-[8px_8px_0px_rgba(44,24,16,1)] transition-all duration-200 hover:translate-y-1 hover:shadow-[4px_4px_0px_rgba(44,24,16,1)] group"
+          >
+            <h2 className="text-2xl font-black uppercase tracking-widest mb-2 group-hover:scale-105 transition-transform">I am a Parent</h2>
+            <p className="text-[#FDF8E7]/70 text-xs font-bold uppercase tracking-wider">Post a requirement instantly.</p>
           </Link>
 
-          <Link to="/tutor" className="flex-1 bg-white hover:bg-gray-50 text-slate-800 border-2 border-blue-500 text-center py-6 px-8 rounded-2xl shadow-lg transition duration-300 transform hover:-translate-y-1">
-            <h2 className="text-2xl font-bold mb-2">I am a Tuto₹</h2>
-            <p className="text-gray-500 text-sm">Browse local jobs and apply directly to parents.</p>
+          {/* Tutor Button (Light Theme) */}
+          <Link 
+            to="/tutor" 
+            className="flex-1 bg-[#FDF8E7] text-[#2C1810] border-4 border-[#2C1810] text-center py-6 px-8 shadow-[8px_8px_0px_rgba(44,24,16,1)] transition-all duration-200 hover:bg-[#f0e4cc] hover:translate-y-1 hover:shadow-[4px_4px_0px_rgba(44,24,16,1)] group"
+          >
+            <h2 className="text-2xl font-black uppercase tracking-widest mb-2 group-hover:scale-105 transition-transform">I am a Tuto₹</h2>
+            <p className="text-[#2C1810]/70 text-xs font-bold uppercase tracking-wider">Browse verified local jobs.</p>
           </Link>
         </div>
 
-        <div className="text-center mt-8 z-10">
-          <Link to="/register" className="text-blue-600 hover:text-blue-800 hover:underline font-medium transition">
+        <div className="text-center mt-12 z-10">
+          <Link 
+            to="/register" 
+            className="inline-block border-b-4 border-[#2C1810] text-[#2C1810] hover:bg-[#2C1810] hover:text-[#FDF8E7] font-black uppercase tracking-widest transition-colors py-1 px-2"
+          >
             New Tutor? Register Here First
           </Link>
         </div>
 
         {/* Scroll down indicator */}
-        <div className="absolute bottom-8 animate-bounce text-gray-400 hidden md:block">
-          ↓ Scroll to learn more ↓
+        <div className="absolute bottom-8 font-black uppercase tracking-widest text-[#2C1810]/40 text-xs hidden md:block">
+          ↓ Scroll for details ↓
         </div>
       </div>
 
       {/* ========================================== */}
       {/* 2. THE VALUE PROPOSITION (The Details)       */}
       {/* ========================================== */}
-      <div className="max-w-6xl mx-auto px-6 py-24">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-800 mb-4">
-            A <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600'>Smarter</span> Way to Learn
+      <div className="max-w-7xl mx-auto px-6 py-24">
+        
+        <div className="text-center mb-20">
+          <h2 className="text-4xl md:text-6xl font-black text-[#2C1810] mb-6 uppercase tracking-widest inline-block border-b-8 border-[#2C1810] pb-2">
+            A Smarter Way
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto py-10">
+          <p className="text-sm md:text-base font-bold uppercase tracking-widest text-[#2C1810]/70 max-w-2xl mx-auto leading-relaxed mt-4">
             We stripped away the heavy agency fees to create a direct, transparent connection between great students and great teachers.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
           {/* Detail Card 1 */}
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-blue-500 text-center hover:shadow-md transition">
-            <GraduationCap className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-slate-800 mb-3">100% Verified Tutors</h3>
-            <p className="text-gray-600 leading-relaxed">Every tutor on our platform is a rigorously vetted university student. We check college IDs manually so you can trust who is teaching your child.</p>
+          <div className="bg-[#f0e4cc] p-8 border-4 border-[#2C1810] relative shadow-[8px_8px_0px_rgba(44,24,16,1)] hover:-translate-y-2 hover:shadow-[12px_12px_0px_rgba(44,24,16,1)] transition-all duration-300">
+            <div className="absolute -top-5 -left-5 bg-[#FDF8E7] border-4 border-[#2C1810] p-3 shadow-[4px_4px_0px_rgba(44,24,16,1)]">
+              <GraduationCap className="w-8 h-8 text-[#2C1810]" strokeWidth={2.5} />
+            </div>
+            <h3 className="text-xl font-black uppercase tracking-widest text-[#2C1810] mb-4 mt-4">100% Verified</h3>
+            <p className="text-sm font-bold uppercase tracking-wider leading-relaxed text-[#2C1810]/80">
+              Every tutor on our platform is a rigorously vetted university student. We check IDs so you can trust who is teaching.
+            </p>
           </div>
 
           {/* Detail Card 2 */}
-          <div className="bg-blue-500 p-8 rounded-2xl shadow-sm border text-center hover:shadow-md transition">
-            <Wallet className="w-16 h-16 text-white mx-auto mb-4" /> {/* Changed to white for better contrast on blue background */}
-            <h3 className="text-xl font-bold text-white mb-3">Zero Agency Fees</h3>
-            <p className="text-white leading-relaxed">Traditional agencies take up to 50% of a teacher's salary. We don't. Tutors keep what they earn, which means parents get highly motivated educators.</p>
+          <div className="bg-[#2C1810] p-8 border-4 border-[#2C1810] relative shadow-[8px_8px_0px_rgba(44,24,16,1)] hover:-translate-y-2 hover:shadow-[12px_12px_0px_rgba(44,24,16,1)] transition-all duration-300">
+            <div className="absolute -top-5 -left-5 bg-[#FDF8E7] border-4 border-[#2C1810] p-3 shadow-[4px_4px_0px_rgba(44,24,16,1)]">
+              <Wallet className="w-8 h-8 text-[#2C1810]" strokeWidth={2.5} />
+            </div>
+            <h3 className="text-xl font-black uppercase tracking-widest text-[#FDF8E7] mb-4 mt-4">Zero Fees</h3>
+            <p className="text-sm font-bold uppercase tracking-wider leading-relaxed text-[#FDF8E7]/80">
+              Agencies take up to 50% of a teacher's salary. We don't. Tutors keep what they earn, meaning you get motivated educators.
+            </p>
           </div>
 
           {/* Detail Card 3 */}
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-blue-500 text-center hover:shadow-md transition">
-            <Zap className="w-16 h-16 text-amber-500 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-slate-800 mb-3">Instant Connections</h3>
-            <p className="text-gray-600 leading-relaxed">No endless waiting or middleman delays. Parents post a job, tutors apply, and you connect instantly via WhatsApp to discuss details.</p>
+          <div className="bg-[#f0e4cc] p-8 border-4 border-[#2C1810] relative shadow-[8px_8px_0px_rgba(44,24,16,1)] hover:-translate-y-2 hover:shadow-[12px_12px_0px_rgba(44,24,16,1)] transition-all duration-300">
+            <div className="absolute -top-5 -left-5 bg-[#FDF8E7] border-4 border-[#2C1810] p-3 shadow-[4px_4px_0px_rgba(44,24,16,1)]">
+              <Zap className="w-8 h-8 text-[#2C1810]" strokeWidth={2.5} />
+            </div>
+            <h3 className="text-xl font-black uppercase tracking-widest text-[#2C1810] mb-4 mt-4">Instant Access</h3>
+            <p className="text-sm font-bold uppercase tracking-wider leading-relaxed text-[#2C1810]/80">
+              No endless waiting. Parents post a job, tutors apply, and you connect instantly via WhatsApp to discuss details.
+            </p>
           </div>
+
         </div>
       </div>
 
-     {/* ========================================== */}
+      {/* ========================================== */}
       {/* 3. THE FOOTER                                */}
       {/* ========================================== */}
-      <footer className="text-slate-500 py-8 text-center border-t border-slate-200 mt-12 bg-white">
-        <p className="mb-2 font-medium">© 2026 Tutor Kart. Empowering Students.</p>
-        <div className="flex justify-center gap-6 text-sm">
-          <Link to="/terms" className="hover:text-blue-600 transition">Terms & Conditions</Link>
-          <Link to="/terms" className="hover:text-blue-600 transition">Privacy Policy</Link>
-          <Link to="/terms" className="hover:text-blue-600 transition">Refund Policy</Link>
+      <footer className="bg-[#2C1810] text-[#FDF8E7] py-12 text-center border-t-8 border-[#2C1810]">
+        <h2 className="text-3xl font-black uppercase tracking-widest mb-6">TUTO₹49</h2>
+        <p className="mb-8 font-bold uppercase tracking-widest text-xs opacity-70">© 2026. Empowering Students in Lucknow.</p>
+        
+        <div className="flex flex-col sm:flex-row justify-center gap-6 text-xs font-black uppercase tracking-widest">
+          <Link to="/terms" className="hover:text-[#f0e4cc] hover:underline transition-colors">Terms & Conditions</Link>
+          <Link to="/terms" className="hover:text-[#f0e4cc] hover:underline transition-colors">Privacy Policy</Link>
+          <Link to="/terms" className="hover:text-[#f0e4cc] hover:underline transition-colors">Refund Policy</Link>
         </div>
       </footer>
 

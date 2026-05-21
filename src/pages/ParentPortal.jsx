@@ -32,121 +32,200 @@ function ParentPortal() {
     setSubmittedJob(null); 
   };
 
-  // --- THE CONCIERGE SUCCESS SCREEN ---
+  // --- THE VINTAGE RECEIPT SUCCESS SCREEN ---
   if (submittedJob) {
     return (
-      <div className="max-w-3xl mx-auto p-8 font-sans mt-10">
-        <div className="bg-white p-10 rounded-2xl shadow-xl border border-gray-100 text-center">
-          <div className="text-green-500 text-6xl mb-6">✓</div>
-          <h3 className="text-3xl font-bold text-slate-800 mb-3">Requirement Posted!</h3>
-          <p className="text-slate-600 mb-8 text-lg">Your job has been securely added to the Tutor Kart network.</p>
-
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8 inline-block min-w-[250px]">
-            <p className="text-sm text-blue-800 font-semibold mb-2">Your Reference ID</p>
-            <p className="text-4xl font-bold text-blue-700 tracking-wider">
-              {submittedJob.displayId || "TK-PENDING"}
-            </p>
-          </div>
-
-          <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 text-sm text-slate-600 mb-8">
-            <p className="font-semibold text-slate-800 mb-2 text-base">Need to make changes?</p>
-            <p>To edit details, update the salary, or close this listing once you hire a tutor, simply WhatsApp our Admin team at <span className="font-bold text-slate-900">+91 7007112372</span> with your Reference ID.</p>
-          </div>
+      <div className="min-h-screen bg-[#FDF8E7] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7] p-8">
+        <div className="max-w-2xl mx-auto mt-10">
           
-          <button 
-            onClick={handleReset} 
-            className="px-8 py-3 bg-slate-900 text-white font-semibold rounded-xl hover:bg-slate-800 transition shadow-md"
-          >
-            Post Another Requirement
-          </button>
+          <div className="bg-[#f0e4cc] p-10 border-4 border-[#2C1810] shadow-[12px_12px_0px_rgba(44,24,16,1)] text-center relative">
+            
+            {/* Vintage "Stamp" */}
+            <div className="absolute -top-6 -right-6 w-24 h-24 border-4 border-[#2C1810] rounded-full flex items-center justify-center bg-[#FDF8E7] transform rotate-12 shadow-[4px_4px_0px_rgba(44,24,16,1)]">
+              <span className="font-black uppercase tracking-widest text-[#2C1810] text-sm text-center leading-tight">
+                VERIFIED<br/>ENTRY
+              </span>
+            </div>
+
+            <h3 className="text-4xl font-black uppercase tracking-widest text-[#2C1810] mb-4 border-b-4 border-dashed border-[#2C1810] pb-4 inline-block">
+              Requirement Posted
+            </h3>
+            <p className="text-[#2C1810]/80 font-bold uppercase tracking-widest text-sm mb-10 mt-4">
+              Your job has been securely added to the Tutor49 network.
+            </p>
+
+            {/* Ticket Stub Style ID Box */}
+            <div className="bg-[#FDF8E7] border-4 border-[#2C1810] p-6 mb-10 inline-block min-w-[250px] shadow-[6px_6px_0px_rgba(44,24,16,1)]">
+              <p className="text-xs font-black uppercase tracking-widest text-[#2C1810]/70 mb-2">Official Reference ID</p>
+              <p className="text-5xl font-black text-[#2C1810] tracking-[0.1em]">
+                {submittedJob.displayId || "TK-PNDG"}
+              </p>
+            </div>
+
+            <div className="bg-[#FDF8E7] border-4 border-[#2C1810] p-6 text-sm text-[#2C1810] mb-10 text-left relative">
+              <span className="absolute -top-3 left-4 bg-[#f0e4cc] px-2 font-black uppercase tracking-widest text-xs border-2 border-[#2C1810]">
+                Admin Notice
+              </span>
+              <p className="font-black uppercase tracking-widest mb-2 text-base mt-2">Need to make changes?</p>
+              <p className="font-bold uppercase tracking-wider leading-relaxed text-xs opacity-80">
+                To edit details, update the salary, or close this listing once you hire a tutor, simply WhatsApp our Admin team at <span className="font-black border-b-2 border-[#2C1810]">+91 7007112372</span> with your Reference ID.
+              </p>
+            </div>
+            
+            <button 
+              onClick={handleReset} 
+              className="px-8 py-4 bg-[#2C1810] text-[#FDF8E7] font-black uppercase tracking-widest border-4 border-[#2C1810] hover:bg-[#FDF8E7] hover:text-[#2C1810] transition-colors shadow-[6px_6px_0px_rgba(44,24,16,1)] hover:translate-y-px hover:shadow-[3px_3px_0px_rgba(44,24,16,1)]"
+            >
+              Post Another Requirement
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
-  // --- THE WARM-UP FORM UI ---
+  // --- THE VINTAGE FORM UI ---
   return (
-    <div className="max-w-6xl mx-auto p-6 md:p-12 font-sans">
-      <button onClick={() => navigate('/')} className="text-blue-600 hover:underline mb-8 font-semibold flex items-center">
-        &larr; Back to Home
-      </button>
-
-      <div className="grid md:grid-cols-2 gap-12 items-start">
+    <div className="min-h-screen bg-[#FDF8E7] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7] p-4 md:p-8">
+      <div className="max-w-6xl mx-auto">
         
-        {/* LEFT COLUMN: The Trust Content */}
-        <div className="space-y-6 md:pr-8">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">
-            Find the perfect <span className="text-blue-600">home tutor</span> for your child.
-          </h1>
-          <p className="text-lg text-slate-600 leading-relaxed">
-            Tutor Kart connects families in Lucknow with bright, verified university students who are passionate about teaching. Skip the expensive agencies and hire top-tier talent directly.
-          </p>
-          
-          <div className="space-y-6 pt-6">
-            <div className="flex items-start">
-              <div className="flex-shrink-0 mt-1 bg-green-100 p-1.5 rounded-full">
-                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-              </div>
-              <div className="ml-4">
-                <h4 className="text-xl font-bold text-slate-800">Verified Tutors</h4>
-                <p className="text-slate-600 mt-1">We rigorously screen students from top local colleges to ensure quality, knowledge, and safety.</p>
-              </div>
-            </div>
-            
-            <div className="flex items-start">
-              <div className="flex-shrink-0 mt-1 bg-green-100 p-1.5 rounded-full">
-                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-              </div>
-              <div className="ml-4">
-                <h4 className="text-xl font-bold text-slate-800">Zero Agency Fees</h4>
-                <p className="text-slate-600 mt-1">You pay the tutor directly. We do not charge parents any hidden commissions or middleman fees.</p>
-              </div>
-            </div>
+        <button 
+          onClick={() => navigate('/')} 
+          className="mb-8 px-5 py-2 border-2 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] hover:bg-[#2C1810] hover:text-[#FDF8E7] transition-colors shadow-[2px_2px_0px_rgba(44,24,16,1)] hover:translate-y-px hover:shadow-[1px_1px_0px_rgba(44,24,16,1)]"
+        >
+          &larr; Back to Home
+        </button>
 
-            <div className="flex items-start">
-              <div className="flex-shrink-0 mt-1 bg-green-100 p-1.5 rounded-full">
-                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          
+          {/* LEFT COLUMN: The Trust Content */}
+          <div className="space-y-8 md:pr-8">
+            <h1 
+              className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-[#2C1810] leading-none"
+              style={{ textShadow: '4px 4px 0px rgba(0,0,0,0.1)' }}
+            >
+              FIND THE <br/> PERFECT <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2C1810] to-[#5c3726] border-b-8 border-[#2C1810]">TUTOR.</span>
+            </h1>
+            <p className="text-sm font-bold uppercase tracking-widest text-[#2C1810]/80 leading-relaxed border-l-4 border-[#2C1810] pl-4">
+              Tutor49 connects families in Lucknow with bright, verified university students who are passionate about teaching. Skip the expensive agencies and hire top-tier talent directly.
+            </p>
+            
+            <div className="space-y-8 pt-6">
+              {/* Feature 1 */}
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
+                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Verified Tutors</h4>
+                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">We rigorously screen students from top local colleges to ensure quality, knowledge, and safety.</p>
+                </div>
               </div>
-              <div className="ml-4">
-                <h4 className="text-xl font-bold text-slate-800">Fast Matching</h4>
-                <p className="text-slate-600 mt-1">Post your requirement below, and start receiving interest from qualified tutors within 24 hours.</p>
+              
+              {/* Feature 2 */}
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
+                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Zero Agency Fees</h4>
+                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">You pay the tutor directly. We do not charge parents any hidden commissions or middleman fees.</p>
+                </div>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
+                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Fast Matching</h4>
+                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">Post your requirement below, and start receiving interest from qualified tutors within 24 hours.</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* RIGHT COLUMN: The Form */}
-        <div className="bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
-          <h3 className="text-2xl font-bold text-slate-800 mb-6">Post Your Requirement</h3>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <input type="text" name="parentName" placeholder="Your Name" value={formData.parentName} onChange={handleChange} required className="p-3 rounded-lg border focus:ring-2 focus:ring-blue-400 bg-gray-50 outline-none transition" />
+          {/* RIGHT COLUMN: The Brutalist Form */}
+          <div className="bg-[#f0e4cc] p-8 md:p-10 border-4 border-[#2C1810] shadow-[12px_12px_0px_rgba(44,24,16,1)]">
+            <h3 className="text-3xl font-black uppercase tracking-widest text-[#2C1810] mb-8 border-b-4 border-[#2C1810] pb-4 inline-block">
+              Post Requirement
+            </h3>
             
-            <div className="grid grid-cols-2 gap-4">
-              <input type="text" name="subject" placeholder="Subject (e.g., Math)" value={formData.subject} onChange={handleChange} required className="p-3 rounded-lg border focus:ring-2 focus:ring-blue-400 bg-gray-50 outline-none transition" />
-              <input type="text" name="grade" placeholder="Grade (e.g., 10th)" value={formData.grade} onChange={handleChange} required className="p-3 rounded-lg border focus:ring-2 focus:ring-blue-400 bg-gray-50 outline-none transition" />
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <input type="text" name="location" placeholder="Your Location" value={formData.location} onChange={handleChange} required className="p-3 rounded-lg border focus:ring-2 focus:ring-blue-400 bg-gray-50 outline-none transition" />
-              <input type="number" name="salary" placeholder="Salary Offered (₹)" value={formData.salary} onChange={handleChange} required className="p-3 rounded-lg border focus:ring-2 focus:ring-blue-400 bg-gray-50 outline-none transition" />
-            </div>
-            
-            <input type="tel" name="contactNumber" placeholder="Contact Number" value={formData.contactNumber} onChange={handleChange} required className="p-3 rounded-lg border focus:ring-2 focus:ring-blue-400 bg-gray-50 outline-none transition" />
-            <textarea name="requirements" placeholder="Any extra requirements or preferences?" value={formData.requirements} onChange={handleChange} className="p-3 rounded-lg border focus:ring-2 focus:ring-blue-400 h-28 resize-none bg-gray-50 outline-none transition"></textarea>
-            
-            <button 
-              type="submit" 
-              disabled={isSubmitting}
-              className={`mt-2 p-4 text-white font-bold rounded-xl shadow-md transition ${
-                isSubmitting ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 hover:shadow-lg'
-              }`}
-            >
-              {isSubmitting ? 'Posting Securely...' : 'Publish Requirement'}
-            </button>
-            <p className="text-xs text-center text-slate-500 mt-2">Your contact details are encrypted and securely stored.</p>
-          </form>
-        </div>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              
+              <div className="relative">
+                <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Parent Name</label>
+                <input type="text" name="parentName" placeholder="ENTER YOUR NAME" value={formData.parentName} onChange={handleChange} required 
+                  className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
+                />
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="relative">
+                  <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Subject</label>
+                  <input type="text" name="subject" placeholder="E.G. MATH" value={formData.subject} onChange={handleChange} required 
+                    className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
+                  />
+                </div>
+                <div className="relative">
+                  <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Grade</label>
+                  <input type="text" name="grade" placeholder="E.G. 10TH" value={formData.grade} onChange={handleChange} required 
+                    className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="relative">
+                  <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Location</label>
+                  <input type="text" name="location" placeholder="YOUR AREA" value={formData.location} onChange={handleChange} required 
+                    className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
+                  />
+                </div>
+                <div className="relative">
+                  <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Salary (₹)</label>
+                  <input type="number" name="salary" placeholder="AMOUNT" value={formData.salary} onChange={handleChange} required 
+                    className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
+                  />
+                </div>
+              </div>
+              
+              <div className="relative">
+                <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Contact Number</label>
+                <input type="tel" name="contactNumber" placeholder="10-DIGIT NUMBER" value={formData.contactNumber} onChange={handleChange} required 
+                  className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
+                />
+              </div>
 
+              <div className="relative">
+                <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Extra Requirements</label>
+                <textarea name="requirements" placeholder="ANY EXTRA REQUIREMENTS OR PREFERENCES?" value={formData.requirements} onChange={handleChange} 
+                  className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)] h-32 resize-none"
+                ></textarea>
+              </div>
+              
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className={`mt-4 p-5 border-4 border-[#2C1810] font-black uppercase tracking-widest transition-all shadow-[6px_6px_0px_rgba(44,24,16,1)] ${
+                  isSubmitting 
+                  ? 'bg-[#2C1810]/50 text-[#FDF8E7] cursor-not-allowed shadow-none translate-y-[6px]' 
+                  : 'bg-[#2C1810] text-[#FDF8E7] hover:bg-[#FDF8E7] hover:text-[#2C1810] hover:translate-y-px hover:shadow-[3px_3px_0px_rgba(44,24,16,1)]'
+                }`}
+              >
+                {isSubmitting ? 'TRANSMITTING...' : 'PUBLISH REQUIREMENT'}
+              </button>
+              
+              <div className="bg-[#FDF8E7] border-2 border-dashed border-[#2C1810] p-3 text-center mt-2">
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#2C1810]/70">
+                  🔒 Data encrypted. Only verified tutors can unlock your contact.
+                </p>
+              </div>
+            </form>
+          </div>
+
+        </div>
       </div>
     </div>
   );
