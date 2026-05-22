@@ -14,14 +14,18 @@ function AdminPortal() {
   const [applications, setApplications] = useState([]);
   const [tutors, setTutors] = useState([]);
 
+  // --- NEW: SEARCH STATE ---
+  const [searchQuery, setSearchQuery] = useState('');
+
   // --- INJECTION FORM STATE ---
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [newLeadForm, setNewLeadForm] = useState({
+    title: '', 
     parentName: '', subject: '', grade: '', location: '', salary: '', contactNumber: '', requirements: '', 
     leadType: 'classic' 
   });
 
-  // --- NEW: INLINE EDIT STATE ---
+  // --- INLINE EDIT STATE ---
   const [editingJobId, setEditingJobId] = useState(null);
   const [editLeadForm, setEditLeadForm] = useState({});
 
@@ -76,7 +80,7 @@ function AdminPortal() {
     try {
       await axios.post('https://luminous-classes-backend.onrender.com/api/jobs', newLeadForm);
       alert("Lead Successfully Injected!");
-      setNewLeadForm({ parentName: '', subject: '', grade: '', location: '', salary: '', contactNumber: '', requirements: '', leadType: 'classic' });
+      setNewLeadForm({ title: '', parentName: '', subject: '', grade: '', location: '', salary: '', contactNumber: '', requirements: '', leadType: 'classic' });
       fetchJobs(); 
     } catch (error) {
       console.error("Error creating lead:", error);
@@ -86,10 +90,10 @@ function AdminPortal() {
     }
   };
 
-  // --- NEW: EDIT LEAD FUNCTIONS ---
+  // --- EDIT LEAD FUNCTIONS ---
   const startEditing = (job) => {
     setEditingJobId(job._id);
-    setEditLeadForm({ ...job }); // Pre-fill the form with existing data
+    setEditLeadForm({ ...job }); 
   };
 
   const handleEditChange = (e) => {
@@ -102,12 +106,21 @@ function AdminPortal() {
       await axios.put(`https://luminous-classes-backend.onrender.com/api/jobs/${id}`, editLeadForm);
       alert("Record successfully amended.");
       setEditingJobId(null);
-      fetchJobs(); // Refresh the board
+      fetchJobs(); 
     } catch (error) {
       console.error("Error updating lead:", error);
-      alert("Failed to update record. Ensure your backend has a PUT route for jobs.");
+      alert("Failed to update record.");
     }
   };
+
+  // --- FILTER LOGIC FOR THE SEARCH BAR ---
+  const filteredJobs = jobs.filter(job => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    const displayIdMatch = job.displayId && job.displayId.toLowerCase().includes(query);
+    const parentNameMatch = job.parentName && job.parentName.toLowerCase().includes(query);
+    return displayIdMatch || parentNameMatch;
+  });
 
   const pendingTutors = tutors.filter(t => t.status === 'pending');
 
@@ -174,13 +187,21 @@ function AdminPortal() {
           <h2 className="text-2xl font-black uppercase tracking-widest text-[#2C1810] mb-6 border-b-2 border-[#2C1810] pb-2 inline-block">Inject New Lead</h2>
           
           <form onSubmit={handleCreateLead} className="flex flex-col gap-5">
+            <input 
+              type="text" 
+              name="title" 
+              placeholder="CUSTOM TITLE (E.g. SCHOOL TEACHER) - LEAVE BLANK FOR 'STUDENT LEAD'" 
+              value={newLeadForm.title} 
+              onChange={handleLeadChange} 
+              className="w-full p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" 
+            />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <input type="text" name="parentName" placeholder="PARENT NAME" value={newLeadForm.parentName} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
+              <input type="text" name="parentName" placeholder="CLIENT / PARENT NAME" value={newLeadForm.parentName} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
               <input type="text" name="contactNumber" placeholder="CONTACT NUMBER" value={newLeadForm.contactNumber} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <input type="text" name="subject" placeholder="SUBJECT" value={newLeadForm.subject} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
-              <input type="text" name="grade" placeholder="GRADE" value={newLeadForm.grade} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
+              <input type="text" name="grade" placeholder="GRADE / LEVEL" value={newLeadForm.grade} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
               <input type="text" name="salary" placeholder="SALARY (₹)" value={newLeadForm.salary} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
             </div>
             
@@ -189,13 +210,13 @@ function AdminPortal() {
               <div className="relative">
                 <label className="absolute -top-3 left-2 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Commission Structure</label>
                 <select name="leadType" value={newLeadForm.leadType} onChange={handleLeadChange} className="w-full p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none cursor-pointer">
-                  <option value="classic">CLASSIC - 25% PARTNER AGENCY FEE</option>
+                  <option value="classic">CLASSIC - 50% PARTNER AGENCY FEE</option>
                   <option value="premium">PREMIUM - 0% ORGANIC DIRECT LEAD</option>
                 </select>
               </div>
             </div>
 
-            <textarea name="requirements" placeholder="INTERNAL NOTES & PARENT REQUIREMENTS" value={newLeadForm.requirements} onChange={handleLeadChange} className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white h-24 resize-none"></textarea>
+            <textarea name="requirements" placeholder="INTERNAL NOTES & REQUIREMENTS" value={newLeadForm.requirements} onChange={handleLeadChange} className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white h-24 resize-none"></textarea>
             
             <button type="submit" disabled={isSubmitting} className="bg-[#2C1810] text-[#FDF8E7] font-black uppercase tracking-widest p-4 border-4 border-[#2C1810] shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:translate-y-px transition-all">
               {isSubmitting ? 'UPLOADING...' : 'INJECT LEAD INTO SYSTEM'}
@@ -227,14 +248,36 @@ function AdminPortal() {
           )}
         </div>
 
-        {/* SECTION 3: ACTIVE JOBS BOARD */}
+        {/* SECTION 3: ACTIVE JOBS BOARD WITH SEARCH BAR */}
         <div>
-          <h2 className="text-2xl font-black uppercase tracking-widest text-[#2C1810] mb-6">Active Job Ledger ({jobs.length})</h2>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 border-b-4 border-[#2C1810] pb-6 gap-4">
+            <h2 className="text-2xl font-black uppercase tracking-widest text-[#2C1810]">
+              Active Job Ledger ({filteredJobs.length})
+            </h2>
+            
+            {/* --- NEW ADMIN SEARCH VAULT --- */}
+            <div className="w-full md:w-80 relative">
+              <label className="absolute -top-3 left-2 bg-[#FDF8E7] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810] z-10">
+                Search Vault
+              </label>
+              <input 
+                type="text" 
+                placeholder="ENTER TK-ID OR CLIENT NAME..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full p-3 border-4 border-[#2C1810] bg-white font-black uppercase tracking-wider focus:outline-none focus:bg-[#f0e4cc] transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]"
+              />
+            </div>
+            {/* -------------------------------- */}
+          </div>
+
           <div className="flex flex-col gap-8">
-            {jobs.length === 0 ? (
-              <div className="bg-[#FDF8E7] p-6 border-4 border-dashed border-[#2C1810]/30 text-center font-bold uppercase tracking-widest text-[#2C1810]/50">No active jobs in the database.</div>
+            {filteredJobs.length === 0 ? (
+              <div className="bg-[#FDF8E7] p-6 border-4 border-dashed border-[#2C1810]/30 text-center font-bold uppercase tracking-widest text-[#2C1810]/50">
+                {searchQuery ? "No records match your search." : "No active jobs in the database."}
+              </div>
             ) : (
-              jobs.map((job) => {
+              filteredJobs.map((job) => {
                 const jobApps = applications.filter(app => app.jobId === job._id);
                 const isPremium = job.leadType === 'premium' || !job.leadType;
 
@@ -252,23 +295,33 @@ function AdminPortal() {
                         <h3 className="text-2xl font-black uppercase tracking-widest text-[#2C1810] mb-6 border-b-2 border-dashed border-[#2C1810] pb-2">Amend Record: {job.displayId}</h3>
                         
                         <form onSubmit={(e) => handleUpdateLead(e, job._id)} className="flex flex-col gap-4">
+                          
+                          <input 
+                            type="text" 
+                            name="title" 
+                            placeholder="LEAD TITLE" 
+                            value={editLeadForm.title || ''} 
+                            onChange={handleEditChange} 
+                            className="w-full p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" 
+                          />
+
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <input type="text" name="parentName" value={editLeadForm.parentName} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
-                            <input type="text" name="contactNumber" value={editLeadForm.contactNumber} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
+                            <input type="text" name="parentName" placeholder="CLIENT NAME" value={editLeadForm.parentName} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
+                            <input type="text" name="contactNumber" placeholder="CONTACT" value={editLeadForm.contactNumber} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
                           </div>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <input type="text" name="subject" value={editLeadForm.subject} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
-                            <input type="text" name="grade" value={editLeadForm.grade} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
-                            <input type="text" name="salary" value={editLeadForm.salary} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
+                            <input type="text" name="subject" placeholder="SUBJECT" value={editLeadForm.subject} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
+                            <input type="text" name="grade" placeholder="GRADE" value={editLeadForm.grade} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
+                            <input type="text" name="salary" placeholder="SALARY" value={editLeadForm.salary} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
                           </div>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-                            <input type="text" name="location" value={editLeadForm.location} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
+                            <input type="text" name="location" placeholder="LOCATION" value={editLeadForm.location} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
                             <select name="leadType" value={editLeadForm.leadType || 'premium'} onChange={handleEditChange} className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none cursor-pointer">
                               <option value="classic">CLASSIC - 50% PARTNER AGENCY FEE</option>
                               <option value="premium">PREMIUM - 0% ORGANIC DIRECT LEAD</option>
                             </select>
                           </div>
-                          <textarea name="requirements" value={editLeadForm.requirements || ''} onChange={handleEditChange} className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none h-24 resize-none"></textarea>
+                          <textarea name="requirements" placeholder="REQUIREMENT DETAILS" value={editLeadForm.requirements || ''} onChange={handleEditChange} className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none h-24 resize-none"></textarea>
                           
                           <div className="flex gap-4 mt-2">
                             <button type="button" onClick={() => setEditingJobId(null)} className="flex-1 bg-[#FDF8E7] text-[#2C1810] py-3 font-black uppercase tracking-widest border-4 border-[#2C1810] hover:bg-[#2C1810] hover:text-[#FDF8E7] transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)] hover:translate-y-px hover:shadow-[2px_2px_0px_rgba(44,24,16,1)]">
@@ -288,11 +341,11 @@ function AdminPortal() {
                           <div className="pr-16">
                             <h2 className="text-3xl font-black uppercase tracking-widest text-[#2C1810]">
                               {job.displayId && <span className="opacity-50 mr-3">[{job.displayId}]</span>}
-                              {job.subject} - {job.grade}
+                              {job.title || "STUDENT LEAD"}
                             </h2>
                             <p className="font-bold uppercase tracking-widest text-sm mt-2 opacity-80">📍 {job.location} | 💰 ₹{job.salary}</p>
                             <p className="font-black uppercase tracking-widest text-xs mt-3 text-blue-900 bg-blue-100 px-2 py-1 inline-block border border-blue-900">
-                              PARENT: {job.parentName} ({job.contactNumber})
+                              CLIENT: {job.parentName} ({job.contactNumber})
                             </p>
                           </div>
                           

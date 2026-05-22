@@ -196,16 +196,16 @@ function TutorPortal() {
               const displayId = job.displayId || job._id.substring(0, 6).toUpperCase();
               
               return (
-                // Replaced drop-shadow-xl with a hard box-shadow to prevent shadow-bleed under the punch holes
                 <div key={job._id} className="flex w-full shadow-[8px_8px_0px_rgba(0,0,0,0.1)] group hover:-translate-y-1 hover:shadow-[12px_12px_0px_rgba(0,0,0,0.1)] transition-all duration-300 rounded-lg">
                   
                   {/* MAIN TICKET BODY */}
                   <div className="flex-grow bg-[#FDF8E7] text-[#2C1810] p-6 rounded-l-lg border-2 border-r-0 border-[#2C1810] relative">
                     
-                    <div className="flex justify-between items-start mb-4 border-b-2 border-dashed border-[#2C1810] pb-2">
+                    <div className="flex justify-between items-start mb-5 border-b-2 border-dashed border-[#2C1810] pb-3">
                       <div>
+                        {/* --- DYNAMIC TITLE HERE --- */}
                         <h2 className="text-2xl font-black uppercase tracking-widest" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.1)' }}>
-                          STUDENT LEAD
+                          {job.title || "STUDENT LEAD"}
                         </h2>
                         <p className="text-xs font-bold tracking-widest opacity-80 mt-1">TK-{displayId}</p>
                       </div>
@@ -215,33 +215,38 @@ function TutorPortal() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3 mb-4 font-mono text-sm uppercase font-bold">
-                      <div>
-                        <span className="block opacity-50 text-[10px]">Target Level</span>
-                        <span>{job.grade} - {job.subject}</span>
-                      </div>
-                      <div>
-                        <span className="block opacity-50 text-[10px]">Location Zone</span>
-                        <span>📍 {job.location}</span>
+                    <div className="grid grid-cols-2 gap-3 mb-5 font-mono text-sm uppercase font-bold">
+                      {/* --- NEW HIGHLIGHTED DETAIL BOXES --- */}
+                      <div className="bg-[#f0e4cc] p-2.5 rounded border border-[#2C1810]/20 relative mt-2">
+                        <span className="absolute -top-2 left-2 bg-[#FDF8E7] px-1 text-[9px] font-bold uppercase tracking-wider text-[#2C1810]/60">
+                          Target Level
+                        </span>
+                        <span className="block mt-1 leading-snug">{job.grade} - {job.subject}</span>
                       </div>
                       
-                      {/* --- THE NEW SALARY ROW --- */}
+                      <div className="bg-[#f0e4cc] p-2.5 rounded border border-[#2C1810]/20 relative mt-2">
+                        <span className="absolute -top-2 left-2 bg-[#FDF8E7] px-1 text-[9px] font-bold uppercase tracking-wider text-[#2C1810]/60">
+                          Location Zone
+                        </span>
+                        <span className="block mt-1 leading-snug truncate">📍 {job.location}</span>
+                      </div>
+                      {/* ------------------------------------ */}
+                      
                       <div className="col-span-2 flex items-center justify-between border-t-2 border-dashed border-[#2C1810]/30 pt-3 mt-1">
                         <span className="block opacity-60 text-[11px] tracking-widest">Est. Budget</span>
                         <span className="text-lg font-black tracking-wider text-green-600">
                           ₹{job.salary} <span className="text-[10px] opacity-70 tracking-widest font-bold text-black">/ MO</span>
                         </span>
                       </div>
-                      {/* -------------------------- */}
-                      
                     </div>
 
+                    {/* --- UPDATED NOTES LABEL --- */}
                     <div className="bg-[#f0e4cc] p-3 rounded border border-[#2C1810]/20 mb-4 relative min-h-[60px]">
                       <span className="absolute -top-2 left-2 bg-[#FDF8E7] px-1 text-[10px] font-bold uppercase tracking-wider text-[#2C1810]/60">
-                        Parent Notes
+                        Requirement Details
                       </span>
                       <p className="italic text-xs leading-relaxed mt-1">
-                        "{job.requirements || job.parentDescription || "Standard home tuition requirement verified by Tutor49."}"
+                        "{job.requirements || job.parentDescription || "Standard requirement verified by Tutor49."}"
                       </p>
                     </div>
 
@@ -264,27 +269,21 @@ function TutorPortal() {
                   {/* TICKET STUB WITH PUNCH HOLES */}
                   <div className={`w-16 md:w-20 border-2 border-l-2 border-dashed border-[#2C1810] rounded-r-lg flex flex-col justify-center items-center relative transition-colors ${isPremium ? 'bg-[#eef4ea]' : 'bg-[#faebe6]'}`}>
                     
-                    {/* --- THE NEGATIVE SPACE PUNCH HOLES --- */}
-                    {/* Positioned perfectly to overlap the border without shadow bleed */}
                     <div className="absolute -top-[2px] -left-[14px] w-6 h-3 bg-[#f3f1ec] border-b-2 border-l-2 border-r-2 border-[#2C1810] rounded-b-full z-10"></div>
                     <div className="absolute -bottom-[2px] -left-[14px] w-6 h-3 bg-[#f3f1ec] border-t-2 border-l-2 border-r-2 border-[#2C1810] rounded-t-full z-10"></div>
-                    {/* -------------------------------------- */}
 
-                    {/* The Header Stamp */}
                     <div className={`w-full py-2 text-center border-b-2 border-dashed border-[#2C1810] rounded-tr-[6px] ${isPremium ? 'bg-green-800' : 'bg-orange-700'} text-[#FDF8E7]`}>
                       <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest leading-tight px-1">
                         {isPremium ? '0% COMM' : '50% FEE'}
                       </p>
                     </div>
                     
-                    {/* The Vertical Text */}
                     <div className="flex-grow flex items-center justify-center py-4">
                       <h3 className="text-lg md:text-xl font-black tracking-[0.2em] uppercase text-[#2C1810]" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}>
                         {isPremium ? 'PREMIUM' : 'CLASSIC'}
                       </h3>
                     </div>
                     
-                    {/* The Serial Number */}
                     <div className="w-full text-center py-2 border-t-2 border-dashed border-[#2C1810] rounded-br-[6px]">
                       <span className="text-[8px] font-mono font-bold tracking-widest text-[#2C1810]/70">{displayId}</span>
                     </div>
@@ -313,7 +312,7 @@ function TutorPortal() {
                     
                     <div className="bg-[#f0e4cc] border-4 border-[#2C1810] rounded-lg p-6 mb-6 relative">
                       <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#FDF8E7] px-3 py-1 text-xs font-black uppercase tracking-wider text-[#2C1810] border-4 border-[#2C1810]">
-                        Parent Contact
+                        Contact Number
                       </span>
                       <p className="text-3xl font-black text-[#2C1810] tracking-wider mt-3">
                         {unlockedNumber}
@@ -338,7 +337,6 @@ function TutorPortal() {
                   </div>
                 ) : (
                   <>
-                    {/* --- NEW REFUND POLICY SECTION --- */}
                     <div className="bg-[#f0e4cc] border-4 border-[#2C1810] p-5 mb-6 shadow-[4px_4px_0px_rgba(44,24,16,1)]">
                       <h4 className="font-black uppercase tracking-widest text-[#2C1810] text-sm mb-3 border-b-2 border-dashed border-[#2C1810] pb-2">
                         How Our Payment & Refund Works
@@ -350,19 +348,18 @@ function TutorPortal() {
                         </li>
                         <li>
                           <strong className="text-[#2C1810] font-black uppercase">2. What You Get:</strong><br />
-                          This payment gives you the parent’s contact number only. It does not guarantee the tuition.
+                          This payment gives you the contact number only. It does not guarantee the tuition.
                         </li>
                         <li>
                           <strong className="text-[#2C1810] font-black uppercase">3. When You Get The Tuition:</strong><br />
-                          You will get the tuition only after you give a free demo and the parent gives a positive response.
+                          You will get the tuition only after you give a free demo and the client gives a positive response.
                         </li>
                         <li>
                           <strong className="text-[#2C1810] font-black uppercase">4. Refund Policy:</strong><br />
-                          If you contact the parent and they refuse the tuition or do not want a demo, you can apply for a full refund from Tutor49.
+                          If you contact the client and they refuse the tuition or do not want a demo, you can apply for a full refund from Tutor49.
                         </li>
                       </ul>
                     </div>
-                    {/* --------------------------------- */}
 
                     <div className="mb-6">
                       <label className="block text-xs font-black uppercase tracking-wider text-[#2C1810] mb-3">
