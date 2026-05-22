@@ -196,7 +196,9 @@ function TutorPortal() {
               const displayId = job.displayId || job._id.substring(0, 6).toUpperCase();
               
               return (
-                <div key={job._id} className="flex w-full drop-shadow-xl group hover:-translate-y-1 transition-transform duration-300">
+                // Replaced drop-shadow-xl with a hard box-shadow to prevent shadow-bleed under the punch holes
+                <div key={job._id} className="flex w-full shadow-[8px_8px_0px_rgba(0,0,0,0.1)] group hover:-translate-y-1 hover:shadow-[12px_12px_0px_rgba(0,0,0,0.1)] transition-all duration-300 rounded-lg">
+                  
                   {/* MAIN TICKET BODY */}
                   <div className="flex-grow bg-[#FDF8E7] text-[#2C1810] p-6 rounded-l-lg border-2 border-r-0 border-[#2C1810] relative">
                     
@@ -259,11 +261,17 @@ function TutorPortal() {
                     </div>
                   </div>
 
-                  {/* TICKET STUB */}
-                  <div className={`w-16 md:w-20 border-2 border-l-2 border-dashed border-[#2C1810] rounded-r-lg flex flex-col justify-center items-center relative overflow-hidden transition-colors ${isPremium ? 'bg-[#eef4ea]' : 'bg-[#faebe6]'}`}>
+                  {/* TICKET STUB WITH PUNCH HOLES */}
+                  <div className={`w-16 md:w-20 border-2 border-l-2 border-dashed border-[#2C1810] rounded-r-lg flex flex-col justify-center items-center relative transition-colors ${isPremium ? 'bg-[#eef4ea]' : 'bg-[#faebe6]'}`}>
                     
+                    {/* --- THE NEGATIVE SPACE PUNCH HOLES --- */}
+                    {/* Positioned perfectly to overlap the border without shadow bleed */}
+                    <div className="absolute -top-[2px] -left-[14px] w-6 h-3 bg-[#f3f1ec] border-b-2 border-l-2 border-r-2 border-[#2C1810] rounded-b-full z-10"></div>
+                    <div className="absolute -bottom-[2px] -left-[14px] w-6 h-3 bg-[#f3f1ec] border-t-2 border-l-2 border-r-2 border-[#2C1810] rounded-t-full z-10"></div>
+                    {/* -------------------------------------- */}
+
                     {/* The Header Stamp */}
-                    <div className={`w-full py-2 text-center border-b-2 border-dashed border-[#2C1810] ${isPremium ? 'bg-green-800' : 'bg-orange-700'} text-[#FDF8E7]`}>
+                    <div className={`w-full py-2 text-center border-b-2 border-dashed border-[#2C1810] rounded-tr-[6px] ${isPremium ? 'bg-green-800' : 'bg-orange-700'} text-[#FDF8E7]`}>
                       <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest leading-tight px-1">
                         {isPremium ? '0% COMM' : '50% FEE'}
                       </p>
@@ -277,7 +285,7 @@ function TutorPortal() {
                     </div>
                     
                     {/* The Serial Number */}
-                    <div className="w-full text-center py-2 border-t-2 border-dashed border-[#2C1810]">
+                    <div className="w-full text-center py-2 border-t-2 border-dashed border-[#2C1810] rounded-br-[6px]">
                       <span className="text-[8px] font-mono font-bold tracking-widest text-[#2C1810]/70">{displayId}</span>
                     </div>
                   </div>
@@ -287,11 +295,12 @@ function TutorPortal() {
           )}
         </div>
 
+        {/* --- UNLOCK MODAL WITH NEW REFUND POLICY UI --- */}
         {isModalOpen && selectedJob && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2C1810]/80 backdrop-blur-sm p-4">
-            <div className="bg-[#FDF8E7] border-4 border-[#2C1810] rounded-xl shadow-[12px_12px_0px_rgba(0,0,0,0.5)] max-w-md w-full overflow-hidden transform transition-all">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2C1810]/80 backdrop-blur-sm p-4 pt-10 overflow-y-auto">
+            <div className="bg-[#FDF8E7] border-4 border-[#2C1810] rounded-xl shadow-[12px_12px_0px_rgba(0,0,0,0.5)] max-w-lg w-full transform transition-all my-auto">
               
-              <div className="bg-[#2C1810] p-6 text-center text-[#FDF8E7] border-b-4 border-[#2C1810]">
+              <div className="bg-[#2C1810] p-6 text-center text-[#FDF8E7] border-b-4 border-[#2C1810] rounded-t-lg">
                 <h3 className="text-2xl font-black uppercase tracking-widest mb-1">Unlock Lead</h3>
                 <p className="text-[#FDF8E7]/80 text-xs font-bold uppercase">Pay ₹49 to instantly reveal the parent's contact.</p>
               </div>
@@ -329,7 +338,33 @@ function TutorPortal() {
                   </div>
                 ) : (
                   <>
-                    <div className="mb-8">
+                    {/* --- NEW REFUND POLICY SECTION --- */}
+                    <div className="bg-[#f0e4cc] border-4 border-[#2C1810] p-5 mb-6 shadow-[4px_4px_0px_rgba(44,24,16,1)]">
+                      <h4 className="font-black uppercase tracking-widest text-[#2C1810] text-sm mb-3 border-b-2 border-dashed border-[#2C1810] pb-2">
+                        How Our Payment & Refund Works
+                      </h4>
+                      <ul className="text-xs font-bold text-[#2C1810]/80 space-y-3">
+                        <li>
+                          <strong className="text-[#2C1810] font-black uppercase">1. No Extra Charges:</strong><br />
+                          You will not be charged any commission or any other fee after this one-time payment (only applicable for premium leads).
+                        </li>
+                        <li>
+                          <strong className="text-[#2C1810] font-black uppercase">2. What You Get:</strong><br />
+                          This payment gives you the parent’s contact number only. It does not guarantee the tuition.
+                        </li>
+                        <li>
+                          <strong className="text-[#2C1810] font-black uppercase">3. When You Get The Tuition:</strong><br />
+                          You will get the tuition only after you give a free demo and the parent gives a positive response.
+                        </li>
+                        <li>
+                          <strong className="text-[#2C1810] font-black uppercase">4. Refund Policy:</strong><br />
+                          If you contact the parent and they refuse the tuition or do not want a demo, you can apply for a full refund from Tutor49.
+                        </li>
+                      </ul>
+                    </div>
+                    {/* --------------------------------- */}
+
+                    <div className="mb-6">
                       <label className="block text-xs font-black uppercase tracking-wider text-[#2C1810] mb-3">
                         Enter your WhatsApp Number:
                       </label>
