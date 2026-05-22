@@ -107,10 +107,20 @@ function ParentPortal() {
               FIND THE <br/> PERFECT <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2C1810] to-[#5c3726] border-b-8 border-[#2C1810]">TUTOR.</span>
             </h1>
             <p className="text-sm font-bold uppercase tracking-widest text-[#2C1810]/80 leading-relaxed border-l-4 border-[#2C1810] pl-4">
-              Tutor49 connects families in Lucknow with bright, verified university students who are passionate about teaching. Skip the expensive agencies and hire top-tier talent directly.
+              Tutor49 connects families in Lucknow with bright, verified tutors who are passionate about teaching. Skip the expensive agencies and hire top-tier talent directly.
             </p>
             
             <div className="space-y-8 pt-6">
+              {/* Feature 4 (NEW) */}
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
+                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Free Trials</h4>
+                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">GET FREE DEMOS FROM MULTIPLE TUTORS TILL YOU FIND THE PERFECT ONE FOR YOU!</p>
+                </div>
+              </div>
               {/* Feature 1 */}
               <div className="flex items-start">
                 <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
@@ -118,7 +128,7 @@ function ParentPortal() {
                 </div>
                 <div className="ml-5">
                   <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Verified Tutors</h4>
-                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">We rigorously screen students from top local colleges to ensure quality, knowledge, and safety.</p>
+                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">We rigorously screen tutors from top local colleges to ensure quality, knowledge, and safety.</p>
                 </div>
               </div>
               
@@ -143,6 +153,9 @@ function ParentPortal() {
                   <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">Post your requirement below, and start receiving interest from qualified tutors within 24 hours.</p>
                 </div>
               </div>
+
+              
+              
             </div>
           </div>
 
@@ -219,7 +232,7 @@ function ParentPortal() {
               
               <div className="bg-[#FDF8E7] border-2 border-dashed border-[#2C1810] p-3 text-center mt-2">
                 <p className="text-[10px] font-black uppercase tracking-widest text-[#2C1810]/70">
-                  🔒 Data encrypted. Only verified tutors can unlock your contact.
+                   Data encrypted. Only verified tutors can unlock your contact.
                 </p>
               </div>
             </form>
