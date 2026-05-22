@@ -18,11 +18,17 @@ function LandingPage() {
         </div>
 
         <h1 
-          className="text-7xl md:text-9xl text-[#2C1810] mb-6 tracking-tighter text-center font-black uppercase"
-          style={{ textShadow: '6px 6px 0px rgba(0,0,0,0.15)' }}
-        >
-          TUTO₹49
-        </h1>
+  className="text-7xl md:text-9xl text-[#2C1810] mb-6 tracking-tighter text-center font-black uppercase flex justify-center items-baseline"
+  style={{ textShadow: '6px 6px 0px rgba(0,0,0,0.15)' }}
+>
+  <span 
+    className="font-serif italic normal-case text-[#8B1A1A] tracking-normal pr-2 text-[1.1em]"
+    style={{ textShadow: 'none' }}
+  >
+    Tuto₹
+  </span>
+  <span>49</span>
+</h1>
         
         <p className="text-sm md:text-base text-[#2C1810]/80 mb-12 text-center max-w-2xl font-bold uppercase tracking-widest leading-relaxed">
           Connecting dedicated parents with verified, top-tier university tutors in the area. No hidden agencies.
@@ -70,8 +76,8 @@ function LandingPage() {
         
         <div className="text-center mb-20">
           <h2 className="text-4xl md:text-6xl font-black text-[#2C1810] mb-6 uppercase tracking-widest inline-block border-b-8 border-[#2C1810] pb-2">
-            A Smarter Way
-          </h2>
+  A <span className="font-serif italic normal-case text-[#8B1A1A] tracking-normal px-3 text-[1.1em]">Smarter</span> WAY
+</h2>
           <p className="text-sm md:text-base font-bold uppercase tracking-widest text-[#2C1810]/70 max-w-2xl mx-auto leading-relaxed mt-4">
             We stripped away the heavy agency fees to create a direct, transparent connection between great students and great teachers.
           </p>
@@ -86,7 +92,7 @@ function LandingPage() {
             </div>
             <h3 className="text-xl font-black uppercase tracking-widest text-[#2C1810] mb-4 mt-4">100% Verified</h3>
             <p className="text-sm font-bold uppercase tracking-wider leading-relaxed text-[#2C1810]/80">
-              Every tutor on our platform is a rigorously vetted university student. We check IDs so you can trust who is teaching.
+              Every tutor on our platform is a rigorously vetted Tutors. We check IDs so you can trust who is teaching.
             </p>
           </div>
 
@@ -95,7 +101,7 @@ function LandingPage() {
             <div className="absolute -top-5 -left-5 bg-[#FDF8E7] border-4 border-[#2C1810] p-3 shadow-[4px_4px_0px_rgba(44,24,16,1)]">
               <Wallet className="w-8 h-8 text-[#2C1810]" strokeWidth={2.5} />
             </div>
-            <h3 className="text-xl font-black uppercase tracking-widest text-[#FDF8E7] mb-4 mt-4">Zero Fees</h3>
+            <h3 className="text-xl font-black uppercase tracking-widest text-[#FDF8E7] mb-4 mt-4">Zero Fees*</h3>
             <p className="text-sm font-bold uppercase tracking-wider leading-relaxed text-[#FDF8E7]/80">
               Agencies take up to 50% of a teacher's salary. We don't. Tutors keep what they earn, meaning you get motivated educators.
             </p>
@@ -108,7 +114,7 @@ function LandingPage() {
             </div>
             <h3 className="text-xl font-black uppercase tracking-widest text-[#2C1810] mb-4 mt-4">Instant Access</h3>
             <p className="text-sm font-bold uppercase tracking-wider leading-relaxed text-[#2C1810]/80">
-              No endless waiting. Parents post a job, tutors apply, and you connect instantly via WhatsApp to discuss details.
+              No endless waiting. Parents post a job, tutors apply, and you connect instantly via chat/call to discuss details.
             </p>
           </div>
 

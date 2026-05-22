@@ -104,7 +104,16 @@ function ParentPortal() {
               className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-[#2C1810] leading-none"
               style={{ textShadow: '4px 4px 0px rgba(0,0,0,0.1)' }}
             >
-              FIND THE <br/> PERFECT <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2C1810] to-[#5c3726] border-b-8 border-[#2C1810]">TUTOR.</span>
+              FIND THE <br/> 
+              <span 
+                className="font-serif italic normal-case text-[#8B1A1A] tracking-normal pr-4 text-[1.1em]" 
+                style={{ textShadow: 'none' }}
+              >
+                Perfect
+              </span> 
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2C1810] to-[#5c3726] border-b-8 border-[#2C1810]">
+                TUTOR.
+              </span>
             </h1>
             <p className="text-sm font-bold uppercase tracking-widest text-[#2C1810]/80 leading-relaxed border-l-4 border-[#2C1810] pl-4">
               Tutor49 connects families in Lucknow with bright, verified tutors who are passionate about teaching. Skip the expensive agencies and hire top-tier talent directly.
