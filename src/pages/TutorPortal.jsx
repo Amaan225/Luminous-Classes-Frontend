@@ -145,11 +145,12 @@ function TutorPortal() {
         
         <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-10 border-b-4 border-dashed border-[#2C1810] pb-8">
           <div className="mb-6 md:mb-0">
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-widest text-[#2C1810] mb-2 drop-shadow-[3px_3px_0px_rgba(0,0,0,0.15)]">
-              Tutor Dashboard
+            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-widest text-[#2C1810] mb-2 drop-shadow-[3px_3px_0px_rgba(0,0,0,0.15)] flex items-baseline">
+              <span className="font-serif italic normal-case text-[#8B1A1A] tracking-normal pr-3 text-5xl md:text-6xl drop-shadow-none">Tutor</span>
+              Dashboard
             </h1>
             <p className="text-[#2C1810]/80 font-bold uppercase tracking-widest text-sm">
-              Explore Verified Home Tuition Requirements
+              Explore Verified Requirements
             </p>
           </div>
 
@@ -195,28 +196,47 @@ function TutorPortal() {
               const isPremium = job.leadType === 'premium' || !job.leadType;
               const displayId = job.displayId || job._id.substring(0, 6).toUpperCase();
               
+              // Helper logic to split titles for dual-styling
+              const rawTitle = job.title || "STUDENT LEAD";
+              const titleParts = rawTitle.trim().split(' ');
+              const titlePrefix = titleParts[0]; 
+              const titleRemainder = titleParts.slice(1).join(' '); 
+
               return (
                 <div key={job._id} className="flex w-full shadow-[8px_8px_0px_rgba(0,0,0,0.1)] group hover:-translate-y-1 hover:shadow-[12px_12px_0px_rgba(0,0,0,0.1)] transition-all duration-300 rounded-lg">
                   
                   {/* MAIN TICKET BODY */}
                   <div className="flex-grow bg-[#FDF8E7] text-[#2C1810] p-6 rounded-l-lg border-2 border-r-0 border-[#2C1810] relative">
                     
-                    <div className="flex justify-between items-start mb-5 border-b-2 border-dashed border-[#2C1810] pb-3">
+                    <div className="flex justify-between items-start mb-5 border-b-2 border-dashed border-[#2C1810] pb-3 gap-4">
                       <div>
-                        {/* --- DYNAMIC TITLE HERE --- */}
-                        <h2 className="text-2xl font-black uppercase tracking-widest" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.1)' }}>
-                          {job.title || "STUDENT LEAD"}
+                        {/* --- DUAL-STYLED TITLE --- */}
+                        <h2 className="text-2xl flex items-baseline gap-2.5 font-black text-[#2C1810] flex-wrap" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.1)' }}>
+                          <span className="font-serif italic text-3xl md:text-4xl normal-case text-[#8B1A1A] drop-shadow-none">
+                            {titlePrefix}
+                          </span>
+                          <span className="uppercase tracking-widest">
+                            {titleRemainder}
+                          </span>
                         </h2>
                         <p className="text-xs font-bold tracking-widest opacity-80 mt-1">TK-{displayId}</p>
                       </div>
-                      <div className="text-right">
-                        <span className="text-xs font-bold uppercase tracking-wider block opacity-70">Unlock</span>
-                        <span className="text-xl font-black">₹49</span>
-                      </div>
+
+                      {/* --- REFINED, SLIM UNLOCK BUTTON --- */}
+                      <button 
+                        onClick={() => {
+                          setSelectedJob(job);
+                          setIsModalOpen(true);
+                        }}
+                        className="flex-shrink-0 flex flex-col items-center justify-center border-2 border-[#2C1810] bg-[#3a6a39] text-[#f9ebe6] px-4 py-1.5 shadow-[3px_3px_0px_rgba(44,24,16,1)] hover:translate-y-px hover:shadow-[1px_1px_0px_rgba(44,24,16,1)] hover:bg-[#2C1810] hover:text-[#dcb946] transition-all cursor-pointer group"
+                      >
+                        <span className="text-[9px] font-bold uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">Unlock</span>
+                        <span className="text-xl font-black leading-none mt-0.5">₹49</span>
+                      </button>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3 mb-5 font-mono text-sm uppercase font-bold">
-                      {/* --- NEW HIGHLIGHTED DETAIL BOXES --- */}
+                      {/* --- HIGHLIGHTED DETAIL BOXES --- */}
                       <div className="bg-[#f0e4cc] p-2.5 rounded border border-[#2C1810]/20 relative mt-2">
                         <span className="absolute -top-2 left-2 bg-[#FDF8E7] px-1 text-[9px] font-bold uppercase tracking-wider text-[#2C1810]/60">
                           Target Level
@@ -230,39 +250,23 @@ function TutorPortal() {
                         </span>
                         <span className="block mt-1 leading-snug truncate">📍 {job.location}</span>
                       </div>
-                      {/* ------------------------------------ */}
                       
                       <div className="col-span-2 flex items-center justify-between border-t-2 border-dashed border-[#2C1810]/30 pt-3 mt-1">
                         <span className="block opacity-60 text-[11px] tracking-widest">Est. Budget</span>
-                        <span className="text-lg font-black tracking-wider text-green-600">
-                          ₹{job.salary} <span className="text-[10px] opacity-70 tracking-widest font-bold text-black">/ MO</span>
+                        <span className="text-lg font-black tracking-wider text-green-700">
+                          💰₹{job.salary} <span className="text-[10px] opacity-70 tracking-widest font-bold text-[#2C1810]">/ MO</span>
                         </span>
                       </div>
                     </div>
 
                     {/* --- UPDATED NOTES LABEL --- */}
-                    <div className="bg-[#f0e4cc] p-3 rounded border border-[#2C1810]/20 mb-4 relative min-h-[60px]">
+                    <div className="bg-[#f0e4cc] p-3 rounded border border-[#2C1810]/20 relative min-h-[60px]">
                       <span className="absolute -top-2 left-2 bg-[#FDF8E7] px-1 text-[10px] font-bold uppercase tracking-wider text-[#2C1810]/60">
                         Requirement Details
                       </span>
                       <p className="italic text-xs leading-relaxed mt-1">
                         "{job.requirements || job.parentDescription || "Standard requirement verified by Tutor49."}"
                       </p>
-                    </div>
-
-                    <div className="flex justify-between items-center mt-2">
-                      <p className="text-[10px] uppercase font-bold opacity-60 max-w-[150px] leading-tight">
-                        Verified requirement. Unlock for direct Contact.
-                      </p>
-                      <button 
-                        onClick={() => {
-                          setSelectedJob(job);
-                          setIsModalOpen(true);
-                        }}
-                        className="px-6 py-2 text-sm font-bold uppercase bg-[#2C1810] text-[#FDF8E7] rounded shadow-[2px_2px_0px_rgba(0,0,0,0.3)] hover:translate-y-px hover:shadow-[1px_1px_0px_rgba(0,0,0,0.3)] transition-all whitespace-nowrap"
-                      >
-                        Unlock Contact
-                      </button>
                     </div>
                   </div>
 
@@ -274,7 +278,7 @@ function TutorPortal() {
 
                     <div className={`w-full py-2 text-center border-b-2 border-dashed border-[#2C1810] rounded-tr-[6px] ${isPremium ? 'bg-green-800' : 'bg-orange-700'} text-[#FDF8E7]`}>
                       <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest leading-tight px-1">
-                        {isPremium ? '0% COMM' : '50% FEE'}
+                        {isPremium ? '0% COMM' : '50% COMM'}
                       </p>
                     </div>
                     
@@ -294,7 +298,7 @@ function TutorPortal() {
           )}
         </div>
 
-        {/* --- UNLOCK MODAL WITH NEW REFUND POLICY UI --- */}
+        {/* --- UNLOCK MODAL WITH REFUND POLICY UI --- */}
         {isModalOpen && selectedJob && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2C1810]/80 backdrop-blur-sm p-4 pt-10 overflow-y-auto">
             <div className="bg-[#FDF8E7] border-4 border-[#2C1810] rounded-xl shadow-[12px_12px_0px_rgba(0,0,0,0.5)] max-w-lg w-full transform transition-all my-auto">
