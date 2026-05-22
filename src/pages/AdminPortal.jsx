@@ -242,7 +242,7 @@ function AdminPortal() {
                   <div key={job._id} className="bg-white border-4 border-[#2C1810] shadow-[8px_8px_0px_rgba(44,24,16,1)] relative overflow-hidden">
                     
                     <div className={`absolute top-0 right-0 px-3 py-1 font-black uppercase text-[10px] tracking-widest border-b-4 border-l-4 border-[#2C1810] ${isPremium ? 'bg-green-300 text-green-900' : 'bg-orange-400 text-orange-950'}`}>
-                      {isPremium ? '0% PREMIUM' : '25% CLASSIC'}
+                      {isPremium ? '0% PREMIUM' : '50% CLASSIC'}
                     </div>
 
                     {/* --- TOGGLE BETWEEN EDIT MODE AND VIEW MODE --- */}
@@ -264,7 +264,7 @@ function AdminPortal() {
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
                             <input type="text" name="location" value={editLeadForm.location} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
                             <select name="leadType" value={editLeadForm.leadType || 'premium'} onChange={handleEditChange} className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none cursor-pointer">
-                              <option value="classic">CLASSIC - 25% PARTNER AGENCY FEE</option>
+                              <option value="classic">CLASSIC - 50% PARTNER AGENCY FEE</option>
                               <option value="premium">PREMIUM - 0% ORGANIC DIRECT LEAD</option>
                             </select>
                           </div>
