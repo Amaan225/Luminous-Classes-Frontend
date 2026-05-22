@@ -260,19 +260,25 @@ function TutorPortal() {
                   </div>
 
                   {/* TICKET STUB */}
-                  <div className="w-16 md:w-20 bg-[#FDF8E7] border-2 border-l-2 border-dashed border-[#2C1810] rounded-r-lg flex flex-col justify-center items-center relative overflow-hidden">
-                    <div className={`w-full py-2 text-center border-b-2 border-dashed border-[#2C1810] ${isPremium ? 'bg-green-700' : 'bg-orange-600'} text-[#FDF8E7]`}>
+                  <div className={`w-16 md:w-20 border-2 border-l-2 border-dashed border-[#2C1810] rounded-r-lg flex flex-col justify-center items-center relative overflow-hidden transition-colors ${isPremium ? 'bg-[#eef4ea]' : 'bg-[#faebe6]'}`}>
+                    
+                    {/* The Header Stamp */}
+                    <div className={`w-full py-2 text-center border-b-2 border-dashed border-[#2C1810] ${isPremium ? 'bg-green-800' : 'bg-orange-700'} text-[#FDF8E7]`}>
                       <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest leading-tight px-1">
-                        {isPremium ? '0% COMM' : '50% COMM.'}
+                        {isPremium ? '0% COMM' : '50% FEE'}
                       </p>
                     </div>
+                    
+                    {/* The Vertical Text */}
                     <div className="flex-grow flex items-center justify-center py-4">
                       <h3 className="text-lg md:text-xl font-black tracking-[0.2em] uppercase text-[#2C1810]" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}>
                         {isPremium ? 'PREMIUM' : 'CLASSIC'}
                       </h3>
                     </div>
+                    
+                    {/* The Serial Number */}
                     <div className="w-full text-center py-2 border-t-2 border-dashed border-[#2C1810]">
-                      <span className="text-[8px] font-mono font-bold tracking-widest">{displayId}</span>
+                      <span className="text-[8px] font-mono font-bold tracking-widest text-[#2C1810]/70">{displayId}</span>
                     </div>
                   </div>
                 </div>
