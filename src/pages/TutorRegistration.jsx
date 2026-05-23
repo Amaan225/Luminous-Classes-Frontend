@@ -39,8 +39,8 @@ function TutorRegistration() {
         <div className="bg-[#f0e4cc] p-8 border-4 border-[#2C1810] rounded-none shadow-[8px_8px_0px_rgba(44,24,16,1)] relative">
           
           {/* Official Document "Stamp" Illusion */}
-          <div className="absolute -top-6 -right-6 w-24 h-24 border-4 border-[#2C1810] rounded-full flex items-center justify-center bg-[#FDF8E7] transform rotate-12 shadow-[4px_4px_0px_rgba(44,24,16,1)]">
-            <span className="font-black uppercase tracking-widest text-[#2C1810] text-sm text-center leading-tight">
+          <div className="absolute -top-6 -right-6 w-24 h-24 border-4 border-[#2C1810] rounded-full flex items-center justify-center bg-[#a72b06] transform rotate-12 shadow-[4px_4px_0px_rgba(44,24,16,1)]">
+            <span className="font-black uppercase tracking-widest text-[#ecd9d2] text-sm text-center leading-tight">
               APPLY<br/>ENTRY
             </span>
           </div>
