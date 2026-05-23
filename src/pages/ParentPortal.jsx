@@ -116,54 +116,89 @@ function ParentPortal() {
               </span>
             </h1>
             <p className="text-sm font-bold uppercase tracking-widest text-[#2C1810]/80 leading-relaxed border-l-4 border-[#2C1810] pl-4">
-              Tutor49 connects families in Lucknow with bright, verified tutors who are passionate about teaching. Skip the expensive agencies and hire top-tier talent directly.
+              You may have dealt with tuition agencies before. But our process is different and made to benefit parents like you:
             </p>
             
             <div className="space-y-8 pt-6">
-              {/* Feature 4 (NEW) */}
-              <div className="flex items-start">
-                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
-                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-                </div>
-                <div className="ml-5">
-                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Free Trials</h4>
-                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">GET FREE DEMOS FROM MULTIPLE TUTORS TILL YOU FIND THE PERFECT ONE FOR YOU!</p>
-                </div>
-              </div>
-              {/* Feature 1 */}
-              <div className="flex items-start">
-                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
-                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-                </div>
-                <div className="ml-5">
-                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Verified Tutors</h4>
-                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">We rigorously screen tutors from top local colleges to ensure quality, knowledge, and safety.</p>
-                </div>
-              </div>
               
-              {/* Feature 2 */}
+          {/* Feature 1: Full Control (Steering Wheel / Handshake concept) */}
               <div className="flex items-start">
                 <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
-                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 18V12L16.2426 7.75736"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 12L7.75736 7.75736"></path>
+                  </svg>
                 </div>
                 <div className="ml-5">
-                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Zero Agency Fees</h4>
-                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">You pay the tutor directly. We do not charge parents any hidden commissions or middleman fees.</p>
+                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Full Control</h4>
+                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">You decide which tutor to finalize after talking to them. And directly deal with them regarding fee and all.</p>
                 </div>
               </div>
 
-              {/* Feature 3 */}
+              {/* Feature 2: No Registration Fee (Zero Currency concept) */}
               <div className="flex items-start">
                 <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
-                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M9 12H15"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M9 16H15"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17C10.3431 17 9 15.6569 9 14"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M3 3L21 21"></path>
+                  </svg>
                 </div>
                 <div className="ml-5">
-                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Fast Matching</h4>
-                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">Post your requirement below, and start receiving interest from qualified tutors within 24 hours.</p>
+                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">No Registration Fee</h4>
+                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">You don't pay us anything to find a tutor. In fact, you get a Free Demo from the tutor.</p>
                 </div>
               </div>
 
-              
+              {/* Feature 3: No Middleman (Direct Connection concept) */}
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
+                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M17 21V19C17 16.7909 15.2091 15 13 15H11C8.79086 15 7 16.7909 7 19V21"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M21 12L3 12"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M18 9L21 12L18 15"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M6 9L3 12L6 15"></path>
+                  </svg>
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">No Middleman</h4>
+                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">Tutors contact you directly. You discuss timing, fees, and everything yourself.</p>
+                </div>
+              </div>
+
+              {/* Feature 4: More Choices (Grid / Many Profiles concept) */}
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
+                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M10 3H3V10H10V3Z"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M21 3H14V10H21V3Z"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M21 14H14V21H21V14Z"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M10 14H3V21H10V14Z"></path>
+                  </svg>
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">More Choices</h4>
+                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">Your requirement goes on our website. Many verified tutors see it, so you get more options to choose from.</p>
+                </div>
+              </div>
+
+              {/* Feature 5: Save Time & Money (Stopwatch / Piggy Bank concept) */}
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
+                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 22C16.9706 22 21 17.9706 21 13C21 8.02944 16.9706 4 12 4C7.02944 4 3 8.02944 3 13C3 17.9706 7.02944 22 12 22Z"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 8V13L15 16"></path>
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M9 2H15"></path>
+                  </svg>
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Save Time & Money</h4>
+                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">You negotiate directly with tutors. No agency taking 50% of first month fee.</p>
+                </div>
+              </div>
               
             </div>
           </div>

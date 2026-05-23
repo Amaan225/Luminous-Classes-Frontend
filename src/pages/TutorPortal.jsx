@@ -244,17 +244,17 @@ function TutorPortal() {
                         <span className="block mt-1 leading-snug">{job.grade} - {job.subject}</span>
                       </div>
                       
-                      <div className="bg-[#f0e4cc] p-2.5 rounded border border-[#2C1810]/20 relative mt-2">
-                        <span className="absolute -top-2 left-2 bg-[#FDF8E7] px-1 text-[9px] font-bold uppercase tracking-wider text-[#2C1810]/60">
-                          Location Zone
-                        </span>
-                        <span className="block mt-1 leading-snug truncate">📍 {job.location}</span>
-                      </div>
+                      <div className="bg-[#f0e4cc] p-2.5 rounded border border-[#2C1810]/20 relative mt-2 h-full">
+  <span className="absolute -top-2 left-2 bg-[#FDF8E7] px-1 text-[9px] font-bold uppercase tracking-wider text-[#2C1810]/60">
+    Location Zone
+  </span>
+  <span className="block mt-1 leading-snug break-words">📍 {job.location}</span>
+</div>
                       
                       <div className="col-span-2 flex items-center justify-between border-t-2 border-dashed border-[#2C1810]/30 pt-3 mt-1">
-                        <span className="block opacity-60 text-[11px] tracking-widest">Est. Budget</span>
+                        <span className="block opacity-60 text-[11px] tracking-widest">Est. Budget / Month</span>
                         <span className="text-lg font-black tracking-wider text-green-700">
-                          💰₹{job.salary} <span className="text-[10px] opacity-70 tracking-widest font-bold text-[#2C1810]">/ MO</span>
+                          💰₹{job.salary} <span className="text-[10px] opacity-70 tracking-widest font-bold text-[#2C1810]"></span>
                         </span>
                       </div>
                     </div>
