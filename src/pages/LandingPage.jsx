@@ -73,7 +73,7 @@ function LandingPage() {
           {/* Parent Button (Dark Theme) */}
           <Link 
             to="/parent" 
-            className="flex-1 bg-[#2C1810] text-[#FDF8E7] border-4 border-[#2C1810] text-center py-6 px-8 shadow-[8px_8px_0px_rgba(44,24,16,1)] transition-all duration-200 hover:translate-y-1 hover:shadow-[4px_4px_0px_rgba(44,24,16,1)] group"
+            className="flex-1 bg-[#820707] text-[#FDF8E7] border-4 border-[#2C1810] text-center py-6 px-8 shadow-[8px_8px_0px_rgba(44,24,16,1)] transition-all duration-200 hover:translate-y-1 hover:shadow-[4px_4px_0px_rgba(44,24,16,1)] group"
           >
             <h2 className="text-2xl font-black uppercase tracking-widest mb-2 group-hover:scale-105 transition-transform">I am a Parent</h2>
             <p className="text-[#FDF8E7]/70 text-xs font-bold uppercase tracking-wider">Post a requirement instantly.</p>
@@ -165,8 +165,8 @@ function LandingPage() {
       <div className="max-w-4xl mx-auto px-6 py-24">
         <div className="text-center mb-16">
           {/* CHANGED: Dual styling applied to the word "Frequently" */}
-          <h2 className="text-3xl md:text-5xl font-black text-[#2C1810] uppercase tracking-widest inline-block border-b-8 border-[#2C1810] pb-3">
-            <span className="font-serif italic normal-case text-[#8B1A1A] tracking-normal pr-3 text-[1.1em]">Frequently</span> ASKED QUESTIONS
+          <h2 className="text-3xl md:text-5xl font-black text-[#2C1810] uppercase tracking-widest inline-block border-b-8 border-[#770808] pb-6">
+            <span className="font-serif italic normal-case text-[#8B1A1A] tracking-normal pr-3 text-[1.3em]">Frequently</span> ASKED QUESTIONS
           </h2>
         </div>
 
