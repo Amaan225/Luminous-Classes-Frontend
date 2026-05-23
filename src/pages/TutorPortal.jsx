@@ -301,11 +301,12 @@ function TutorPortal() {
         {/* --- UNLOCK MODAL WITH REFUND POLICY UI --- */}
         {isModalOpen && selectedJob && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2C1810]/80 backdrop-blur-sm p-4 pt-10 overflow-y-auto">
-            <div className="bg-[#FDF8E7] border-4 border-[#2C1810] rounded-xl shadow-[12px_12px_0px_rgba(0,0,0,0.5)] max-w-lg w-full transform transition-all my-auto">
+            {/* CHANGED: max-w-lg to max-w-2xl for a wider, more premium window */}
+            <div className="bg-[#e4e2db] border-4 border-[#2C1810] rounded-xl shadow-[12px_12px_0px_rgba(0,0,0,0.5)] max-w-2xl w-full transform transition-all my-auto">
               
               <div className="bg-[#2C1810] p-6 text-center text-[#FDF8E7] border-b-4 border-[#2C1810] rounded-t-lg">
                 <h3 className="text-2xl font-black uppercase tracking-widest mb-1">Unlock Lead</h3>
-                <p className="text-[#FDF8E7]/80 text-xs font-bold uppercase">Pay ₹49 to instantly reveal the parent's contact.</p>
+                <p className="text-[#FDF8E7]/80 text-xs font-bold uppercase">Pay ₹49 to instantly reveal the Agency /  parent's contact.</p>
               </div>
 
               <div className="p-6">
@@ -341,33 +342,60 @@ function TutorPortal() {
                   </div>
                 ) : (
                   <>
-                    <div className="bg-[#f0e4cc] border-4 border-[#2C1810] p-5 mb-6 shadow-[4px_4px_0px_rgba(44,24,16,1)]">
-                      <h4 className="font-black uppercase tracking-widest text-[#2C1810] text-sm mb-3 border-b-2 border-dashed border-[#2C1810] pb-2">
-                        How Our Payment & Refund Works
-                      </h4>
-                      <ul className="text-xs font-bold text-[#2C1810]/80 space-y-3">
-                        <li>
-                          <strong className="text-[#2C1810] font-black uppercase">1. No Extra Charges:</strong><br />
-                          You will not be charged any commission or any other fee after this one-time payment (only applicable for premium leads).
-                        </li>
-                        <li>
-                          <strong className="text-[#2C1810] font-black uppercase">2. What You Get:</strong><br />
-                          This payment gives you the contact number only. It does not guarantee the tuition.
-                        </li>
-                        <li>
-                          <strong className="text-[#2C1810] font-black uppercase">3. When You Get The Tuition:</strong><br />
-                          You will get the tuition only after you give a free demo and the client gives a positive response.
-                        </li>
-                        <li>
-                          <strong className="text-[#2C1810] font-black uppercase">4. Refund Policy:</strong><br />
-                          If you contact the client and they refuse the tuition or do not want a demo, you can apply for a full refund from Tutor49.
-                        </li>
-                      </ul>
+                    <h4 className="font-black uppercase tracking-widest text-[#2C1810] text-center text-lg mb-4 border-b-4 border-dashed border-[#2C1810] pb-3 mx-4">
+                      Payment & Refund Guarantees
+                    </h4>
+                    
+                    {/* CHANGED: Restructured bullet points into a highly readable 2x2 brutalist grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                      {/* Point 1 */}
+                      <div className="bg-[#f0e4cc] p-4 border-2 border-[#2C1810] shadow-[4px_4px_0px_rgba(44,24,16,1)]">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-[#2C1810] text-[#FDF8E7] px-2 py-0.5 font-black text-[10px]">01</span>
+                          <h5 className="font-black uppercase tracking-widest text-[#2C1810] text-xs">No Extra Charges</h5>
+                        </div>
+                        <p className="text-[10px] font-bold text-[#2C1810]/80 uppercase leading-relaxed">
+                          You will not be charged any commission or any other fee after this one-time payment (only for Premium leads).
+                        </p>
+                      </div>
+
+                      {/* Point 2 */}
+                      <div className="bg-[#f0e4cc] p-4 border-2 border-[#2C1810] shadow-[4px_4px_0px_rgba(44,24,16,1)]">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-[#2C1810] text-[#FDF8E7] px-2 py-0.5 font-black text-[10px]">02</span>
+                          <h5 className="font-black uppercase tracking-widest text-[#2C1810] text-xs">Contact Access</h5>
+                        </div>
+                        <p className="text-[10px] font-bold text-[#2C1810]/80 uppercase leading-relaxed">
+                          This payment gives you the parent's contact number only. It does not instantly guarantee the tuition.
+                        </p>
+                      </div>
+
+                      {/* Point 3 */}
+                      <div className="bg-[#f0e4cc] p-4 border-2 border-[#2C1810] shadow-[4px_4px_0px_rgba(44,24,16,1)]">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-[#2C1810] text-[#FDF8E7] px-2 py-0.5 font-black text-[10px]">03</span>
+                          <h5 className="font-black uppercase tracking-widest text-[#2C1810] text-xs">The Process</h5>
+                        </div>
+                        <p className="text-[10px] font-bold text-[#2C1810]/80 uppercase leading-relaxed">
+                          You secure the job only after you give a free demo and the client gives a positive response.
+                        </p>
+                      </div>
+
+                      {/* Point 4 - HIGHLIGHTED IN DARK MODE */}
+                      <div className="bg-[#971919] p-4 border-2 border-[#2C1810] shadow-[4px_4px_0px_rgba(44,24,16,1)] text-[#FDF8E7]">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-[#FDF8E7] text-[#2C1810] px-2 py-0.5 font-black text-[10px]">04</span>
+                          <h5 className="font-black uppercase tracking-widest text-xs">Refund Policy*</h5>
+                        </div>
+                        <p className="text-[10px] font-bold text-[#FDF8E7]/80 uppercase leading-relaxed">
+                          If you contact the client and they do not want a demo, you get a refund*.
+                        </p>
+                      </div>
                     </div>
 
                     <div className="mb-6">
                       <label className="block text-xs font-black uppercase tracking-wider text-[#2C1810] mb-3">
-                        Enter your WhatsApp Number:
+                        Enter your WhatsApp Number to Proceed:
                       </label>
                       <input 
                         type="text" 
@@ -388,7 +416,7 @@ function TutorPortal() {
                       <button 
                         onClick={handleRazorpayPayment}
                         disabled={tutorPhone.length < 10 || paymentStatus === 'submitting'}
-                        className="flex-[2] px-4 py-4 bg-[#2C1810] text-[#FDF8E7] font-black uppercase tracking-wider border-4 border-[#2C1810] shadow-[4px_4px_0px_rgba(44,24,16,1)] disabled:opacity-50 hover:translate-y-px hover:shadow-[2px_2px_0px_rgba(44,24,16,1)] transition-all flex justify-center items-center"
+                        className="flex-[2] px-4 py-4 bg-[#076b14] text-[#FDF8E7] font-black uppercase tracking-wider border-4 border-[#2C1810] shadow-[4px_4px_0px_rgba(44,24,16,1)] disabled:opacity-50 hover:translate-y-px hover:shadow-[2px_2px_0px_rgba(44,24,16,1)] transition-all flex justify-center items-center"
                       >
                         {paymentStatus === 'submitting' ? (
                           <span className="animate-pulse">Loading...</span>

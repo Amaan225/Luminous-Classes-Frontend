@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ScrollToTop from './ScrollToTop'; // <-- Imported here
 import TutorRegistration from './pages/TutorRegistration';
 
 // Import our newly separated pages
@@ -14,6 +15,7 @@ function App() {
     // --- THE PREMIUM WRAPPER ---
     <div className="min-h-screen font-sans text-slate-800 bg-dot-pattern">
       <BrowserRouter>
+        <ScrollToTop /> {/* <-- Injected right above your Routes */}
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/parent" element={<ParentPortal />} />
