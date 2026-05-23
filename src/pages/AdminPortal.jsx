@@ -86,7 +86,7 @@ function AdminPortal() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await axios.post('https://luminous-classes-backend.onrender.com/api/jobs', newLeadForm);
+     await axios.post('https://luminous-classes-backend.onrender.com/api/jobs?secret=amaan2026', newLeadForm);
       alert("Lead Successfully Injected!");
       setNewLeadForm({ title: '', parentName: '', subject: '', grade: '', location: '', salary: '', contactNumber: '', requirements: '', leadType: 'classic', status: 'approved' });
       fetchJobs(); 
