@@ -20,11 +20,11 @@ function LandingPage() {
     },
     {
       question: "How are tutors verified?",
-      answer: "Quality and safety are our highest priorities. Every tutor must register with a valid college ID and contact number. Our admin team manually verifies these credentials before a tutor is granted access to unlock any parent requirements."
+      answer: "Quality and safety are our highest priorities. Every tutor must register with a Aadhaar card number. Our admin team manually verifies these credentials before a tutor is granted access to unlock any parent requirements."
     },
     {
       question: "What if the parent declines the demo?",
-      answer: "We operate with full transparency. If you unlock a lead and the parent declines to take a demo or refuses the tuition, you are protected by our Refund Policy. Simply contact our support team, and we will process a full refund for that unlock."
+      answer: "We operate with full transparency. If you unlock a lead and the parent declines to take a demo, you are protected by our Refund Policy. Simply contact our support team, and send us the screenshot of the conversation, and we will process a refund for that unlock."
     }
   ];
 
@@ -50,11 +50,11 @@ function LandingPage() {
           </div>
 
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-slate-900 mb-8 drop-shadow-sm">
-            Tuto<span className="text-indigo-600">₹49</span>
+            Tuto₹<span className="text-indigo-600"> 49</span>
           </h1>
           
           <p className="text-xl md:text-2xl lg:text-3xl text-slate-600 mb-14 max-w-3xl mx-auto leading-relaxed font-medium">
-            Connecting dedicated parents with verified, top-tier university tutors in the area. No hidden agencies. No predatory commissions.
+            Connecting dedicated parents with verified, top-tier  tutors in the area.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 w-full max-w-3xl justify-center mb-16">
@@ -111,7 +111,7 @@ function LandingPage() {
               </div>
               <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">100% Verified</h3>
               <p className="text-slate-600 leading-relaxed font-medium">
-                Every tutor on our platform is rigorously vetted. We check IDs so you can trust exactly who is teaching your child.
+                Every tutor on our platform is experienced and verified. We check IDs so you can trust exactly who is teaching your child.
               </p>
             </div>
           </div>
@@ -137,7 +137,7 @@ function LandingPage() {
               </div>
               <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Instant Access</h3>
               <p className="text-slate-600 leading-relaxed font-medium">
-                No endless waiting. Parents post a job, tutors apply, and you connect instantly via call to discuss details.
+                No endless waiting. Parents post a job, tutors apply, and you connect instantly via WhatsApp to discuss details.
               </p>
             </div>
           </div>
