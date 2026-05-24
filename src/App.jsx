@@ -13,7 +13,7 @@ import Terms from './pages/Terms';
 function App() {
   return (
     // --- THE PREMIUM WRAPPER ---
-    <div className="min-h-screen font-sans text-slate-800 bg-dot-pattern">
+    <div className="min-h-screen font-sans text-slate-900 bg-slate-50 selection:bg-indigo-100 selection:text-indigo-900">
       <BrowserRouter>
         <ScrollToTop /> {/* <-- Injected right above your Routes */}
         <Routes>

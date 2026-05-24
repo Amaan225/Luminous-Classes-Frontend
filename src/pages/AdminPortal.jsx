@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ShieldAlert, ShieldCheck, UserCheck, Trash2, Edit, CheckCircle2, Lock, ArrowLeft, Search, Plus } from 'lucide-react';
 
 function AdminPortal() {
   const navigate = useNavigate();
@@ -59,7 +60,6 @@ function AdminPortal() {
     }
   };
 
-  // --- NEW: APPROVE LEAD FUNCTION ---
   const handleApproveLead = async (job) => {
     if (window.confirm(`Did you call ${job.parentName} and verify this requirement?`)) {
       try {
@@ -123,7 +123,6 @@ function AdminPortal() {
   // --- FILTERING LOGIC ---
   const pendingLeads = jobs.filter(job => job.status === 'pending');
   
-  // Active jobs are either explicitly approved, or old jobs that don't have a status yet
   const activeJobs = jobs.filter(job => job.status === 'approved' || !job.status);
   
   const filteredActiveJobs = activeJobs.filter(job => {
@@ -139,16 +138,36 @@ function AdminPortal() {
   // --- THE LOCK SCREEN UI ---
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#2C1810] font-sans p-4">
-        <form onSubmit={(e) => { e.preventDefault(); passcode === 'amaan2026' ? setIsAuthenticated(true) : alert("Access Denied."); setPasscode(''); }} 
-          className="bg-[#FDF8E7] p-10 border-8 border-double border-[#2C1810] shadow-[16px_16px_0px_rgba(0,0,0,1)] flex flex-col gap-6 w-full max-w-md relative">
-          <div className="absolute -top-6 -left-6 bg-[#2C1810] text-[#FDF8E7] font-black uppercase tracking-widest px-3 py-1 text-xs border-4 border-[#FDF8E7]">RESTRICTED</div>
-          <div className="text-center mb-4 mt-2">
-            <h2 className="text-4xl font-black uppercase tracking-widest text-[#2C1810]">Admin Vault</h2>
-            <p className="text-[#2C1810]/70 mt-2 font-bold uppercase tracking-widest text-xs">Authorized Personnel Only</p>
+      <div className="min-h-screen flex items-center justify-center bg-slate-900 font-sans p-4 selection:bg-indigo-500 selection:text-white">
+        <form 
+          onSubmit={(e) => { e.preventDefault(); passcode === 'amaan2026' ? setIsAuthenticated(true) : alert("Access Denied."); setPasscode(''); }} 
+          className="bg-white p-8 md:p-10 rounded-3xl shadow-2xl max-w-md w-full relative overflow-hidden border border-slate-100"
+        >
+          <div className="absolute top-0 left-0 w-full h-2 bg-indigo-600"></div>
+          
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-slate-100">
+              <Lock className="w-8 h-8 text-indigo-600" />
+            </div>
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Admin Vault</h2>
+            <p className="text-slate-500 text-sm font-medium mt-2">Restricted Access. Authorized Personnel Only.</p>
           </div>
-          <input type="password" placeholder="ENTER PASSCODE" value={passcode} onChange={(e) => setPasscode(e.target.value)} className="p-4 border-4 border-[#2C1810] bg-[#f0e4cc] focus:outline-none focus:bg-white text-center text-2xl tracking-[0.5em] font-black uppercase text-[#2C1810] shadow-[4px_4px_0px_rgba(44,24,16,1)]" />
-          <button type="submit" className="bg-[#2C1810] text-[#FDF8E7] font-black uppercase tracking-widest p-4 hover:bg-[#FDF8E7] hover:text-[#2C1810] border-4 border-[#2C1810] transition-colors shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:translate-y-px hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] mt-2">Unlock Console</button>
+          
+          <div className="space-y-6">
+            <input 
+              type="password" 
+              placeholder="Enter Passcode" 
+              value={passcode} 
+              onChange={(e) => setPasscode(e.target.value)} 
+              className="w-full p-4 rounded-xl border border-slate-300 bg-slate-50 focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-center text-xl tracking-[0.2em] font-bold text-slate-900 transition-all" 
+            />
+            <button 
+              type="submit" 
+              className="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all"
+            >
+              Unlock Console
+            </button>
+          </div>
         </form>
       </div>
     );
@@ -156,128 +175,200 @@ function AdminPortal() {
 
   // --- THE ACTUAL ADMIN PORTAL ---
   return (
-    <div className="min-h-screen bg-[#FDF8E7] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7] p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
-        
-        {/* HEADER */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b-8 border-dashed border-[#2C1810] pb-6">
-          <div>
-            <button onClick={() => navigate('/')} className="text-[#2C1810] hover:underline mb-4 font-black uppercase tracking-widest text-xs border-2 border-[#2C1810] px-3 py-1 bg-[#f0e4cc]">&larr; Public Site</button>
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-widest text-[#2C1810]">Command Center</h1>
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 pb-20">
+      
+      {/* HEADER */}
+      <div className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center py-4 gap-4">
+            <div className="flex items-center gap-6">
+              <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">
+                <ArrowLeft className="w-4 h-4" /> Exit
+              </button>
+              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Command Center</h1>
+            </div>
+            <button 
+              onClick={() => { setIsAuthenticated(false); setPasscode(''); }} 
+              className="flex items-center gap-2 bg-slate-100 text-slate-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-200 transition-colors"
+            >
+              <Lock className="w-4 h-4" /> Lock Vault
+            </button>
           </div>
-          <button onClick={() => { setIsAuthenticated(false); setPasscode(''); }} className="mt-4 md:mt-0 bg-[#2C1810] text-[#FDF8E7] px-6 py-3 font-black uppercase tracking-widest border-4 border-[#2C1810] shadow-[4px_4px_0px_rgba(0,0,0,0.3)] hover:translate-y-px transition-transform">Lock Vault</button>
         </div>
+      </div>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-12">
+        
         {/* SECTION 1: QUARANTINE ZONE (PENDING LEADS) */}
-        <div className="mb-16">
-          <div className="flex items-center gap-4 mb-6">
-            <h2 className="text-2xl font-black uppercase tracking-widest text-red-800">Pending Leads ({pendingLeads.length})</h2>
-            <span className="bg-red-800 text-white px-2 py-1 text-[10px] font-black tracking-widest uppercase">Action Required</span>
+        <section>
+          <div className="flex items-center gap-3 mb-6">
+            <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+              <ShieldAlert className="w-6 h-6 text-amber-500" />
+              Pending Leads ({pendingLeads.length})
+            </h2>
+            {pendingLeads.length > 0 && (
+              <span className="bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider">Action Required</span>
+            )}
           </div>
           
           {pendingLeads.length === 0 ? (
-            <div className="bg-[#f0e4cc] p-6 border-4 border-dashed border-red-800/30 text-center font-bold uppercase tracking-widest text-red-900/50">Quarantine is empty.</div>
+            <div className="bg-white rounded-2xl border border-slate-200 border-dashed p-10 text-center">
+              <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
+              <p className="text-slate-500 font-medium">Quarantine is empty. All leads are processed.</p>
+            </div>
           ) : (
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-4">
               {pendingLeads.map(job => (
-                <div key={job._id} className="bg-red-50 border-4 border-red-800 shadow-[8px_8px_0px_rgba(153,27,27,1)] p-6 relative">
-                  <div className="absolute top-0 right-0 bg-red-800 text-white px-3 py-1 text-xs font-black tracking-widest uppercase border-b-4 border-l-4 border-red-800">UNVERIFIED</div>
+                <div key={job._id} className="bg-white rounded-2xl border border-amber-200 shadow-sm p-6 relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-amber-400"></div>
                   
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-                    <div>
-                      <h3 className="text-2xl font-black uppercase tracking-widest text-red-900">{job.parentName}</h3>
-                      <p className="text-sm font-bold uppercase tracking-widest mt-1">📞 {job.contactNumber}</p>
-                      <div className="mt-3 text-xs font-black uppercase tracking-widest bg-red-200 text-red-900 inline-block px-2 py-1 border border-red-900">
-                        {job.grade} {job.subject} | {job.location} | ₹{job.salary}
-                      </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-900">{job.parentName}</h3>
+                    <p className="text-sm font-medium text-slate-500 mt-1 flex items-center gap-2">
+                      📞 <span className="text-slate-700">{job.contactNumber}</span>
+                    </p>
+                    <div className="mt-3 inline-flex items-center gap-2 bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg text-sm font-medium border border-slate-100">
+                      <span>{job.grade} {job.subject}</span>
+                      <span className="text-slate-300">|</span>
+                      <span>{job.location}</span>
+                      <span className="text-slate-300">|</span>
+                      <span className="text-indigo-600 font-bold">₹{job.salary}</span>
                     </div>
-                    
-                    <div className="flex flex-col gap-2 mt-4 md:mt-0 w-full md:w-auto">
-                      <button onClick={() => handleApproveLead(job)} className="bg-green-700 text-white px-6 py-3 font-black uppercase tracking-widest border-4 border-green-900 shadow-[4px_4px_0px_rgba(0,0,0,0.3)] hover:translate-y-px transition-all">
-                        Approve & Publish
-                      </button>
-                      <button onClick={() => handleDeleteJob(job._id)} className="bg-transparent text-red-900 px-6 py-2 font-black uppercase tracking-widest border-4 border-red-900 hover:bg-red-900 hover:text-white transition-all text-xs">
-                        Reject (Spam)
-                      </button>
-                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 w-full md:w-auto">
+                    <button onClick={() => handleDeleteJob(job._id)} className="flex-1 md:flex-none px-4 py-2.5 text-red-600 bg-red-50 hover:bg-red-100 rounded-xl font-semibold text-sm transition-colors flex justify-center items-center gap-2">
+                      <Trash2 className="w-4 h-4" /> Reject
+                    </button>
+                    <button onClick={() => handleApproveLead(job)} className="flex-1 md:flex-none px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold text-sm shadow-sm hover:shadow-md transition-all flex justify-center items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4" /> Verify & Publish
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
           )}
-        </div>
+        </section>
 
         {/* SECTION 2: MANUAL LEAD INJECTION */}
-        <div className="mb-16 bg-[#f0e4cc] p-6 md:p-8 border-4 border-[#2C1810] shadow-[12px_12px_0px_rgba(44,24,16,1)] relative">
-          <div className="absolute -top-4 left-6 bg-[#2C1810] text-[#FDF8E7] px-3 py-1 font-black uppercase tracking-widest text-xs border-2 border-[#2C1810]">INTERNAL TOOL</div>
-          <h2 className="text-2xl font-black uppercase tracking-widest text-[#2C1810] mb-6 border-b-2 border-[#2C1810] pb-2 inline-block">Inject Verified Lead</h2>
+        <section className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-100">
+            <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
+              <Plus className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900">Inject Verified Lead</h2>
+              <p className="text-sm text-slate-500 mt-0.5">Bypass quarantine and push directly to the live board.</p>
+            </div>
+          </div>
           
-          <form onSubmit={handleCreateLead} className="flex flex-col gap-5">
-            <input type="text" name="title" placeholder="CUSTOM TITLE (E.g. SCHOOL TEACHER) - LEAVE BLANK FOR 'STUDENT LEAD'" value={newLeadForm.title} onChange={handleLeadChange} className="w-full p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <input type="text" name="parentName" placeholder="CLIENT / PARENT NAME" value={newLeadForm.parentName} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
-              <input type="text" name="contactNumber" placeholder="CONTACT NUMBER" value={newLeadForm.contactNumber} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <input type="text" name="subject" placeholder="SUBJECT" value={newLeadForm.subject} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
-              <input type="text" name="grade" placeholder="GRADE / LEVEL" value={newLeadForm.grade} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
-              <input type="text" name="salary" placeholder="SALARY (₹)" value={newLeadForm.salary} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
-              <input type="text" name="location" placeholder="LOCATION ZONE" value={newLeadForm.location} onChange={handleLeadChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white" />
-              <div className="relative">
-                <label className="absolute -top-3 left-2 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Commission Structure</label>
-                <select name="leadType" value={newLeadForm.leadType} onChange={handleLeadChange} className="w-full p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none cursor-pointer">
-                  <option value="classic">CLASSIC - 50% PARTNER AGENCY FEE</option>
-                  <option value="premium">PREMIUM - 0% ORGANIC DIRECT LEAD</option>
+          <form onSubmit={handleCreateLead} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex flex-col gap-1.5 md:col-span-2">
+                <label className="text-sm font-semibold text-slate-700">Custom Title (Optional)</label>
+                <input type="text" name="title" placeholder="Leave blank for 'STUDENT LEAD'" value={newLeadForm.title} onChange={handleLeadChange} className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-semibold text-slate-700">Client / Parent Name <span className="text-red-500">*</span></label>
+                <input type="text" name="parentName" value={newLeadForm.parentName} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-semibold text-slate-700">Contact Number <span className="text-red-500">*</span></label>
+                <input type="text" name="contactNumber" value={newLeadForm.contactNumber} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-semibold text-slate-700">Subject <span className="text-red-500">*</span></label>
+                <input type="text" name="subject" value={newLeadForm.subject} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-semibold text-slate-700">Grade / Level <span className="text-red-500">*</span></label>
+                <input type="text" name="grade" value={newLeadForm.grade} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-semibold text-slate-700">Salary (₹) <span className="text-red-500">*</span></label>
+                <input type="text" name="salary" value={newLeadForm.salary} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-semibold text-slate-700">Location <span className="text-red-500">*</span></label>
+                <input type="text" name="location" value={newLeadForm.location} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
+              </div>
+              <div className="flex flex-col gap-1.5 md:col-span-2">
+                <label className="text-sm font-semibold text-slate-700">Commission Structure <span className="text-red-500">*</span></label>
+                <select name="leadType" value={newLeadForm.leadType} onChange={handleLeadChange} className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full font-medium">
+                  <option value="classic">CLASSIC - 50% Partner Agency Fee</option>
+                  <option value="premium">PREMIUM - 0% Organic Direct Lead</option>
                 </select>
               </div>
+              <div className="flex flex-col gap-1.5 md:col-span-2">
+                <label className="text-sm font-semibold text-slate-700">Internal Notes / Requirements</label>
+                <textarea name="requirements" value={newLeadForm.requirements} onChange={handleLeadChange} className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full h-24 resize-none"></textarea>
+              </div>
             </div>
-            <textarea name="requirements" placeholder="INTERNAL NOTES & REQUIREMENTS" value={newLeadForm.requirements} onChange={handleLeadChange} className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none focus:bg-white h-24 resize-none"></textarea>
             
-            <button type="submit" disabled={isSubmitting} className="bg-[#2C1810] text-[#FDF8E7] font-black uppercase tracking-widest p-4 border-4 border-[#2C1810] shadow-[6px_6px_0px_rgba(0,0,0,0.3)] hover:translate-y-px transition-all">
-              {isSubmitting ? 'UPLOADING...' : 'INJECT LIVE LEAD INTO SYSTEM'}
+            <button type="submit" disabled={isSubmitting} className="w-full md:w-auto px-8 py-4 bg-indigo-600 text-white rounded-xl font-bold shadow-md hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 transition-all disabled:opacity-70 flex justify-center items-center">
+              {isSubmitting ? 'Pushing to Database...' : 'Inject Live Lead'}
             </button>
           </form>
-        </div>
+        </section>
 
-        {/* SECTION 3: WAITING ROOM */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-black uppercase tracking-widest text-[#2C1810] mb-6">Pending Tutors ({pendingTutors.length})</h2>
+        {/* SECTION 3: PENDING TUTORS */}
+        <section>
+          <div className="flex items-center gap-3 mb-6">
+            <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+              <UserCheck className="w-6 h-6 text-indigo-600" />
+              Tutor Verification Queue ({pendingTutors.length})
+            </h2>
+          </div>
           {pendingTutors.length === 0 ? (
-            <div className="bg-[#FDF8E7] p-6 border-4 border-dashed border-[#2C1810]/30 text-center font-bold uppercase tracking-widest text-[#2C1810]/50">Queue is empty.</div>
+            <div className="bg-white rounded-2xl border border-slate-200 border-dashed p-8 text-center text-slate-500">
+              No pending registrations.
+            </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {pendingTutors.map(tutor => (
-                <div key={tutor._id} className="bg-white p-5 border-4 border-[#2C1810] shadow-[6px_6px_0px_rgba(44,24,16,1)] flex flex-col justify-between">
-                  <div className="mb-4">
-                    <p className="font-black text-xl uppercase tracking-widest">{tutor.name}</p>
-                    <p className="text-xs font-bold uppercase tracking-wider mt-2 opacity-70">✉️ {tutor.email}</p>
-                    <p className="text-xs font-bold uppercase tracking-wider mt-1 opacity-70">📞 {tutor.phone}</p>
-                    <p className="text-sm font-black text-[#2C1810] mt-3 border-t-2 border-dashed pt-2">ID: {tutor.collegeId}</p>
+                <div key={tutor._id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                  <div className="mb-6">
+                    <h3 className="font-bold text-lg text-slate-900">{tutor.name}</h3>
+                    <div className="space-y-1.5 mt-3 text-sm text-slate-600">
+                      <p>✉️ {tutor.email}</p>
+                      <p>📞 {tutor.phone}</p>
+                    </div>
+                    <div className="mt-4 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                      <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1">College ID / Roll No</p>
+                      <p className="text-sm font-bold text-slate-900">{tutor.collegeId}</p>
+                    </div>
                   </div>
-                  <button onClick={() => handleApproveTutor(tutor._id)} className="w-full bg-[#2C1810] text-[#FDF8E7] py-2 font-black uppercase tracking-widest border-2 border-[#2C1810] hover:bg-[#FDF8E7] hover:text-[#2C1810] transition-colors">Verify & Approve</button>
+                  <button onClick={() => handleApproveTutor(tutor._id)} className="w-full bg-slate-900 text-white py-2.5 rounded-xl font-semibold hover:bg-indigo-600 transition-colors shadow-sm">
+                    Verify & Approve
+                  </button>
                 </div>
               ))}
             </div>
           )}
-        </div>
+        </section>
 
         {/* SECTION 4: ACTIVE JOBS BOARD WITH SEARCH BAR */}
-        <div>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 border-b-4 border-[#2C1810] pb-6 gap-4">
-            <h2 className="text-2xl font-black uppercase tracking-widest text-[#2C1810]">
+        <section>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-4">
+            <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-emerald-500" />
               Active Job Ledger ({filteredActiveJobs.length})
             </h2>
             <div className="w-full md:w-80 relative">
-              <label className="absolute -top-3 left-2 bg-[#FDF8E7] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810] z-10">Search Vault</label>
-              <input type="text" placeholder="ENTER TK-ID OR CLIENT NAME..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full p-3 border-4 border-[#2C1810] bg-white font-black uppercase tracking-wider focus:outline-none focus:bg-[#f0e4cc] transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" />
+              <Search className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input 
+                type="text" 
+                placeholder="Search TK-ID or Name..." 
+                value={searchQuery} 
+                onChange={(e) => setSearchQuery(e.target.value)} 
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all shadow-sm" 
+              />
             </div>
           </div>
 
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-6">
             {filteredActiveJobs.length === 0 ? (
-              <div className="bg-[#FDF8E7] p-6 border-4 border-dashed border-[#2C1810]/30 text-center font-bold uppercase tracking-widest text-[#2C1810]/50">
+              <div className="bg-white rounded-2xl border border-slate-200 border-dashed p-12 text-center text-slate-500">
                 {searchQuery ? "No records match your search." : "No active jobs in the database."}
               </div>
             ) : (
@@ -286,72 +377,123 @@ function AdminPortal() {
                 const isPremium = job.leadType === 'premium' || !job.leadType;
 
                 return (
-                  <div key={job._id} className="bg-white border-4 border-[#2C1810] shadow-[8px_8px_0px_rgba(44,24,16,1)] relative overflow-hidden">
-                    <div className={`absolute top-0 right-0 px-3 py-1 font-black uppercase text-[10px] tracking-widest border-b-4 border-l-4 border-[#2C1810] ${isPremium ? 'bg-green-300 text-green-900' : 'bg-orange-400 text-orange-950'}`}>
-                      {isPremium ? '0% PREMIUM' : '50% CLASSIC'}
+                  <div key={job._id} className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden flex flex-col relative">
+                    
+                    {/* Status Badge */}
+                    <div className="absolute top-6 right-6">
+                      {isPremium ? (
+                        <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-200">
+                          0% PREMIUM
+                        </span>
+                      ) : (
+                        <span className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-xs font-bold border border-amber-200">
+                          50% CLASSIC
+                        </span>
+                      )}
                     </div>
 
                     {editingJobId === job._id ? (
-                      <div className="p-6 md:p-8 bg-[#f0e4cc] border-b-4 border-[#2C1810]">
-                        <h3 className="text-2xl font-black uppercase tracking-widest text-[#2C1810] mb-6 border-b-2 border-dashed border-[#2C1810] pb-2">Amend Record: {job.displayId}</h3>
-                        <form onSubmit={(e) => handleUpdateLead(e, job._id)} className="flex flex-col gap-4">
-                          <input type="text" name="title" placeholder="LEAD TITLE" value={editLeadForm.title || ''} onChange={handleEditChange} className="w-full p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <input type="text" name="parentName" placeholder="CLIENT NAME" value={editLeadForm.parentName} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
-                            <input type="text" name="contactNumber" placeholder="CONTACT" value={editLeadForm.contactNumber} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
+                      <div className="p-6 md:p-8 bg-indigo-50/50">
+                        <div className="flex items-center gap-2 mb-6 pb-4 border-b border-indigo-100">
+                          <Edit className="w-5 h-5 text-indigo-600" />
+                          <h3 className="text-xl font-bold text-slate-900">Amend Record: {job.displayId}</h3>
+                        </div>
+                        
+                        <form onSubmit={(e) => handleUpdateLead(e, job._id)} className="space-y-5">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div className="flex flex-col gap-1.5 md:col-span-2">
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Lead Title</label>
+                              <input type="text" name="title" value={editLeadForm.title || ''} onChange={handleEditChange} className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full" />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Client Name</label>
+                              <input type="text" name="parentName" value={editLeadForm.parentName} onChange={handleEditChange} required className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full" />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Contact</label>
+                              <input type="text" name="contactNumber" value={editLeadForm.contactNumber} onChange={handleEditChange} required className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full" />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Subject</label>
+                              <input type="text" name="subject" value={editLeadForm.subject} onChange={handleEditChange} required className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full" />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Grade</label>
+                              <input type="text" name="grade" value={editLeadForm.grade} onChange={handleEditChange} required className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full" />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Salary</label>
+                              <input type="text" name="salary" value={editLeadForm.salary} onChange={handleEditChange} required className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full" />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Location</label>
+                              <input type="text" name="location" value={editLeadForm.location} onChange={handleEditChange} required className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full" />
+                            </div>
+                            <div className="flex flex-col gap-1.5 md:col-span-2">
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Lead Type</label>
+                              <select name="leadType" value={editLeadForm.leadType || 'premium'} onChange={handleEditChange} className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full">
+                                <option value="classic">CLASSIC - 50% FEE</option>
+                                <option value="premium">PREMIUM - 0% FEE</option>
+                              </select>
+                            </div>
+                            <div className="flex flex-col gap-1.5 md:col-span-2">
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Requirements</label>
+                              <textarea name="requirements" value={editLeadForm.requirements || ''} onChange={handleEditChange} className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full h-20 resize-none"></textarea>
+                            </div>
                           </div>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <input type="text" name="subject" placeholder="SUBJECT" value={editLeadForm.subject} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
-                            <input type="text" name="grade" placeholder="GRADE" value={editLeadForm.grade} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
-                            <input type="text" name="salary" placeholder="SALARY" value={editLeadForm.salary} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
-                          </div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-                            <input type="text" name="location" placeholder="LOCATION" value={editLeadForm.location} onChange={handleEditChange} required className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none" />
-                            <select name="leadType" value={editLeadForm.leadType || 'premium'} onChange={handleEditChange} className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none cursor-pointer">
-                              <option value="classic">CLASSIC - 50% PARTNER AGENCY FEE</option>
-                              <option value="premium">PREMIUM - 0% ORGANIC DIRECT LEAD</option>
-                            </select>
-                          </div>
-                          <textarea name="requirements" placeholder="REQUIREMENT DETAILS" value={editLeadForm.requirements || ''} onChange={handleEditChange} className="p-3 border-4 border-[#2C1810] bg-[#FDF8E7] font-black uppercase tracking-wider focus:outline-none h-24 resize-none"></textarea>
                           
-                          <div className="flex gap-4 mt-2">
-                            <button type="button" onClick={() => setEditingJobId(null)} className="flex-1 bg-[#FDF8E7] text-[#2C1810] py-3 font-black uppercase tracking-widest border-4 border-[#2C1810] hover:bg-[#2C1810] hover:text-[#FDF8E7] transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)] hover:translate-y-px hover:shadow-[2px_2px_0px_rgba(44,24,16,1)]">Cancel</button>
-                            <button type="submit" className="flex-[2] bg-[#2C1810] text-[#FDF8E7] py-3 font-black uppercase tracking-widest border-4 border-[#2C1810] shadow-[4px_4px_0px_rgba(44,24,16,1)] hover:translate-y-px hover:shadow-[2px_2px_0px_rgba(44,24,16,1)] transition-transform">Save Amendments</button>
+                          <div className="flex gap-4 pt-2">
+                            <button type="button" onClick={() => setEditingJobId(null)} className="flex-1 py-3 text-slate-700 bg-white border border-slate-300 rounded-xl font-semibold hover:bg-slate-50 transition-colors">Cancel</button>
+                            <button type="submit" className="flex-[2] py-3 bg-indigo-600 text-white rounded-xl font-semibold shadow-sm hover:bg-indigo-700 transition-colors">Save Amendments</button>
                           </div>
                         </form>
                       </div>
                     ) : (
-                      <div className="p-6 md:p-8">
-                        <div className="flex flex-col md:flex-row justify-between items-start mb-6 border-b-4 border-[#2C1810] pb-4">
-                          <div className="pr-16">
-                            <h2 className="text-3xl font-black uppercase tracking-widest text-[#2C1810]">
-                              {job.displayId && <span className="opacity-50 mr-3">[{job.displayId}]</span>}
-                              {job.title || "STUDENT LEAD"}
-                            </h2>
-                            <p className="font-bold uppercase tracking-widest text-sm mt-2 opacity-80">📍 {job.location} | 💰 ₹{job.salary}</p>
-                            <p className="font-black uppercase tracking-widest text-xs mt-3 text-blue-900 bg-blue-100 px-2 py-1 inline-block border border-blue-900">
-                              CLIENT: {job.parentName} ({job.contactNumber})
-                            </p>
+                      <div className="p-6 md:p-8 flex flex-col md:flex-row gap-8">
+                        
+                        {/* Job Details */}
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            {job.displayId && <span className="text-sm font-bold text-slate-400">{job.displayId}</span>}
+                            <h3 className="text-2xl font-bold text-slate-900">{job.title || "STUDENT LEAD"}</h3>
                           </div>
-                          <div className="flex flex-col gap-2 mt-4 md:mt-0">
-                            <button onClick={() => startEditing(job)} className="bg-[#f0e4cc] text-[#2C1810] px-4 py-2 font-black uppercase tracking-widest border-4 border-[#2C1810] shadow-[4px_4px_0px_rgba(44,24,16,1)] hover:translate-y-px transition-transform whitespace-nowrap text-xs">Amend Record</button>
-                            <button onClick={() => handleDeleteJob(job._id)} className="bg-red-600 text-white px-4 py-2 font-black uppercase tracking-widest border-4 border-red-900 shadow-[4px_4px_0px_rgba(0,0,0,0.3)] hover:translate-y-px transition-transform whitespace-nowrap text-xs">Purge Record</button>
+                          
+                          <div className="flex flex-wrap items-center gap-3 mt-4 text-sm font-medium text-slate-600">
+                            <span className="bg-slate-100 px-3 py-1 rounded-lg">📍 {job.location}</span>
+                            <span className="bg-slate-100 px-3 py-1 rounded-lg">💰 ₹{job.salary}</span>
+                            <span className="bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-1 rounded-lg">
+                              👤 {job.parentName} ({job.contactNumber})
+                            </span>
+                          </div>
+
+                          <div className="mt-6 flex flex-wrap gap-3">
+                            <button onClick={() => startEditing(job)} className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
+                              <Edit className="w-4 h-4" /> Amend
+                            </button>
+                            <button onClick={() => handleDeleteJob(job._id)} className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
+                              <Trash2 className="w-4 h-4" /> Purge
+                            </button>
                           </div>
                         </div>
 
-                        <div className="bg-[#f0e4cc] p-4 border-4 border-[#2C1810]">
-                          <h3 className="font-black uppercase tracking-widest text-[#2C1810] mb-4 border-b-2 border-dashed border-[#2C1810] pb-2">Unlocked By ({jobApps.length})</h3>
+                        {/* Unlocks Panel */}
+                        <div className="w-full md:w-72 bg-slate-50 rounded-2xl p-5 border border-slate-200 shrink-0">
+                          <h4 className="text-sm font-bold text-slate-900 mb-4 flex items-center justify-between">
+                            Unlocked By 
+                            <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">{jobApps.length}</span>
+                          </h4>
+                          
                           {jobApps.length === 0 ? (
-                            <p className="text-xs font-bold uppercase tracking-widest opacity-60">No unlocks recorded.</p>
+                            <p className="text-sm text-slate-500 italic">No unlocks recorded.</p>
                           ) : (
-                            <div className="flex flex-col gap-3">
+                            <div className="space-y-3">
                               {jobApps.map(app => (
-                                <div key={app._id} className="bg-white p-3 border-2 border-[#2C1810] flex justify-between items-center shadow-[2px_2px_0px_rgba(44,24,16,1)]">
-                                  <div>
-                                    <p className="font-black uppercase tracking-widest text-sm">{app.tutorName}</p>
-                                    <p className="text-[10px] font-bold uppercase tracking-wider mt-1 opacity-70">Trans: {app._id.substring(0,8)}</p>
-                                  </div>
-                                  <a href={`https://wa.me/91${app.tutorPhone}`} target="_blank" rel="noreferrer" className="bg-[#2C1810] text-[#FDF8E7] px-3 py-1 font-black uppercase text-xs tracking-widest border-2 border-[#2C1810] hover:bg-[#FDF8E7] hover:text-[#2C1810] transition-colors">Message</a>
+                                <div key={app._id} className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                                  <p className="font-bold text-slate-900 text-sm">{app.tutorName}</p>
+                                  <p className="text-xs text-slate-400 mt-0.5">ID: {app._id.substring(0,8)}</p>
+                                  <a href={`https://wa.me/91${app.tutorPhone}`} target="_blank" rel="noreferrer" className="mt-2 block w-full text-center bg-indigo-50 text-indigo-700 hover:bg-indigo-100 py-1.5 rounded-lg text-xs font-semibold transition-colors">
+                                    Message
+                                  </a>
                                 </div>
                               ))}
                             </div>
@@ -364,7 +506,7 @@ function AdminPortal() {
               })
             )}
           </div>
-        </div>
+        </section>
 
       </div>
     </div>

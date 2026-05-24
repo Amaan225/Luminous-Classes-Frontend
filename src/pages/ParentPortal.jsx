@@ -1,80 +1,68 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ShieldCheck, UserCheck, Sparkles, ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 function ParentPortal() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submittedJob, setSubmittedJob] = useState(null); 
+  const [submitStatus, setSubmitStatus] = useState('idle'); // 'idle', 'success', 'error'
+  
   const [formData, setFormData] = useState({
-    parentName: '', subject: '', grade: '', location: '', salary: '', contactNumber: '', requirements: ''
+    parentName: '',
+    contactNumber: '',
+    subject: '',
+    grade: '',
+    location: '',
+    salary: '',
+    requirements: ''
   });
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true); 
-    
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
     try {
-      const response = await axios.post('https://luminous-classes-backend.onrender.com/api/jobs', formData);
-      setSubmittedJob(response.data);
-      setFormData({ parentName: '', subject: '', grade: '', location: '', salary: '', contactNumber: '', requirements: '' });
+      // Posts to the public route without the admin secret, meaning it defaults to 'pending' (Quarantine)
+      await axios.post('https://luminous-classes-backend.onrender.com/api/jobs', formData);
+      setSubmitStatus('success');
+      setFormData({
+        parentName: '', contactNumber: '', subject: '', grade: '', location: '', salary: '', requirements: ''
+      });
     } catch (error) {
-      console.error("Error posting job:", error);
-      alert("Failed to post job. Please try again.");
+      console.error('Submission error:', error);
+      setSubmitStatus('error');
     } finally {
-      setIsSubmitting(false); 
+      setIsSubmitting(false);
     }
   };
 
-  const handleReset = () => {
-    setSubmittedJob(null); 
-  };
-
-  // --- THE VINTAGE RECEIPT SUCCESS SCREEN ---
-  if (submittedJob) {
+  // --- SUCCESS STATE UI ---
+  if (submitStatus === 'success') {
     return (
-      <div className="min-h-screen bg-[#FDF8E7] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7] p-8">
-        <div className="max-w-2xl mx-auto mt-10">
-          
-          <div className="bg-[#f0e4cc] p-10 border-4 border-[#2C1810] shadow-[12px_12px_0px_rgba(44,24,16,1)] text-center relative">
-            
-            {/* Vintage "Stamp" */}
-            <div className="absolute -top-6 -right-6 w-24 h-24 border-4 border-[#2C1810] rounded-full flex items-center justify-center bg-[#FDF8E7] transform rotate-12 shadow-[4px_4px_0px_rgba(44,24,16,1)]">
-              <span className="font-black uppercase tracking-widest text-[#2C1810] text-sm text-center leading-tight">
-                VERIFIED<br/>ENTRY
-              </span>
-            </div>
-
-            <h3 className="text-4xl font-black uppercase tracking-widest text-[#2C1810] mb-4 border-b-4 border-dashed border-[#2C1810] pb-4 inline-block">
-              Requirement Posted
-            </h3>
-            <p className="text-[#2C1810]/80 font-bold uppercase tracking-widest text-sm mb-10 mt-4">
-              Your job has been securely added to the Tutor49 network.
-            </p>
-
-            {/* Ticket Stub Style ID Box */}
-            <div className="bg-[#FDF8E7] border-4 border-[#2C1810] p-6 mb-10 inline-block min-w-[250px] shadow-[6px_6px_0px_rgba(44,24,16,1)]">
-              <p className="text-xs font-black uppercase tracking-widest text-[#2C1810]/70 mb-2">Official Reference ID</p>
-              <p className="text-5xl font-black text-[#2C1810] tracking-[0.1em]">
-                {submittedJob.displayId || "TK-PNDG"}
-              </p>
-            </div>
-
-            <div className="bg-[#FDF8E7] border-4 border-[#2C1810] p-6 text-sm text-[#2C1810] mb-10 text-left relative">
-              <span className="absolute -top-3 left-4 bg-[#f0e4cc] px-2 font-black uppercase tracking-widest text-xs border-2 border-[#2C1810]">
-                Admin Notice
-              </span>
-              <p className="font-black uppercase tracking-widest mb-2 text-base mt-2">Need to make changes?</p>
-              <p className="font-bold uppercase tracking-wider leading-relaxed text-xs opacity-80">
-                To edit details, update the salary, or close this listing once you hire a tutor, simply WhatsApp our Admin team at <span className="font-black border-b-2 border-[#2C1810]">+91 7007112372</span> with your Reference ID.
-              </p>
-            </div>
-            
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-lg border border-slate-100 p-8 text-center relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-2 bg-emerald-500"></div>
+          <CheckCircle2 className="w-20 h-20 text-emerald-500 mx-auto mb-6" strokeWidth={1.5} />
+          <h2 className="text-3xl font-bold text-slate-900 mb-4">Requirement Posted!</h2>
+          <p className="text-slate-600 mb-8 leading-relaxed">
+            Your requirement is currently under review by our team. Once verified, it will be shared with our network of top-tier university tutors.
+          </p>
+          <div className="flex flex-col gap-3">
             <button 
-              onClick={handleReset} 
-              className="px-8 py-4 bg-[#2C1810] text-[#FDF8E7] font-black uppercase tracking-widest border-4 border-[#2C1810] hover:bg-[#FDF8E7] hover:text-[#2C1810] transition-colors shadow-[6px_6px_0px_rgba(44,24,16,1)] hover:translate-y-px hover:shadow-[3px_3px_0px_rgba(44,24,16,1)]"
+              onClick={() => navigate('/')} 
+              className="w-full py-3.5 bg-slate-900 text-white rounded-xl font-semibold shadow-md hover:bg-slate-800 transition-colors"
+            >
+              Return to Homepage
+            </button>
+            <button 
+              onClick={() => setSubmitStatus('idle')} 
+              className="w-full py-3.5 bg-slate-50 text-slate-700 rounded-xl font-semibold border border-slate-200 hover:bg-slate-100 transition-colors"
             >
               Post Another Requirement
             </button>
@@ -84,202 +72,169 @@ function ParentPortal() {
     );
   }
 
-  // --- THE VINTAGE FORM UI ---
+  // --- THE MODERN FORM UI ---
   return (
-    <div className="min-h-screen bg-[#f3f1ec] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7] p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
-        
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 py-12 px-4 sm:px-6 lg:px-8">
+      
+      <div className="max-w-4xl mx-auto">
+        {/* Navigation & Header */}
         <button 
           onClick={() => navigate('/')} 
-          className="mb-8 px-5 py-2 border-2 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] hover:bg-[#2C1810] hover:text-[#FDF8E7] transition-colors shadow-[2px_2px_0px_rgba(44,24,16,1)] hover:translate-y-px hover:shadow-[1px_1px_0px_rgba(44,24,16,1)]"
+          className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors mb-8"
         >
-          &larr; Back to Home
+          <ArrowLeft className="w-4 h-4" /> Back to home
         </button>
 
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="mb-10 text-center md:text-left">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+            Find the Perfect Tutor
+          </h1>
+          <p className="text-lg text-slate-600 max-w-2xl">
+            Post your requirement for free. We'll connect you directly with verified university students from top local colleges. No agencies in the middle.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           
-          {/* LEFT COLUMN: The Trust Content */}
-          <div className="space-y-8 md:pr-8">
-            <h1 
-              className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-[#2C1810] leading-none"
-              style={{ textShadow: '4px 4px 0px rgba(0,0,0,0.1)' }}
-            >
-              FIND THE <br/> 
-              <span 
-                className="font-serif italic normal-case text-[#8B1A1A] tracking-normal pr-4 text-[1.1em]" 
-                style={{ textShadow: 'none' }}
-              >
-                Perfect
-              </span> 
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2C1810] to-[#5c3726] border-b-8 border-[#2C1810]">
-                TUTOR.
-              </span>
-            </h1>
-            <p className="text-sm font-bold uppercase tracking-widest text-[#2C1810]/80 leading-relaxed border-l-4 border-[#2C1810] pl-4">
-              You may have dealt with tuition agencies before. But our process is different and made to benefit parents like you:
-            </p>
-            
-            <div className="space-y-8 pt-6">
-              
-          {/* Feature 1: Full Control (Steering Wheel / Handshake concept) */}
-              <div className="flex items-start">
-                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
-                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 18V12L16.2426 7.75736"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 12L7.75736 7.75736"></path>
-                  </svg>
+          {/* THE FORM CONTAINER */}
+          <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+            <div className="p-8 md:p-10">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                
+                {/* 1. Parent Details */}
+                <div className="space-y-4">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-2">Your Contact Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-sm font-medium text-slate-700">Your Name <span className="text-red-500">*</span></label>
+                      <input 
+                        type="text" name="parentName" required value={formData.parentName} onChange={handleChange}
+                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
+                        placeholder="e.g. Mr. Sharma"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-sm font-medium text-slate-700">WhatsApp Number <span className="text-red-500">*</span></label>
+                      <input 
+                        type="text" name="contactNumber" required value={formData.contactNumber} onChange={handleChange}
+                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
+                        placeholder="10-digit number"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="ml-5">
-                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Full Control</h4>
-                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">You decide which tutor to finalize after talking to them. And directly deal with them regarding fee and all.</p>
-                </div>
-              </div>
 
-              {/* Feature 2: No Registration Fee (Zero Currency concept) */}
-              <div className="flex items-start">
-                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
-                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M9 12H15"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M9 16H15"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17C10.3431 17 9 15.6569 9 14"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M3 3L21 21"></path>
-                  </svg>
+                {/* 2. Requirement Details */}
+                <div className="space-y-4 pt-4">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-2">Tuition Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-sm font-medium text-slate-700">Subject(s) <span className="text-red-500">*</span></label>
+                      <input 
+                        type="text" name="subject" required value={formData.subject} onChange={handleChange}
+                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
+                        placeholder="e.g. Maths & Science"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-sm font-medium text-slate-700">Grade / Class <span className="text-red-500">*</span></label>
+                      <input 
+                        type="text" name="grade" required value={formData.grade} onChange={handleChange}
+                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
+                        placeholder="e.g. Class 10 (CBSE)"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-sm font-medium text-slate-700">Location Area <span className="text-red-500">*</span></label>
+                      <input 
+                        type="text" name="location" required value={formData.location} onChange={handleChange}
+                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
+                        placeholder="e.g. Aliganj / Online"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-sm font-medium text-slate-700">Monthly Budget (₹) <span className="text-red-500">*</span></label>
+                      <input 
+                        type="text" name="salary" required value={formData.salary} onChange={handleChange}
+                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
+                        placeholder="e.g. 3000 - 4000"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="ml-5">
-                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">No Registration Fee</h4>
-                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">You don't pay us anything to find a tutor. In fact, you get a Free Demo from the tutor.</p>
-                </div>
-              </div>
 
-              {/* Feature 3: No Middleman (Direct Connection concept) */}
-              <div className="flex items-start">
-                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
-                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M17 21V19C17 16.7909 15.2091 15 13 15H11C8.79086 15 7 16.7909 7 19V21"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M21 12L3 12"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M18 9L21 12L18 15"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M6 9L3 12L6 15"></path>
-                  </svg>
+                {/* 3. Additional Notes */}
+                <div className="space-y-4 pt-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-sm font-medium text-slate-700">Specific Requirements (Optional)</label>
+                    <textarea 
+                      name="requirements" value={formData.requirements} onChange={handleChange}
+                      className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full h-32 resize-none"
+                      placeholder="e.g. Looking for a female tutor, 3 days a week, evening time preferable."
+                    ></textarea>
+                  </div>
                 </div>
-                <div className="ml-5">
-                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">No Middleman</h4>
-                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">Tutors contact you directly. You discuss timing, fees, and everything yourself.</p>
-                </div>
-              </div>
 
-              {/* Feature 4: More Choices (Grid / Many Profiles concept) */}
-              <div className="flex items-start">
-                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
-                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M10 3H3V10H10V3Z"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M21 3H14V10H21V3Z"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M21 14H14V21H21V14Z"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M10 14H3V21H10V14Z"></path>
-                  </svg>
-                </div>
-                <div className="ml-5">
-                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">More Choices</h4>
-                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">Your requirement goes on our website. Many verified tutors see it, so you get more options to choose from.</p>
-                </div>
-              </div>
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-red-50 text-red-700 rounded-xl text-sm font-medium border border-red-100">
+                    Something went wrong while posting your requirement. Please try again or contact support.
+                  </div>
+                )}
 
-              {/* Feature 5: Save Time & Money (Stopwatch / Piggy Bank concept) */}
-              <div className="flex items-start">
-                <div className="flex-shrink-0 mt-1 bg-[#f0e4cc] p-2 border-4 border-[#2C1810] shadow-[2px_2px_0px_rgba(44,24,16,1)]">
-                  <svg className="w-6 h-6 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 22C16.9706 22 21 17.9706 21 13C21 8.02944 16.9706 4 12 4C7.02944 4 3 8.02944 3 13C3 17.9706 7.02944 22 12 22Z"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M12 8V13L15 16"></path>
-                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="3" d="M9 2H15"></path>
-                  </svg>
-                </div>
-                <div className="ml-5">
-                  <h4 className="text-xl font-black uppercase tracking-widest text-[#2C1810]">Save Time & Money</h4>
-                  <p className="text-[#2C1810]/70 mt-2 text-xs font-bold uppercase tracking-wider leading-relaxed">You negotiate directly with tutors. No agency taking 50% of first month fee.</p>
-                </div>
-              </div>
-              
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full py-4 bg-indigo-600 text-white rounded-xl text-lg font-semibold shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:shadow-indigo-600/30 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 flex justify-center items-center gap-2 mt-4"
+                >
+                  {isSubmitting ? 'Securing your request...' : 'Post Requirement Free'}
+                </button>
+                <p className="text-center text-xs text-slate-500 mt-4">
+                  By posting, you agree to our terms. Your contact details are kept secure.
+                </p>
+              </form>
             </div>
           </div>
 
-          {/* RIGHT COLUMN: The Brutalist Form */}
-          <div className="bg-[#f0e4cc] p-8 md:p-10 border-4 border-[#2C1810] shadow-[12px_12px_0px_rgba(44,24,16,1)]">
-            <h3 className="text-3xl font-black uppercase tracking-widest text-[#2C1810] mb-8 border-b-4 border-[#2C1810] pb-4 inline-block">
-              Post Requirement
-            </h3>
-            
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-              
-              <div className="relative">
-                <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Parent Name</label>
-                <input type="text" name="parentName" placeholder="ENTER YOUR NAME" value={formData.parentName} onChange={handleChange} required 
-                  className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
-                />
+          {/* TRUST BADGES SIDEBAR */}
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <ShieldCheck className="w-24 h-24 text-indigo-600" />
               </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="relative">
-                  <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Subject</label>
-                  <input type="text" name="subject" placeholder="E.G. MATH" value={formData.subject} onChange={handleChange} required 
-                    className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
-                  />
-                </div>
-                <div className="relative">
-                  <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Grade</label>
-                  <input type="text" name="grade" placeholder="E.G. 10TH" value={formData.grade} onChange={handleChange} required 
-                    className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
-                  />
-                </div>
+              <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center mb-4 text-indigo-600">
+                <ShieldCheck className="w-6 h-6" />
               </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="relative">
-                  <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Location</label>
-                  <input type="text" name="location" placeholder="YOUR AREA" value={formData.location} onChange={handleChange} required 
-                    className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
-                  />
-                </div>
-                <div className="relative">
-                  <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Salary (₹)</label>
-                  <input type="number" name="salary" placeholder="AMOUNT" value={formData.salary} onChange={handleChange} required 
-                    className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
-                  />
-                </div>
-              </div>
-              
-              <div className="relative">
-                <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Contact Number</label>
-                <input type="tel" name="contactNumber" placeholder="10-DIGIT NUMBER" value={formData.contactNumber} onChange={handleChange} required 
-                  className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)]" 
-                />
-              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">100% Free for Parents</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                You never pay a single rupee to Tutor49. We are a free network designed to help you bypass expensive agency commissions.
+              </p>
+            </div>
 
-              <div className="relative">
-                <label className="absolute -top-3 left-3 bg-[#f0e4cc] px-1 text-[10px] font-black uppercase tracking-widest text-[#2C1810]">Extra Requirements</label>
-                <textarea name="requirements" placeholder="ANY EXTRA REQUIREMENTS OR PREFERENCES?" value={formData.requirements} onChange={handleChange} 
-                  className="w-full p-4 bg-[#FDF8E7] border-4 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] placeholder:text-[#2C1810]/30 focus:outline-none focus:bg-white transition-colors shadow-[4px_4px_0px_rgba(44,24,16,1)] h-32 resize-none"
-                ></textarea>
+            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <UserCheck className="w-24 h-24 text-emerald-600" />
               </div>
-              
-              <button 
-                type="submit" 
-                disabled={isSubmitting}
-                className={`mt-4 p-5 border-4 border-[#2C1810] font-black uppercase tracking-widest transition-all shadow-[6px_6px_0px_rgba(44,24,16,1)] ${
-                  isSubmitting 
-                  ? 'bg-[#2C1810]/50 text-[#FDF8E7] cursor-not-allowed shadow-none translate-y-[6px]' 
-                  : 'bg-[#2C1810] text-[#FDF8E7] hover:bg-[#FDF8E7] hover:text-[#2C1810] hover:translate-y-px hover:shadow-[3px_3px_0px_rgba(44,24,16,1)]'
-                }`}
-              >
-                {isSubmitting ? 'TRANSMITTING...' : 'PUBLISH REQUIREMENT'}
-              </button>
-              
-              <div className="bg-[#FDF8E7] border-2 border-dashed border-[#2C1810] p-3 text-center mt-2">
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#2C1810]/70">
-                   Data encrypted. Only verified tutors can unlock your contact.
-                </p>
+              <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4 text-emerald-600">
+                <UserCheck className="w-6 h-6" />
               </div>
-            </form>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Verified Students</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                We manually verify the college ID of every tutor before they can view your requirements, ensuring a safe learning environment.
+              </p>
+            </div>
+
+            <div className="bg-indigo-600 rounded-3xl p-6 shadow-md text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-10">
+                <Sparkles className="w-24 h-24 text-white" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">What happens next?</h3>
+              <ol className="text-sm text-indigo-100 space-y-3 mt-4 relative z-10 list-decimal list-inside marker:font-bold">
+                <li>We review your post for spam.</li>
+                <li>It goes live on our secure board.</li>
+                <li>Interested tutors unlock your number.</li>
+                <li>They call you directly to arrange a free demo!</li>
+              </ol>
+            </div>
           </div>
 
         </div>

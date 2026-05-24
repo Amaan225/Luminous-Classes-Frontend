@@ -1,102 +1,126 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, Shield, AlertCircle, RefreshCcw } from 'lucide-react';
 
 function Terms() {
+  const navigate = useNavigate();
+
   return (
-    // FULL PAGE VINTAGE WRAPPER
-    <div className="min-h-screen bg-[#f3f1ec] text-[#2C1810] font-sans selection:bg-[#2C1810] selection:text-[#FDF8E7] p-4 md:p-8">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 py-12 px-4 sm:px-6 lg:px-8">
+      
       <div className="max-w-4xl mx-auto">
-        
-        {/* VINTAGE BACK BUTTON */}
-        <Link 
-          to="/" 
-          className="mb-8 inline-block px-5 py-2 border-2 border-[#2C1810] font-black uppercase tracking-widest text-[#2C1810] hover:bg-[#2C1810] hover:text-[#FDF8E7] transition-colors shadow-[2px_2px_0px_rgba(44,24,16,1)] hover:translate-y-px hover:shadow-[1px_1px_0px_rgba(44,24,16,1)]"
+        {/* Navigation */}
+        <button 
+          onClick={() => navigate('/')} 
+          className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors mb-8"
         >
-          &larr; Back to Home
-        </Link>
+          <ArrowLeft className="w-4 h-4" /> Back to home
+        </button>
 
-        {/* BRUTALIST DOCUMENT CONTAINER */}
-        <div className="bg-[#f0e4cc] p-8 md:p-12 border-4 border-[#2C1810] shadow-[12px_12px_0px_rgba(44,24,16,1)] relative">
-          
-          {/* Vintage Stamp */}
-          <div className="absolute top-4 right-4 md:top-8 md:right-8 border-4 border-[#900606] px-2 py-1 transform rotate-6 opacity-80 hidden sm:block">
-            <span className="font-black uppercase tracking-widest text-xs">LEGAL MANIFEST</span>
-          </div>
-
-          <h1 className="text-4xl md:text-5xl font-black uppercase tracking-widest text-[#8e1717] mb-12 border-b-8 border-[#751414] pb-4 inline-block">
-            Terms & Conditions
+        {/* Header */}
+        <div className="mb-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+            Terms & Policies
           </h1>
-          
-          <div className="space-y-10">
-            {/* Section 1 */}
-            <section className="relative">
-              <div className="absolute -left-4 top-1 w-2 h-full bg-[#2C1810]"></div>
-              <div className="pl-4">
-                <h2 className="text-xl font-black uppercase tracking-widest text-[#2C1810] mb-3">1. Introduction</h2>
-                <p className="font-bold text-sm md:text-base tracking-wide leading-relaxed text-[#2C1810]/80">
-                  Welcome to Tutor49. By using our platform, you agree to these terms. We act as a direct connection board between parents and independent tutors and other standard agencies.
-                </p>
-              </div>
-            </section>
-
-            {/* Section 2 */}
-            <section className="relative">
-              <div className="absolute -left-4 top-1 w-2 h-full bg-[#2C1810]"></div>
-              <div className="pl-4">
-                <h2 className="text-xl font-black uppercase tracking-widest text-[#2C1810] mb-3">2. Services & Payments</h2>
-                <p className="font-bold text-sm md:text-base tracking-wide leading-relaxed text-[#2C1810]/80">
-                  We charge a nominal, non-refundable platform fee (₹49) for tutors to unlock contact details. Tutor49 does not charge any recurring agency fees or commissions on the tutor's salary for "Direct Leads." However, designated "Partner Leads" clearly marked on the dashboard are subject to a 50% first-month placement fee upon successful matching.
-                </p>
-              </div>
-            </section>
-
-            {/* Section 3 */}
-            <section className="relative">
-              <div className="absolute -left-4 top-1 w-2 h-full bg-[#2C1810]"></div>
-              <div className="pl-4">
-                <h2 className="text-xl font-black uppercase tracking-widest text-[#2C1810] mb-3">3. Verification & Liability</h2>
-                <p className="font-bold text-sm md:text-base tracking-wide leading-relaxed text-[#2C1810]/80">
-                  While we manually verify Tutors, Tutor49 is a matching platform and is not liable for the conduct, safety, or academic outcomes of the engagements. Parents and tutors are explicitly expected to exercise their own due diligence before finalizing any home tuition agreements.
-                </p>
-              </div>
-            </section>
-
-            {/* Section 4 */}
-            <section className="relative">
-              <div className="absolute -left-4 top-1 w-2 h-full bg-[#2C1810]"></div>
-              <div className="pl-4">
-                <h2 className="text-xl font-black uppercase tracking-widest text-[#2C1810] mb-3">4. Privacy Policy</h2>
-                <p className="font-bold text-sm md:text-base tracking-wide leading-relaxed text-[#2C1810]/80">
-                  We collect basic contact information to facilitate connections. Parent phone numbers are strictly encrypted and only shared with tutors who successfully complete the unlock payment. We do not sell your data to third parties.
-                </p>
-              </div>
-            </section>
-
-            {/* Section 5 */}
-            <section className="relative">
-              <div className="absolute -left-4 top-1 w-2 h-full bg-[#2C1810]"></div>
-              <div className="pl-4">
-                <h2 className="text-xl font-black uppercase tracking-widest text-[#2C1810] mb-3">5. Refund Policy</h2>
-                <p className="font-bold text-sm md:text-base tracking-wide leading-relaxed text-[#2C1810]/80">
-                  Since the service provided is immediate access to digital contact information, the ₹49 unlock fee is strictly non-refundable once the contact details have been revealed and delivered to the tutor's dashboard.
-                </p>
-              </div>
-            </section>
-          </div>
-          
-          {/* Footer Signature Line */}
-          <div className="mt-16 pt-8 border-t-4 border-dashed border-[#8b1818] flex justify-between items-end">
-            <div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-[#2C1810]/50">DOCUMENT VERSION</p>
-              <p className="font-bold tracking-widest">v1.0.2026</p>
-            </div>
-            <div className="text-right">
-              <p className="text-[10px] font-black uppercase tracking-widest text-[#2C1810]/50">PLATFORM</p>
-              <p className="font-black uppercase tracking-widest">TUTO₹49 LUCKNOW</p>
-            </div>
-          </div>
-
+          <p className="text-slate-500 font-medium">
+            Last Updated: May 24, 2026
+          </p>
         </div>
+
+        {/* Content Container */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+          
+          <div className="p-8 md:p-12 space-y-12">
+            
+            {/* Section 1: Introduction */}
+            <section>
+              <h2 className="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-3">
+                <Shield className="w-6 h-6 text-indigo-600" />
+                1. Platform Overview
+              </h2>
+              <div className="space-y-4 text-slate-600 leading-relaxed">
+                <p>
+                  Tutor49 operates as a direct digital bulletin board connecting parents with independent university tutors. We are <strong>not</strong> a traditional tutoring agency. 
+                </p>
+                <p>
+                  Our primary service is providing a secure platform for parents to post their educational requirements and for verified tutors to access these leads without paying predatory percentage-based commissions.
+                </p>
+              </div>
+            </section>
+
+            {/* Section 2: Parent Guidelines */}
+            <section>
+              <h2 className="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">
+                2. For Parents (Clients)
+              </h2>
+              <ul className="space-y-3 text-slate-600 leading-relaxed list-disc list-outside ml-5 marker:text-slate-400">
+                <li><strong>Free Usage:</strong> Posting a requirement on Tutor49 is 100% free. Parents are never charged a fee by the platform.</li>
+                <li><strong>Verification:</strong> We manually verify the college IDs of our tutors, but parents are strongly encouraged to independently verify the tutor's identity during the first meeting.</li>
+                <li><strong>Direct Negotiation:</strong> Tutor49 does not dictate salaries. Fees, timings, and syllabus are negotiated directly between the parent and the chosen tutor.</li>
+              </ul>
+            </section>
+
+            {/* Section 3: Tutor Guidelines */}
+            <section>
+              <h2 className="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">
+                3. For Tutors
+              </h2>
+              <ul className="space-y-3 text-slate-600 leading-relaxed list-disc list-outside ml-5 marker:text-slate-400">
+                <li><strong>The Unlock Fee:</strong> Tutors pay a flat, non-recurring fee of ₹49 to unlock a Premium lead's contact number.</li>
+                <li><strong>No Conversion Guarantee:</strong> Unlocking a lead provides the contact number; it does <strong>not</strong> guarantee the parent will hire you. Hiring depends on your communication skills and demo performance.</li>
+                <li><strong>Zero Commission:</strong> Once you are hired via a Premium lead, you keep 100% of your earnings. Tutor49 will never ask for a percentage of your salary.</li>
+                <li><strong>Code of Conduct:</strong> Any harassment, spamming, or unprofessional behavior toward parents will result in an immediate, permanent ban from the platform.</li>
+              </ul>
+            </section>
+
+            {/* Section 4: Refund Policy (Highlighted) */}
+            <section className="bg-indigo-50 p-6 rounded-2xl border border-indigo-100 relative">
+              <h2 className="text-xl font-bold text-indigo-900 mb-4 flex items-center gap-2">
+                <RefreshCcw className="w-5 h-5" />
+                4. The 100% Refund Policy
+              </h2>
+              <div className="space-y-3 text-indigo-800 leading-relaxed text-sm">
+                <p>
+                  We stand by the quality of our leads. If you pay ₹49 to unlock a requirement, you are eligible for a full refund under the following conditions:
+                </p>
+                <ul className="list-disc list-outside ml-5 space-y-2 font-medium">
+                  <li>The parent declines to take a free demo from you.</li>
+                  <li>The parent has already hired someone else before you could call.</li>
+                  <li>The phone number provided is invalid or unreachable after 48 hours.</li>
+                </ul>
+                <p className="pt-2 text-xs opacity-80">
+                  * Note: Refunds are not provided if the parent takes your demo but decides not to hire you based on performance, or if the lead is explicitly marked as a "Classic" 50% commission lead.
+                </p>
+              </div>
+            </section>
+
+            {/* Section 5: Data & Privacy */}
+            <section>
+              <h2 className="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-3">
+                <AlertCircle className="w-6 h-6 text-slate-400" />
+                5. Privacy Policy
+              </h2>
+              <div className="space-y-4 text-slate-600 leading-relaxed">
+                <p>
+                  We treat your data with the utmost respect. 
+                </p>
+                <ul className="space-y-3 list-disc list-outside ml-5 marker:text-slate-400">
+                  <li><strong>Number Masking:</strong> Parent contact numbers are masked securely on our database and are only revealed to verified tutors who execute a successful unlock transaction.</li>
+                  <li><strong>No Third-Party Selling:</strong> We do not sell your personal data, email addresses, or phone numbers to third-party marketing agencies.</li>
+                  <li><strong>Payment Security:</strong> All transactions are handled securely by Razorpay. Tutor49 does not store your credit card or UPI details on our servers.</li>
+                </ul>
+              </div>
+            </section>
+
+          </div>
+        </div>
+
+        <div className="text-center mt-12 mb-8">
+          <p className="text-slate-500 text-sm">
+            Questions about these terms? Email us at <a href="mailto:tutor49.official@gmail.com" className="text-indigo-600 font-medium hover:underline">tutor49.official@gmail.com</a>
+          </p>
+        </div>
+
       </div>
     </div>
   );
