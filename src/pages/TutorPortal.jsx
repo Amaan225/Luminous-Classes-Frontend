@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, BookOpen, GraduationCap, ArrowLeft, Search, ShieldCheck } from 'lucide-react';
+import { MapPin, BookOpen, GraduationCap, ArrowLeft, Search, ShieldCheck, Banknote } from 'lucide-react';
+
 
 function TutorPortal() {
   const navigate = useNavigate();
@@ -184,9 +185,10 @@ function TutorPortal() {
                         </span>
                       )}
                     </div>
-                    <span className="text-lg font-black text-slate-900 bg-white px-3 py-1 rounded-lg shadow-sm border border-slate-100">
-                      ₹{job.salary}
-                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-lg font-black text-green-700 bg-slate-50 px-3 py-1 rounded-lg shadow-sm border border-slate-100">
+  <Banknote className="w-5 h-5" />
+  ₹{job.salary}
+</span>
                   </div>
 
                   {/* Card Body */}
@@ -198,14 +200,14 @@ function TutorPortal() {
                     <div className="space-y-3">
                       <div className="flex items-center gap-3 text-sm text-slate-600">
                         <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 shrink-0">
-                          <GraduationCap className="w-4 h-4 text-slate-500" />
+                          <GraduationCap className="w-4 h-4 text-blue-500" />
                         </div>
                         <span className="font-medium">{job.grade}</span>
                       </div>
                       
                       <div className="flex items-center gap-3 text-sm text-slate-600">
                         <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 shrink-0">
-                          <MapPin className="w-4 h-4 text-slate-500" />
+                          <MapPin className="w-4 h-4 text-red-500" />
                         </div>
                         <span className="font-medium">{job.location}</span>
                       </div>
@@ -213,7 +215,7 @@ function TutorPortal() {
 
                     {job.requirements && (
                       <div className="mt-5 p-4 bg-slate-50 rounded-xl text-sm text-slate-600 border border-slate-100 relative">
-                        <BookOpen className="w-4 h-4 text-slate-400 absolute top-4 left-4" />
+                        <BookOpen className="w-4 h-4 text-yellow-400 absolute top-4 left-4" />
                         <p className="pl-7 line-clamp-3">{job.requirements}</p>
                       </div>
                     )}
@@ -223,7 +225,7 @@ function TutorPortal() {
                   <div className="p-5 pt-0 mt-auto">
                     <button 
                       onClick={() => openUnlockModal(job)}
-                      className="w-full py-3.5 bg-slate-900 text-white rounded-xl font-semibold shadow-md hover:bg-indigo-600 hover:shadow-indigo-600/20 transition-all flex justify-center items-center gap-2 group"
+                      className="w-full py-3.5 bg-slate-900 text-amber-400 rounded-xl font-bold tracking-wide border border-amber-500/30 shadow-lg hover:bg-slate-800 hover:border-amber-400 hover:shadow-amber-500/20 hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 group"
                     >
                       Unlock for ₹{job.price || 49}
                       <span className="opacity-50 group-hover:opacity-100 transition-opacity">→</span>
