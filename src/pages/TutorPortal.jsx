@@ -144,7 +144,7 @@ function TutorPortal() {
             className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${filter === 'classic' ? 'bg-amber-50 text-amber-700 border border-amber-200 shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'}`}
           >
             <span className="w-2 h-2 rounded-full bg-amber-500"></span>
-            Classic (50% Agency Fee)
+            Classic (50% Agency Commission)
           </button>
         </div>
 
