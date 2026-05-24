@@ -280,7 +280,7 @@ function TutorPortal() {
                   </div>
                   
                   <p className="text-slate-500 text-sm md:text-base font-medium mb-10 px-4 max-w-2xl mx-auto">
-                    Important: Please mention Tutor49 when you call. Maintain professional conduct at all times to avoid platform bans.
+                    Important: Please mention Tutor49 when you WhatsApp them. Maintain professional conduct at all times to avoid platform bans.
                   </p>
 
                   <button 
@@ -339,10 +339,10 @@ function TutorPortal() {
                       </div>
                       <div className="flex items-center gap-3 mb-3 relative z-10">
                         <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold shadow-sm text-sm">4</div>
-                        <h5 className="font-bold text-indigo-900">100% Refund Policy</h5>
+                        <h5 className="font-bold text-indigo-900">Refund Policy</h5>
                       </div>
                       <p className="text-sm text-indigo-800 leading-relaxed pl-11 relative z-10">
-                        If you contact the client and they have already hired someone else or refuse a demo, you get a full refund.
+                        If you contact the client and they refuse a demo, you get a  refund with nominal fee deduction.
                       </p>
                     </div>
                   </div>
