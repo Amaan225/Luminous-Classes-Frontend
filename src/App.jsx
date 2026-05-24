@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ScrollToTop from './ScrollToTop'; // <-- Imported here
-import TutorRegistration from './pages/TutorRegistration';
+import ScrollToTop from './ScrollToTop';
+import { Analytics } from '@vercel/analytics/react'; // <-- 1. Import Analytics
 
-// Import our newly separated pages
+import TutorRegistration from './pages/TutorRegistration';
 import LandingPage from './pages/LandingPage';
 import ParentPortal from './pages/ParentPortal';
 import TutorPortal from './pages/TutorPortal';
@@ -12,10 +12,10 @@ import Terms from './pages/Terms';
 
 function App() {
   return (
-    // --- THE PREMIUM WRAPPER ---
+    // Your modern premium wrapper
     <div className="min-h-screen font-sans text-slate-900 bg-slate-50 selection:bg-indigo-100 selection:text-indigo-900">
       <BrowserRouter>
-        <ScrollToTop /> {/* <-- Injected right above your Routes */}
+        <ScrollToTop /> 
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/parent" element={<ParentPortal />} />
@@ -25,6 +25,9 @@ function App() {
           <Route path="/terms" element={<Terms />} />
         </Routes>
       </BrowserRouter>
+      
+      {/* 2. Drop the component here so it tracks every page! */}
+      <Analytics /> 
     </div>
   );
 }
