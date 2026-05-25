@@ -1,9 +1,62 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { GraduationCap, Wallet, Zap, ChevronDown } from 'lucide-react';
+import { GraduationCap, Wallet, Zap, ChevronDown, Star, Quote, Menu, X } from 'lucide-react';
 
 function LandingPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // --- NEW: Smooth Scroll Function ---
+  const scrollToFaq = (e) => {
+    e.preventDefault();
+    const element = document.getElementById('faq');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+ const testimonials = [
+    {
+      quote: "Agencies used to take 50% of my first month's salary. Here, I paid a flat ₹49 to unlock the lead and kept the entire ₹5,000 tuition fee. This platform actually respects a teacher's hard work.",
+      name: "Rahul Verma",
+      role: "Independent Tutor",
+      avatarBg: "bg-indigo-100 text-indigo-700",
+      initial: "R",
+      rating: 5
+    },
+    {
+      quote: "Finding a reliable Maths tutor for my son's CBSE boards used to be a nightmare. Here, I connected directly with a fantastic teacher within hours. No middlemen, no hidden fees, just pure transparency.",
+      name: "Priya Sharma",
+      role: "Parent",
+      avatarBg: "bg-emerald-100 text-emerald-700",
+      initial: "P",
+      rating: 5
+    },
+    {
+      quote: "What I love most is the transparency. You negotiate directly with the tutor before making any commitments. That direct communication gave us the peace of mind we needed to invite a teacher into our home.",
+      name: "Vikram Singh",
+      role: "Parent",
+      avatarBg: "bg-amber-100 text-amber-700",
+      initial: "V",
+      rating: 5
+    },
+    {
+      quote: "The platform is brilliant. I browse local tuition requirements and only unlock the ones that fit my schedule. No agencies dictating my hours or my fees. Highly recommended for any serious educator.",
+      name: "Neha K.",
+      role: "Freelance Educator",
+      avatarBg: "bg-indigo-100 text-indigo-700",
+      initial: "N",
+      rating: 5
+    },
+    {
+      quote: "I was struggling with physics concepts, but the tutor my parents found here explained everything so practically. The platform made it so easy to find the exact subject expertise I needed.",
+      name: "Ananya M.",
+      role: "Student",
+      avatarBg: "bg-emerald-100 text-emerald-700",
+      initial: "A",
+      rating: 4
+    }
+  ];
 
   const faqs = [
     {
@@ -32,14 +85,84 @@ function LandingPage() {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
+  const doubledTestimonials = [...testimonials, ...testimonials];
+
   return (
-    <div className="min-h-screen bg-slate-50 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900">
-      {/* INJECTED: Premium dotted background pattern on the main wrapper */}
+    <div className="min-h-screen bg-slate-50 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-hidden relative">
       
+      <style>
+        {`
+          @keyframes infinite-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .animate-infinite-scroll {
+            animation: infinite-scroll 40s linear infinite;
+            width: max-content;
+          }
+          .animate-infinite-scroll:hover {
+            animation-play-state: paused;
+          }
+        `}
+      </style>
+
       {/* ========================================== */}
-      {/* 1. HERO SECTION (FULL SCREEN)              */}
+      {/* 0. NAVIGATION BAR (VIOLET/BLUE GLASS TINT) */}
       {/* ========================================== */}
-      <div className="relative overflow-hidden border-b border-slate-200 min-h-screen flex flex-col justify-center">
+      <nav className="fixed top-0 inset-x-0 z-[100] bg-white/40 backdrop-blur-2xl bg-gradient-to-r from-indigo-500/5 via-transparent to-violet-500/10 border-b border-indigo-100/50 shadow-sm shadow-indigo-500/5 transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          
+          {/* Brand Logo */}
+          <Link to="/" className="text-2xl font-black tracking-tighter text-slate-900 drop-shadow-sm">
+            TUTO₹<span className="text-indigo-600">49</span>
+          </Link>
+
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link to="/parent" className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors">For Parents</Link>
+            <Link to="/tutor" className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors">For Tutors</Link>
+            {/* UPDATED: Smooth Scroll Link */}
+            <a href="#faq" onClick={scrollToFaq} className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors cursor-pointer">FAQ</a>
+          </div>
+
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center gap-5">
+            <Link to="/register" className="text-sm font-bold text-slate-700 hover:text-indigo-600 transition-colors">Register</Link>
+            <Link to="/parent" className="bg-slate-900 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md shadow-slate-900/10 hover:bg-indigo-600 hover:shadow-indigo-600/20 hover:-translate-y-0.5 transition-all">
+              Post Requirement
+            </Link>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="md:hidden p-2 text-slate-600 hover:text-indigo-600 transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown Menu (Also Tinted) */}
+        <div className={`md:hidden absolute top-20 left-0 w-full bg-white/95 backdrop-blur-3xl border-b border-indigo-100/50 shadow-2xl transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+          <div className="px-6 py-8 flex flex-col gap-6">
+            <Link to="/parent" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-slate-700 hover:text-indigo-600">For Parents</Link>
+            <Link to="/tutor" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-slate-700 hover:text-indigo-600">Browse Jobs</Link>
+            <Link to="/register" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-slate-700 hover:text-indigo-600">Register as Tutor</Link>
+            {/* UPDATED: Mobile Smooth Scroll Link */}
+            <a href="#faq" onClick={(e) => { setIsMobileMenuOpen(false); scrollToFaq(e); }} className="text-lg font-bold text-slate-700 hover:text-indigo-600 cursor-pointer">FAQ</a>
+            <div className="pt-6 border-t border-indigo-100/50">
+              <Link to="/parent" onClick={() => setIsMobileMenuOpen(false)} className="w-full flex justify-center bg-indigo-600 text-white px-5 py-4 rounded-xl text-lg font-bold shadow-md">
+                Post a Requirement
+              </Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* ========================================== */}
+      {/* 1. HERO SECTION                            */}
+      {/* ========================================== */}
+      <div className="relative overflow-hidden border-b border-slate-200 min-h-screen flex flex-col justify-center pt-24">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-gradient-to-b from-indigo-50/80 to-transparent -z-10 rounded-full blur-3xl opacity-80"></div>
         
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center relative z-10 w-full py-20">
@@ -54,7 +177,7 @@ function LandingPage() {
           </h1>
           
           <p className="text-xl md:text-2xl lg:text-3xl text-slate-600 mb-14 max-w-3xl mx-auto leading-relaxed font-medium">
-            Connecting dedicated parents with verified, top-tier  tutors in the area.
+            Connecting dedicated parents with verified, top-tier tutors in the area.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 w-full max-w-3xl justify-center mb-16">
@@ -88,7 +211,7 @@ function LandingPage() {
       </div>
 
       {/* ========================================== */}
-      {/* 2. VALUE PROPOSITION (GRADIENT CARDS)      */}
+      {/* 2. VALUE PROPOSITION                       */}
       {/* ========================================== */}
       <div className="max-w-7xl mx-auto px-6 py-24">
         
@@ -103,9 +226,8 @@ function LandingPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           
-          {/* Card 1 with Gradient Border */}
           <div className="group relative p-[1px] rounded-3xl bg-gradient-to-br from-indigo-500 via-blue-400 to-cyan-400 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300">
-            <div className="bg-white rounded-[calc(1.5rem-1px)] p-10 h-full">
+            <div className="bg-white rounded-[calc(1.5rem-1px)] p-10 h-full overflow-hidden">
               <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <GraduationCap className="w-7 h-7 text-indigo-600" />
               </div>
@@ -116,9 +238,8 @@ function LandingPage() {
             </div>
           </div>
 
-          {/* Card 2 with Gradient Border */}
           <div className="group relative p-[1px] rounded-3xl bg-gradient-to-br from-emerald-500 via-indigo-400 to-blue-400 shadow-sm hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300">
-            <div className="bg-white rounded-[calc(1.5rem-1px)] p-10 h-full">
+            <div className="bg-white rounded-[calc(1.5rem-1px)] p-10 h-full overflow-hidden">
               <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Wallet className="w-7 h-7 text-emerald-600" />
               </div>
@@ -129,9 +250,8 @@ function LandingPage() {
             </div>
           </div>
 
-          {/* Card 3 with Gradient Border */}
           <div className="group relative p-[1px] rounded-3xl bg-gradient-to-br from-amber-500 via-indigo-400 to-purple-400 shadow-sm hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300">
-            <div className="bg-white rounded-[calc(1.5rem-1px)] p-10 h-full">
+            <div className="bg-white rounded-[calc(1.5rem-1px)] p-10 h-full overflow-hidden">
               <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Zap className="w-7 h-7 text-amber-600" />
               </div>
@@ -146,9 +266,57 @@ function LandingPage() {
       </div>
 
       {/* ========================================== */}
-      {/* 3. FAQ SECTION (GRADIENT FAQ BARS)         */}
+      {/* 3. TESTIMONIAL MARQUEE SECTION             */}
       {/* ========================================== */}
-      <div className="border-y border-slate-200 py-32 relative">
+      <section className="py-24 border-y border-slate-200 bg-white/50">
+        <div className="max-w-7xl mx-auto px-6 mb-20 text-center">
+            <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 drop-shadow-sm"> 
+              What <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-blue-500 to-cyan-500">users</span> say about us 
+            </h2>
+        </div>
+
+        <div className="overflow-hidden relative flex">
+          <div className="absolute inset-y-0 left-0 w-32 md:w-64 bg-gradient-to-r from-slate-50 to-transparent z-20 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-32 md:w-64 bg-gradient-to-l from-slate-50 to-transparent z-20 pointer-events-none" />
+
+          <div className="flex animate-infinite-scroll">
+            {doubledTestimonials.map((test, index) => (
+              <div key={index} className="w-[350px] md:w-[450px] flex-shrink-0 px-4">
+                <div className="bg-white/80 backdrop-blur-sm p-8 rounded-3xl border border-slate-200 h-full flex flex-col justify-between shadow-sm hover:border-indigo-200 hover:shadow-md transition-all duration-300 relative group overflow-hidden">
+                  
+                  <Quote className="absolute top-6 right-6 w-12 h-12 text-slate-100 -z-10 group-hover:text-indigo-50 transition-colors duration-300" />
+                  
+                  <div className="mb-8 z-10">
+                    <div className="flex gap-0.5 mb-5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className={`w-5 h-5 ${i < test.rating ? 'fill-amber-400 text-amber-400' : 'fill-slate-200 text-slate-200'}`} />
+                      ))}
+                    </div>
+                    <p className="text-slate-700 leading-relaxed font-medium text-lg">"{test.quote}"</p>
+                  </div>
+
+                  <div className="flex items-center gap-4 pt-6 border-t border-slate-100 mt-auto z-10">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl ${test.avatarBg}`}>
+                      {test.initial}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-900 text-base tracking-tight">{test.name}</h4>
+                      <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">{test.role}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================== */}
+      {/* 4. FAQ SECTION                             */}
+      {/* ========================================== */}
+      {/* UPDATED: Added scroll-mt-24 so the navbar doesn't cover the title when scrolling down */}
+      <div id="faq" className="py-32 relative scroll-mt-24">
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
@@ -189,7 +357,7 @@ function LandingPage() {
       </div>
 
       {/* ========================================== */}
-      {/* 4. FOOTER                                  */}
+      {/* 5. FOOTER                                  */}
       {/* ========================================== */}
       <footer className="bg-slate-900 text-slate-300 py-20 text-center relative z-10">
         <div className="max-w-7xl mx-auto px-6">
