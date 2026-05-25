@@ -219,7 +219,7 @@ function ParentPortal() {
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">Verified Students</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                We manually verify the college ID of every tutor before they can view your requirements, ensuring a safe learning environment.
+                We manually verify the  ID of every tutor before they can view your requirements, ensuring a safe learning environment.
               </p>
             </div>
 
@@ -230,9 +230,9 @@ function ParentPortal() {
               <h3 className="text-lg font-bold mb-2">What happens next?</h3>
               <ol className="text-sm text-indigo-100 space-y-3 mt-4 relative z-10 list-decimal list-inside marker:font-bold">
                 <li>We review your post for spam.</li>
-                <li>It goes live on our secure board.</li>
+                <li>It goes live on our Tutor's board which may take a few hours to reflect.</li>
                 <li>Interested tutors unlock your number.</li>
-                <li>They call you directly to arrange a free demo!</li>
+                <li>They WhatsApp you directly to start a conversation and arrange a free demo!</li>
               </ol>
             </div>
           </div>

@@ -310,6 +310,7 @@ function TutorPortal() {
                       </div>
                       <p className="text-sm text-slate-600 leading-relaxed pl-11">
                         For Premium leads, you will not be charged any agency commission after this one-time unlock fee.
+                        For Classic leads, a 50% commission will be deducted from the salary after you secure the job.
                       </p>
                     </div>
 
