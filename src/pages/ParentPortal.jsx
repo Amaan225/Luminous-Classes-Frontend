@@ -6,20 +6,70 @@ import { ShieldCheck, UserCheck, Sparkles, ArrowLeft, CheckCircle2 } from 'lucid
 function ParentPortal() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState('idle'); // 'idle', 'success', 'error'
+  const [submitStatus, setSubmitStatus] = useState('idle');
   
   const [formData, setFormData] = useState({
     parentName: '',
     contactNumber: '',
     subject: '',
     grade: '',
-    location: '',
+    customGrade: '',
+    city: '',
+    customCity: '',
+    location: '',    // This handles both the Dropdown area and the Text input area
+    customLocation: '', // Used only if they pick "Other" from a known city's dropdown
     salary: '',
     requirements: ''
   });
 
+  // 1. Detailed Maps for your Core Cities
+  const detailedLocations = {
+    "Lucknow": ['Gomti Nagar', 'Indira Nagar', 'Aliganj', 'Mahanagar', 'Hazratganj', 'Alambagh', 'Ashiyana', 'Jankipuram', 'Other'],
+    "Kanpur": ['Kakadeo', 'Swaroop Nagar', 'Kidwai Nagar', 'Civil Lines', 'Kalyanpur', 'Shyam Nagar', 'Other'],
+    "Varanasi": ['Lanka', 'Sigra', 'Bhelupur', 'Cantt', 'Mahmoorganj', 'Other']
+  };
+
+  // 2. Comprehensive Pan-India City List (Alphabetical)
+  const allCities = [
+    'Agra', 'Ahmedabad', 'Ajmer', 'Aligarh', 'Allahabad (Prayagraj)', 'Amritsar', 
+    'Aurangabad', 'Bangalore', 'Bareilly', 'Bhopal', 'Bhubaneswar', 'Chandigarh', 
+    'Chennai', 'Coimbatore', 'Cuttack', 'Dehradun', 'Delhi/NCR', 'Dhanbad', 
+    'Durgapur', 'Faridabad', 'Ghaziabad', 'Gorakhpur', 'Gurgaon (Gurugram)', 
+    'Guwahati', 'Gwalior', 'Hyderabad', 'Indore', 'Jabalpur', 'Jaipur', 'Jalandhar', 
+    'Jamshedpur', 'Jodhpur', 'Kanpur', 'Kochi', 'Kolkata', 'Kota', 'Lucknow', 
+    'Ludhiana', 'Madurai', 'Mangalore', 'Meerut', 'Moradabad', 'Mumbai', 'Mysore', 
+    'Nagpur', 'Nashik', 'Noida', 'Patna', 'Pune', 'Raipur', 'Rajkot', 'Ranchi', 
+    'Rourkela', 'Siliguri', 'Surat', 'Thiruvananthapuram', 'Udaipur', 'Vadodara', 
+    'Varanasi', 'Vijayawada', 'Visakhapatnam', 'Other'
+  ];
+
+  const grades = [
+    'Pre-KG', 'LKG', 'UKG', '1', '2', '3', '4', '5', '6', 
+    '7', '8', '9', '10', '11', '12', 'Dropper/Competitive', 'Other'
+  ];
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    
+    // Auto-wipe location data if city changes to prevent bad data matches
+    if (name === 'city') {
+      setFormData({ 
+        ...formData, 
+        city: value, 
+        location: '', 
+        customLocation: '', 
+        customCity: '' 
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    if (value.length <= 10) {
+      setFormData({ ...formData, contactNumber: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -27,12 +77,20 @@ function ParentPortal() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
+    // Clean up the payload before sending
+    const payload = {
+      ...formData,
+      grade: formData.grade === 'Other' ? formData.customGrade : formData.grade,
+      city: formData.city === 'Other' ? formData.customCity : formData.city,
+      location: formData.location === 'Other' ? formData.customLocation : formData.location
+    };
+
     try {
-      // Posts to the public route without the admin secret, meaning it defaults to 'pending' (Quarantine)
-      await axios.post('https://luminous-classes-backend.onrender.com/api/jobs', formData);
+      await axios.post('https://luminous-classes-backend.onrender.com/api/jobs', payload);
       setSubmitStatus('success');
       setFormData({
-        parentName: '', contactNumber: '', subject: '', grade: '', location: '', salary: '', requirements: ''
+        parentName: '', contactNumber: '', subject: '', grade: '', customGrade: '', 
+        city: '', customCity: '', location: '', customLocation: '', salary: '', requirements: ''
       });
     } catch (error) {
       console.error('Submission error:', error);
@@ -42,7 +100,6 @@ function ParentPortal() {
     }
   };
 
-  // --- SUCCESS STATE UI ---
   if (submitStatus === 'success') {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
@@ -54,16 +111,10 @@ function ParentPortal() {
             Your requirement is currently under review by our team. Once verified, it will be shared with our network of top-tier university tutors.
           </p>
           <div className="flex flex-col gap-3">
-            <button 
-              onClick={() => navigate('/')} 
-              className="w-full py-3.5 bg-slate-900 text-white rounded-xl font-semibold shadow-md hover:bg-slate-800 transition-colors"
-            >
+            <button onClick={() => navigate('/')} className="w-full py-3.5 bg-slate-900 text-white rounded-xl font-semibold shadow-md hover:bg-slate-800 transition-colors">
               Return to Homepage
             </button>
-            <button 
-              onClick={() => setSubmitStatus('idle')} 
-              className="w-full py-3.5 bg-slate-50 text-slate-700 rounded-xl font-semibold border border-slate-200 hover:bg-slate-100 transition-colors"
-            >
+            <button onClick={() => setSubmitStatus('idle')} className="w-full py-3.5 bg-slate-50 text-slate-700 rounded-xl font-semibold border border-slate-200 hover:bg-slate-100 transition-colors">
               Post Another Requirement
             </button>
           </div>
@@ -72,157 +123,140 @@ function ParentPortal() {
     );
   }
 
-  // --- THE MODERN FORM UI ---
+  // SMART LOGIC: Does the selected city have a detailed dropdown array?
+  const hasDetailedAreas = formData.city && detailedLocations[formData.city];
+  const availableAreas = hasDetailedAreas ? detailedLocations[formData.city] : [];
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 py-12 px-4 sm:px-6 lg:px-8">
-      
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        {/* Navigation & Header */}
-        <button 
-          onClick={() => navigate('/')} 
-          className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors mb-8"
-        >
+        
+        <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors mb-8">
           <ArrowLeft className="w-4 h-4" /> Back to home
         </button>
 
         <div className="mb-10 text-center md:text-left">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
-            Find the Perfect Tutor
-          </h1>
-          <p className="text-lg text-slate-600 max-w-2xl">
-            Post your requirement for free. We'll connect you directly with verified university students from top local colleges. No agencies in the middle.
-          </p>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">Find the Perfect Tutor</h1>
+          <p className="text-lg text-slate-600 max-w-2xl">Post your requirement for free. We'll connect you directly with verified university students from top local colleges.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           
-          {/* THE FORM CONTAINER */}
           <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
             <div className="p-8 md:p-10">
               <form onSubmit={handleSubmit} className="space-y-6">
                 
-                {/* 1. Parent Details */}
+                {/* 1. Contact Details */}
                 <div className="space-y-4">
                   <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-2">Your Contact Details</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="flex flex-col gap-1.5">
                       <label className="text-sm font-medium text-slate-700">Your Name <span className="text-red-500">*</span></label>
-                      <input 
-                        type="text" name="parentName" required value={formData.parentName} onChange={handleChange}
-                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
-                        placeholder="e.g. Mr. Sharma"
-                      />
+                      <input type="text" name="parentName" required value={formData.parentName} onChange={handleChange} className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full" placeholder="e.g. Mr. Sharma" />
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label className="text-sm font-medium text-slate-700">WhatsApp Number <span className="text-red-500">*</span></label>
-                      <input 
-                        type="text" name="contactNumber" required value={formData.contactNumber} onChange={handleChange}
-                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
-                        placeholder="10-digit number"
-                      />
+                      <input type="tel" name="contactNumber" required value={formData.contactNumber} onChange={handlePhoneChange} className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full" placeholder="10-digit number" />
                     </div>
                   </div>
                 </div>
 
-                {/* 2. Requirement Details */}
+                {/* 2. Tuition Details */}
                 <div className="space-y-4 pt-4">
                   <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-2">Tuition Details</h3>
+                  
+                  {/* CITY AND AREA ROW */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                    
+                    {/* CITY DROPDOWN (Pan-India) */}
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-sm font-medium text-slate-700">City <span className="text-red-500">*</span></label>
+                      <select name="city" required value={formData.city} onChange={handleChange} className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full appearance-none cursor-pointer">
+                        <option value="" disabled>Select City</option>
+                        {allCities.map(city => <option key={city} value={city}>{city}</option>)}
+                      </select>
+                      {formData.city === 'Other' && (
+                        <input type="text" name="customCity" required value={formData.customCity} onChange={handleChange} className="px-4 py-3.5 mt-2 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full animate-in fade-in" placeholder="Type your city..." />
+                      )}
+                    </div>
+
+                    {/* DYNAMIC AREA LOGIC */}
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-sm font-medium text-slate-700">Area / Locality <span className="text-red-500">*</span></label>
+                      
+                      {!formData.city ? (
+                         <select disabled className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 outline-none w-full appearance-none opacity-50 cursor-not-allowed">
+                           <option>Select City First</option>
+                         </select>
+                      ) : hasDetailedAreas ? (
+                        <>
+                          <select name="location" required value={formData.location} onChange={handleChange} className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full appearance-none cursor-pointer">
+                            <option value="" disabled>Select Area</option>
+                            {availableAreas.map(area => <option key={area} value={area}>{area}</option>)}
+                          </select>
+                          {formData.location === 'Other' && (
+                            <input type="text" name="customLocation" required value={formData.customLocation} onChange={handleChange} className="px-4 py-3.5 mt-2 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full animate-in fade-in" placeholder="Type specific area..." />
+                          )}
+                        </>
+                      ) : (
+                        <input type="text" name="location" required value={formData.location} onChange={handleChange} className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full" placeholder="Type your area (e.g. MG Road)" />
+                      )}
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="flex flex-col gap-1.5">
                       <label className="text-sm font-medium text-slate-700">Subject(s) <span className="text-red-500">*</span></label>
-                      <input 
-                        type="text" name="subject" required value={formData.subject} onChange={handleChange}
-                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
-                        placeholder="e.g. Maths & Science"
-                      />
+                      <input type="text" name="subject" required value={formData.subject} onChange={handleChange} className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full" placeholder="e.g. Maths & Science" />
                     </div>
+                    
                     <div className="flex flex-col gap-1.5">
                       <label className="text-sm font-medium text-slate-700">Grade / Class <span className="text-red-500">*</span></label>
-                      <input 
-                        type="text" name="grade" required value={formData.grade} onChange={handleChange}
-                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
-                        placeholder="e.g. Class 10 (CBSE)"
-                      />
+                      <select name="grade" required value={formData.grade} onChange={handleChange} className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full appearance-none cursor-pointer">
+                        <option value="" disabled>Select Grade</option>
+                        {grades.map(grade => <option key={grade} value={grade}>{grade}</option>)}
+                      </select>
+                      {formData.grade === 'Other' && (
+                        <input type="text" name="customGrade" required value={formData.customGrade} onChange={handleChange} className="px-4 py-3.5 mt-2 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full animate-in fade-in" placeholder="Type specific grade..." />
+                      )}
                     </div>
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-sm font-medium text-slate-700">Location Area <span className="text-red-500">*</span></label>
-                      <input 
-                        type="text" name="location" required value={formData.location} onChange={handleChange}
-                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
-                        placeholder="e.g. Aliganj / Online"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
+
+                    <div className="flex flex-col gap-1.5 md:col-span-2">
                       <label className="text-sm font-medium text-slate-700">Monthly Budget (₹) <span className="text-red-500">*</span></label>
-                      <input 
-                        type="text" name="salary" required value={formData.salary} onChange={handleChange}
-                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
-                        placeholder="e.g. 3000 - 4000"
-                      />
+                      <input type="number" min="0" name="salary" required value={formData.salary} onChange={handleChange} className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full" placeholder="e.g. 4000" />
                     </div>
                   </div>
                 </div>
 
-                {/* 3. Additional Notes */}
                 <div className="space-y-4 pt-4">
                   <div className="flex flex-col gap-1.5">
                     <label className="text-sm font-medium text-slate-700">Specific Requirements (Optional)</label>
-                    <textarea 
-                      name="requirements" value={formData.requirements} onChange={handleChange}
-                      className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full h-32 resize-none"
-                      placeholder="e.g. Looking for a female tutor, 3 days a week, evening time preferable."
-                    ></textarea>
+                    <textarea name="requirements" value={formData.requirements} onChange={handleChange} className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full h-32 resize-none" placeholder="e.g. Looking for a female tutor, 3 days a week, evening time preferable."></textarea>
                   </div>
                 </div>
 
                 {submitStatus === 'error' && (
                   <div className="p-4 bg-red-50 text-red-700 rounded-xl text-sm font-medium border border-red-100">
-                    Something went wrong while posting your requirement. Please try again or contact support.
+                    Something went wrong while posting your requirement. Please try again.
                   </div>
                 )}
 
-                <button 
-                  type="submit" 
-                  disabled={isSubmitting}
-                  className="w-full py-4 bg-indigo-600 text-white rounded-xl text-lg font-semibold shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:shadow-indigo-600/30 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 flex justify-center items-center gap-2 mt-4"
-                >
+                <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-indigo-600 text-white rounded-xl text-lg font-semibold shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 flex justify-center items-center gap-2 mt-4">
                   {isSubmitting ? 'Securing your request...' : 'Post Requirement Free'}
                 </button>
-                <p className="text-center text-xs text-slate-500 mt-4">
-                  By posting, you agree to our terms. Your contact details are kept secure.
-                </p>
               </form>
             </div>
           </div>
 
-          {/* TRUST BADGES SIDEBAR */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                <ShieldCheck className="w-24 h-24 text-indigo-600" />
-              </div>
-              <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center mb-4 text-indigo-600">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">100% Free for Parents</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                You never pay a single rupee to Tutor49. We are a free network designed to help you bypass expensive agency commissions.
-              </p>
+              <p className="text-sm text-slate-600 leading-relaxed">You never pay a single rupee to Tutor49. We are a free network designed to help you bypass expensive agency commissions.</p>
             </div>
-
             <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                <UserCheck className="w-24 h-24 text-emerald-600" />
-              </div>
-              <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4 text-emerald-600">
-                <UserCheck className="w-6 h-6" />
-              </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">Verified Students</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                We manually verify the  ID of every tutor before they can view your requirements, ensuring a safe learning environment.
-              </p>
+              <p className="text-sm text-slate-600 leading-relaxed">We manually verify the ID of every tutor before they can view your requirements, ensuring a safe learning environment.</p>
             </div>
-
             <div className="bg-indigo-600 rounded-3xl p-6 shadow-md text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 opacity-10">
                 <Sparkles className="w-24 h-24 text-white" />

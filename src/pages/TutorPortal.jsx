@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, BookOpen, GraduationCap, ArrowLeft, Search, ShieldCheck, Banknote } from 'lucide-react';
-
+import { MapPin, BookOpen, GraduationCap, ArrowLeft, Search, ShieldCheck, Banknote, ChevronDown } from 'lucide-react';
 
 function TutorPortal() {
   const navigate = useNavigate();
@@ -10,12 +9,29 @@ function TutorPortal() {
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState('all'); // 'all', 'premium', 'classic'
 
+  // NEW: Search and Area State
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedArea, setSelectedArea] = useState('All Areas');
+
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
   const [tutorPhone, setTutorPhone] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('idle'); // idle, submitting, success
   const [unlockedNumber, setUnlockedNumber] = useState('');
+
+  // Lucknow specific areas for the filter
+  const lucknowAreas = [
+    'All Areas',
+    'Gomti Nagar',
+    'Indira Nagar',
+    'Aliganj',
+    'Mahanagar',
+    'Hazratganj',
+    'Alambagh',
+    'Ashiyana',
+    'Jankipuram'
+  ];
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -95,9 +111,47 @@ function TutorPortal() {
     }
   };
 
+  // --- UPGRADED SMART SEARCH LOGIC ---
+  
+  // Helper function to strip "noise" words from grades and classes
+  const normalizeGrade = (text) => {
+    if (!text) return '';
+    return text.toLowerCase()
+      .replace(/class/g, '')
+      .replace(/grade/g, '')
+      .replace(/th/g, '')
+      .replace(/nd/g, '')
+      .replace(/rd/g, '')
+      .replace(/st/g, '')
+      .replace(/\s+/g, '') // remove all spaces
+      .trim();
+  };
+
   const filteredJobs = jobs.filter(job => {
-    if (filter === 'all') return true;
-    return job.leadType === filter;
+    // 1. Type Filter
+    const matchesType = filter === 'all' || job.leadType === filter;
+    
+    // 2. Smart Search Filter
+    const searchLower = searchTerm.toLowerCase();
+    
+    // If they explicitly search "lucknow", just show them everything in the selected area
+    // because all your leads are technically in Lucknow.
+    const isLucknowSearch = searchLower.includes('lucknow');
+    
+    const normalizedSearchTerm = normalizeGrade(searchTerm);
+    const normalizedJobGrade = normalizeGrade(job.grade);
+
+    const matchesSearch = 
+      isLucknowSearch ||
+      (job.subject && job.subject.toLowerCase().includes(searchLower)) ||
+      (job.location && job.location.toLowerCase().includes(searchLower)) ||
+      (job.requirements && job.requirements.toLowerCase().includes(searchLower)) ||
+      (normalizedJobGrade && normalizedSearchTerm && normalizedJobGrade.includes(normalizedSearchTerm));
+
+    // 3. Area Filter
+    const matchesArea = selectedArea === 'All Areas' || (job.location && job.location.includes(selectedArea));
+
+    return matchesType && matchesSearch && matchesArea;
   });
 
   return (
@@ -125,7 +179,38 @@ function TutorPortal() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
         
-        {/* FILTERS */}
+        {/* NEW: SEARCH AND AREA FILTER */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-6 flex flex-col md:flex-row gap-4">
+          
+          {/* Search Bar */}
+          <div className="relative flex-1">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <input 
+              type="text" 
+              placeholder="Search subjects, grades (e.g., '10th CBSE')" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-medium text-slate-700 transition-all"
+            />
+          </div>
+
+          {/* Area Filter Dropdown */}
+          <div className="relative md:w-64 flex-shrink-0">
+            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-indigo-500" />
+            <select 
+              value={selectedArea}
+              onChange={(e) => setSelectedArea(e.target.value)}
+              className="w-full pl-12 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-medium text-slate-700 appearance-none cursor-pointer transition-all"
+            >
+              {lucknowAreas.map(area => (
+                <option key={area} value={area}>{area}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+          </div>
+        </div>
+
+        {/* TYPE FILTERS */}
         <div className="flex flex-wrap gap-3 mb-8">
           <button 
             onClick={() => setFilter('all')}
