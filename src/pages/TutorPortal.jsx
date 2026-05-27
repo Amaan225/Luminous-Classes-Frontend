@@ -199,7 +199,10 @@ function TutorPortal() {
                         <span className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-800 px-2.5 py-1 rounded-md text-xs font-bold border border-amber-200 w-max">CLASSIC AGENCY LEAD</span>
                       )}
                     </div>
-                    <span className="inline-flex items-center gap-1.5 text-lg font-black text-green-700 bg-slate-50 px-3 py-1 rounded-lg shadow-sm border border-slate-100"><Banknote className="w-5 h-5" />₹{job.salary}</span>
+                    <span className="inline-flex items-center gap-1.5 text-lg font-black text-green-700 bg-slate-50 px-3 py-1 rounded-lg shadow-sm border border-slate-100">
+  <Banknote className="w-5 h-5" />
+  ₹{job.salary || job.budget || 'N/A'}
+</span>
                   </div>
 
                   <div className="p-6 flex-1">
