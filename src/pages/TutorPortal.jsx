@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, BookOpen, GraduationCap, ArrowLeft, Search, ShieldCheck, Banknote, ChevronDown } from 'lucide-react';
+import { MapPin, BookOpen, GraduationCap, ArrowLeft, Search, ShieldCheck, Banknote, ChevronDown, Lock } from 'lucide-react';
 
 function TutorPortal() {
   const navigate = useNavigate();
@@ -9,28 +9,36 @@ function TutorPortal() {
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState('all'); 
 
-  // Search and Area State
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedArea, setSelectedArea] = useState('All Areas');
 
-  // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
   const [tutorPhone, setTutorPhone] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('idle'); 
   const [unlockedNumber, setUnlockedNumber] = useState('');
 
-  // Lucknow specific areas for the quick filter
   const lucknowAreas = [
     'All Areas', 'Gomti Nagar', 'Indira Nagar', 'Aliganj', 'Mahanagar',
     'Hazratganj', 'Alambagh', 'Ashiyana', 'Jankipuram'
+  ];
+
+  // --- GROWTH HACK: PHANTOM "SOLD OUT" LEADS ---
+  const phantomSoldOutLeads = [
+    {
+      _id: 'phantom_1', displayId: 'TK-9284', subject: 'All subjects (CBSE)', grade: '8', city: 'Lucknow', location: 'Gomti Nagar', salary: 12000, leadType: 'premium', isSoldOut: true, requirements: 'Looking for an experienced tutor who can help with  exam preparation and previous year papers.'
+    },
+    {
+      _id: 'phantom_2', displayId: 'TK-4712', subject: 'Physics & Chemistry', grade: '7', city: 'Lucknow', location: 'Aliganj', salary: 10500, leadType: 'premium', isSoldOut: true, requirements: 'Need a tutor for my kid who is struggling with science subjects. Must be patient and good with kids.'
+    }
   ];
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get('https://luminous-classes-backend.onrender.com/api/jobs');
-        setJobs(response.data);
+        // Phantom leads go to the top for maximum panic
+        setJobs([...phantomSoldOutLeads, ...response.data]);
       } catch (error) {
         console.error("Error fetching jobs:", error);
       } finally {
@@ -41,6 +49,7 @@ function TutorPortal() {
   }, []);
 
   const openUnlockModal = (job) => {
+    if (job.isSoldOut) return; 
     setSelectedJob(job);
     setIsModalOpen(true);
     setPaymentStatus('idle');
@@ -57,7 +66,7 @@ function TutorPortal() {
       const order = orderRes.data;
 
       const options = {
-        key: "YOUR_RAZORPAY_KEY_ID", // TODO: Replace with env variable in production
+        key: "YOUR_RAZORPAY_KEY_ID", 
         amount: order.amount,
         currency: order.currency,
         name: "Tutor49",
@@ -91,7 +100,6 @@ function TutorPortal() {
     }
   };
 
-  // --- UPGRADED SMART SEARCH LOGIC ---
   const normalizeGrade = (text) => {
     if (!text) return '';
     return text.toLowerCase().replace(/class/g, '').replace(/grade/g, '').replace(/th/g, '').replace(/nd/g, '').replace(/rd/g, '').replace(/st/g, '').replace(/\s+/g, '').trim();
@@ -188,48 +196,63 @@ function TutorPortal() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredJobs.map((job) => {
               const isPremium = job.leadType === 'premium' || !job.leadType;
+              const opacityClass = job.isSoldOut ? 'opacity-70 grayscale-[20%]' : ''; // Dims the card if sold out
+
               return (
-                <div key={job._id} className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full overflow-hidden">
-                  <div className="p-5 border-b border-slate-100 flex justify-between items-start bg-slate-50/50">
+                <div key={job._id} className={`bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-full overflow-hidden transition-all ${job.isSoldOut ? 'relative' : 'hover:shadow-md'} ${opacityClass}`}>
+                  
+                  {/* --- NEW: THE SOLD OUT RED STAMP --- */}
+                  {job.isSoldOut && (
+                    <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                      <div className="border-8 border-red-600 px-8 py-3 rounded-2xl transform -rotate-12 bg-white/70 backdrop-blur-sm">
+                        <span className="text-red-600 text-6xl font-black uppercase tracking-tighter shadow-sm">SOLD OUT</span>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className={`p-5 border-b border-slate-100 flex justify-between items-start ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50/50'}`}>
                     <div className="flex flex-col gap-2">
                       <span className="text-xs font-bold text-slate-400 tracking-wider">{job.displayId || 'TK-XXXX'}</span>
                       {isPremium ? (
-                        <span className="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-md text-xs font-bold border border-indigo-100 w-max"><ShieldCheck className="w-3.5 h-3.5" /> 0% COMMISSION</span>
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-green-500 border-slate-300' : 'bg-indigo-50 text-indigo-700 border border-indigo-100'}`}><ShieldCheck className="w-3.5 h-3.5" /> 0% COMMISSION</span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-800 px-2.5 py-1 rounded-md text-xs font-bold border border-amber-200 w-max">CLASSIC AGENCY LEAD</span>
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-slate-500 border-slate-300' : 'bg-amber-50 text-amber-800 border border-amber-200'}`}>CLASSIC AGENCY LEAD</span>
                       )}
                     </div>
-                    <span className="inline-flex items-center gap-1.5 text-lg font-black text-green-700 bg-slate-50 px-3 py-1 rounded-lg shadow-sm border border-slate-100">
-  <Banknote className="w-5 h-5" />
-  ₹{job.salary || job.budget || 'N/A'}
-</span>
+                    <span className={`inline-flex items-center gap-1.5 text-lg font-black px-3 py-1 rounded-lg shadow-sm border border-slate-100 ${job.isSoldOut ? 'text-green-500 bg-slate-100' : 'text-green-700 bg-slate-50'}`}><Banknote className="w-5 h-5" />₹{job.salary || 'N/A'}</span>
                   </div>
 
                   <div className="p-6 flex-1">
-                    <h3 className="text-xl font-bold text-slate-900 mb-4 line-clamp-2">{job.subject} Tutor Required</h3>
+                    <h3 className={`text-xl font-bold mb-4 line-clamp-2 ${job.isSoldOut ? 'text-slate-500' : 'text-slate-900'}`}>{job.subject} Tutor Required</h3>
                     <div className="space-y-3">
                       <div className="flex items-center gap-3 text-sm text-slate-600">
-                        <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 shrink-0"><GraduationCap className="w-4 h-4 text-blue-500" /></div>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}><GraduationCap className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-blue-500'}`} /></div>
                         <span className="font-medium">{job.grade}</span>
                       </div>
                       <div className="flex items-center gap-3 text-sm text-slate-600">
-                        <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 shrink-0"><MapPin className="w-4 h-4 text-red-500" /></div>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}><MapPin className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-red-500'}`} /></div>
                         <span className="font-medium">{job.location}{job.city ? `, ${job.city}` : ''}</span>
                       </div>
                     </div>
                     {job.requirements && (
                       <div className="mt-5 p-4 bg-slate-50 rounded-xl text-sm text-slate-600 border border-slate-100 relative">
-                        <BookOpen className="w-4 h-4 text-yellow-400 absolute top-4 left-4" />
+                        <BookOpen className={`w-4 h-4 absolute top-4 left-4 ${job.isSoldOut ? 'text-slate-400' : 'text-yellow-400'}`} />
                         <p className="pl-7 line-clamp-3">{job.requirements}</p>
                       </div>
                     )}
                   </div>
 
-                  <div className="p-5 pt-0 mt-auto">
-                    <button onClick={() => openUnlockModal(job)} className="w-full py-3.5 bg-slate-900 text-amber-400 rounded-xl font-bold tracking-wide border border-amber-500/30 shadow-lg hover:bg-slate-800 hover:border-amber-400 hover:shadow-amber-500/20 hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 group">
-                      Unlock for ₹{job.price || 49}
-                      <span className="opacity-50 group-hover:opacity-100 transition-opacity">→</span>
-                    </button>
+                  <div className="p-5 pt-0 mt-auto z-10 relative">
+                    {job.isSoldOut ? (
+                      <button disabled className="w-full py-3.5 bg-slate-100 text-yellow-700 border border-slate-200 rounded-xl font-bold tracking-wide cursor-not-allowed flex justify-center items-center gap-2">
+                        <Lock className="w-4 h-4" /> Lead Claimed
+                      </button>
+                    ) : (
+                      <button onClick={() => openUnlockModal(job)} className="w-full py-3.5 bg-slate-900 text-amber-400 rounded-xl font-bold tracking-wide border border-amber-500/30 shadow-lg hover:bg-slate-800 hover:border-amber-400 hover:shadow-amber-500/20 hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 group">
+                        Unlock for ₹{job.price || 49}
+                        <span className="opacity-50 group-hover:opacity-100 transition-opacity">→</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               );
@@ -238,7 +261,7 @@ function TutorPortal() {
         )}
       </div>
 
-      {/* RAZORPAY UNLOCK MODAL */}
+      {/* RAZORPAY UNLOCK MODAL UNCHANGED BELOW */}
       {isModalOpen && selectedJob && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/80 backdrop-blur-md p-4 md:p-8 overflow-y-auto">
           <div className="bg-white rounded-3xl shadow-2xl w-[95vw] max-w-6xl min-h-[90vh] flex flex-col transform transition-all my-auto overflow-hidden">
