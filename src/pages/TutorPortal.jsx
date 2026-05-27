@@ -26,10 +26,10 @@ function TutorPortal() {
   // --- GROWTH HACK: PHANTOM "SOLD OUT" LEADS ---
   const phantomSoldOutLeads = [
     {
-      _id: 'phantom_1', displayId: 'TK-9284', subject: 'All subjects (CBSE)', grade: '8', city: 'Lucknow', location: 'Gomti Nagar', salary: 12000, leadType: 'premium', isSoldOut: true, requirements: 'Looking for an experienced tutor who can help with  exam preparation and previous year papers.'
+      _id: 'phantom_1', displayId: 'TK-9284', subject: '8th class All subjects (CBSE)', grade: '8', city: 'Lucknow', location: 'Gomti Nagar', salary: 12000, leadType: 'premium', isSoldOut: true, requirements: 'Looking for an experienced tutor who can help with  exam preparation.'
     },
     {
-      _id: 'phantom_2', displayId: 'TK-4712', subject: 'Physics & Chemistry', grade: '7', city: 'Lucknow', location: 'Aliganj', salary: 10500, leadType: 'premium', isSoldOut: true, requirements: 'Need a tutor for my kid who is struggling with science subjects. Must be patient and good with kids.'
+      _id: 'phantom_2', displayId: 'TK-4712', subject: 'All Subjects', grade: '6', city: 'Lucknow', location: 'Aliganj', salary: 10500, leadType: 'premium', isSoldOut: true, requirements: 'Need a tutor for my kid who is struggling with science subjects. Must be patient and good with kids.'
     }
   ];
 
@@ -201,14 +201,7 @@ function TutorPortal() {
               return (
                 <div key={job._id} className={`bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-full overflow-hidden transition-all ${job.isSoldOut ? 'relative' : 'hover:shadow-md'} ${opacityClass}`}>
                   
-                  {/* --- NEW: THE SOLD OUT RED STAMP --- */}
-                  {job.isSoldOut && (
-                    <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                      <div className="border-8 border-red-600 px-8 py-3 rounded-2xl transform -rotate-12 bg-white/70 backdrop-blur-sm">
-                        <span className="text-red-600 text-6xl font-black uppercase tracking-tighter shadow-sm">SOLD OUT</span>
-                      </div>
-                    </div>
-                  )}
+                  
 
                   <div className={`p-5 border-b border-slate-100 flex justify-between items-start ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50/50'}`}>
                     <div className="flex flex-col gap-2">
@@ -245,7 +238,7 @@ function TutorPortal() {
                   <div className="p-5 pt-0 mt-auto z-10 relative">
                     {job.isSoldOut ? (
                       <button disabled className="w-full py-3.5 bg-slate-100 text-yellow-700 border border-slate-200 rounded-xl font-bold tracking-wide cursor-not-allowed flex justify-center items-center gap-2">
-                        <Lock className="w-4 h-4" /> Lead Claimed
+                        <Lock className="w-4 h-4" /> Lead already Claimed
                       </button>
                     ) : (
                       <button onClick={() => openUnlockModal(job)} className="w-full py-3.5 bg-slate-900 text-amber-400 rounded-xl font-bold tracking-wide border border-amber-500/30 shadow-lg hover:bg-slate-800 hover:border-amber-400 hover:shadow-amber-500/20 hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 group">
