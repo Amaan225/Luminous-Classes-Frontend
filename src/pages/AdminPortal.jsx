@@ -18,10 +18,11 @@ function AdminPortal() {
 
   // --- INJECTION FORM STATE ---
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // THE FIX: Added 'city' to initial state
   const [newLeadForm, setNewLeadForm] = useState({
-    title: '', parentName: '', subject: '', grade: '', location: '', salary: '', contactNumber: '', requirements: '', 
+    title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '', 
     leadType: 'classic',
-    status: 'approved' // <-- Admin injections bypass quarantine
+    status: 'approved' 
   });
 
   const [editingJobId, setEditingJobId] = useState(null);
@@ -88,7 +89,8 @@ function AdminPortal() {
     try {
      await axios.post('https://luminous-classes-backend.onrender.com/api/jobs?secret=amaan2026', newLeadForm);
       alert("Lead Successfully Injected!");
-      setNewLeadForm({ title: '', parentName: '', subject: '', grade: '', location: '', salary: '', contactNumber: '', requirements: '', leadType: 'classic', status: 'approved' });
+      // Reset form, including city back to default
+      setNewLeadForm({ title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '', leadType: 'classic', status: 'approved' });
       fetchJobs(); 
     } catch (error) {
       console.error("Error creating lead:", error);
@@ -230,7 +232,7 @@ function AdminPortal() {
                     <div className="mt-3 inline-flex items-center gap-2 bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg text-sm font-medium border border-slate-100">
                       <span>{job.grade} {job.subject}</span>
                       <span className="text-slate-300">|</span>
-                      <span>{job.location}</span>
+                      <span>{job.location} {job.city && `, ${job.city}`}</span>
                       <span className="text-slate-300">|</span>
                       <span className="text-indigo-600 font-bold">₹{job.salary}</span>
                     </div>
@@ -274,7 +276,7 @@ function AdminPortal() {
               </div>
               <div className="flex flex-col gap-1.5">
                 <label className="text-sm font-semibold text-slate-700">Contact Number <span className="text-red-500">*</span></label>
-                <input type="text" name="contactNumber" value={newLeadForm.contactNumber} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
+                <input type="text" name="contactNumber" value={newLeadForm.contactNumber} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" placeholder="Exactly 10 digits" />
               </div>
               <div className="flex flex-col gap-1.5">
                 <label className="text-sm font-semibold text-slate-700">Subject <span className="text-red-500">*</span></label>
@@ -286,10 +288,14 @@ function AdminPortal() {
               </div>
               <div className="flex flex-col gap-1.5">
                 <label className="text-sm font-semibold text-slate-700">Salary (₹) <span className="text-red-500">*</span></label>
-                <input type="text" name="salary" value={newLeadForm.salary} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
+                <input type="number" min="0" name="salary" value={newLeadForm.salary} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-slate-700">Location <span className="text-red-500">*</span></label>
+                <label className="text-sm font-semibold text-slate-700">City <span className="text-red-500">*</span></label>
+                <input type="text" name="city" value={newLeadForm.city} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
+              </div>
+              <div className="flex flex-col gap-1.5 md:col-span-2">
+                <label className="text-sm font-semibold text-slate-700">Area / Location <span className="text-red-500">*</span></label>
                 <input type="text" name="location" value={newLeadForm.location} onChange={handleLeadChange} required className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full" />
               </div>
               <div className="flex flex-col gap-1.5 md:col-span-2">
@@ -423,10 +429,14 @@ function AdminPortal() {
                             </div>
                             <div className="flex flex-col gap-1.5">
                               <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Salary</label>
-                              <input type="text" name="salary" value={editLeadForm.salary} onChange={handleEditChange} required className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full" />
+                              <input type="number" name="salary" value={editLeadForm.salary} onChange={handleEditChange} required className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full" />
                             </div>
                             <div className="flex flex-col gap-1.5">
-                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Location</label>
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">City</label>
+                              <input type="text" name="city" value={editLeadForm.city} onChange={handleEditChange} required className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full" />
+                            </div>
+                            <div className="flex flex-col gap-1.5 md:col-span-2">
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Location / Area</label>
                               <input type="text" name="location" value={editLeadForm.location} onChange={handleEditChange} required className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full" />
                             </div>
                             <div className="flex flex-col gap-1.5 md:col-span-2">
@@ -459,7 +469,7 @@ function AdminPortal() {
                           </div>
                           
                           <div className="flex flex-wrap items-center gap-3 mt-4 text-sm font-medium text-slate-600">
-                            <span className="bg-slate-100 px-3 py-1 rounded-lg">📍 {job.location}</span>
+                            <span className="bg-slate-100 px-3 py-1 rounded-lg">📍 {job.location}{job.city && `, ${job.city}`}</span>
                             <span className="bg-slate-100 px-3 py-1 rounded-lg">💰 ₹{job.salary}</span>
                             <span className="bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-1 rounded-lg">
                               👤 {job.parentName} ({job.contactNumber})
