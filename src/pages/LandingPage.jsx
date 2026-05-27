@@ -173,7 +173,7 @@ function LandingPage() {
           </div>
 
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-slate-900 mb-8 drop-shadow-sm">
-            Tuto₹<span className="text-indigo-600"> 49</span>
+            Tuto₹<span className="text-indigo-600">49</span>
           </h1>
           
           <p className="text-xl md:text-2xl lg:text-3xl text-slate-600 mb-14 max-w-3xl mx-auto leading-relaxed font-medium">
