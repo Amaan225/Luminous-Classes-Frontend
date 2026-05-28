@@ -137,7 +137,10 @@ function TutorPortal() {
               <ArrowLeft className="w-4 h-4" /> Exit Board
             </button>
             <div className="text-center sm:text-right">
-              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Available Requirements</h1>
+              {/* --- THE FIX: Gradient Header --- */}
+              <h1 className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-500 tracking-tight">
+                Available <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 via-slate-600 to-slate-500">Requirements</span> 
+              </h1>
               <p className="text-xs text-slate-500 font-medium mt-1 flex items-center justify-center sm:justify-end gap-1">
                 <ShieldCheck className="w-3 h-3 text-emerald-500" /> All leads manually verified
               </p>
@@ -196,56 +199,70 @@ function TutorPortal() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredJobs.map((job) => {
               const isPremium = job.leadType === 'premium' || !job.leadType;
-              const opacityClass = job.isSoldOut ? 'opacity-70 grayscale-[20%]' : ''; // Dims the card if sold out
+              const opacityClass = job.isSoldOut ? 'opacity-70 grayscale-[20%]' : ''; 
 
               return (
-                <div key={job._id} className={`bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-full overflow-hidden transition-all ${job.isSoldOut ? 'relative' : 'hover:shadow-md'} ${opacityClass}`}>
+                /* --- THE FIX: Gradient Border Wrapper --- */
+                <div key={job._id} className={`rounded-2xl p-[2px] bg-gradient-to-br from-indigo-200 via-slate-200 to-emerald-200 transition-all duration-300 ${job.isSoldOut ? opacityClass : 'hover:shadow-xl hover:from-indigo-500 hover:via-purple-500 hover:to-emerald-500 hover:-translate-y-1'}`}>
                   
-                  
+                  {/* Inner White Card */}
+                  <div className={`bg-white rounded-[14px] flex flex-col h-full overflow-hidden relative`}>
+                    
+                    {/* {job.isSoldOut && (
+                      <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                        <div className="border-8 border-red-600 px-8 py-3 rounded-2xl transform -rotate-12 bg-white/70 backdrop-blur-sm">
+                          <span className="text-red-600 text-6xl font-black uppercase tracking-tighter shadow-sm">SOLD OUT</span>
+                        </div>
+                      </div>
+                    )} */}
 
-                  <div className={`p-5 border-b border-slate-100 flex justify-between items-start ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50/50'}`}>
-                    <div className="flex flex-col gap-2">
-                      <span className="text-xs font-bold text-slate-400 tracking-wider">{job.displayId || 'TK-XXXX'}</span>
-                      {isPremium ? (
-                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-green-500 border-slate-300' : 'bg-indigo-50 text-indigo-700 border border-indigo-100'}`}><ShieldCheck className="w-3.5 h-3.5" /> 0% COMMISSION</span>
-                      ) : (
-                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-slate-500 border-slate-300' : 'bg-amber-50 text-amber-800 border border-amber-200'}`}>CLASSIC AGENCY LEAD</span>
+                    <div className={`p-5 border-b border-slate-100 flex justify-between items-start ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50/50'}`}>
+                      <div className="flex flex-col gap-2">
+                        <span className="text-xs font-bold text-slate-400 tracking-wider">{job.displayId || 'TK-XXXX'}</span>
+                        {isPremium ? (
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-green-500 border-slate-300' : 'bg-indigo-50 text-indigo-700 border border-indigo-100'}`}><ShieldCheck className="w-3.5 h-3.5" /> 0% COMMISSION</span>
+                        ) : (
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-slate-500 border-slate-300' : 'bg-amber-50 text-amber-800 border border-amber-200'}`}>CLASSIC AGENCY LEAD</span>
+                        )}
+                      </div>
+                      <span className={`inline-flex items-center gap-1.5 text-lg font-black px-3 py-1 rounded-lg shadow-sm border border-slate-100 ${job.isSoldOut ? 'text-green-500 bg-slate-100' : 'text-green-700 bg-slate-50'}`}><Banknote className="w-5 h-5" />₹{job.salary || 'N/A'}</span>
+                    </div>
+
+                    <div className="p-6 flex-1">
+                      {/* --- THE FIX: Title fallback, NO MORE ghost text! --- */}
+                      <h3 className={`text-xl font-bold mb-4 line-clamp-2 ${job.isSoldOut ? 'text-slate-500' : 'text-slate-900'}`}>
+                        {job.title || job.subject}
+                      </h3>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3 text-sm text-slate-600">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}><GraduationCap className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-blue-500'}`} /></div>
+                          <span className="font-medium">{job.grade}</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-sm text-slate-600">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}><MapPin className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-red-500'}`} /></div>
+                          <span className="font-medium">{job.location}{job.city ? `, ${job.city}` : ''}</span>
+                        </div>
+                      </div>
+                      {job.requirements && (
+                        <div className="mt-5 p-4 bg-slate-50 rounded-xl text-sm text-slate-600 border border-slate-100 relative">
+                          <BookOpen className={`w-4 h-4 absolute top-4 left-4 ${job.isSoldOut ? 'text-slate-400' : 'text-yellow-400'}`} />
+                          <p className="pl-7 line-clamp-3">{job.requirements}</p>
+                        </div>
                       )}
                     </div>
-                    <span className={`inline-flex items-center gap-1.5 text-lg font-black px-3 py-1 rounded-lg shadow-sm border border-slate-100 ${job.isSoldOut ? 'text-green-500 bg-slate-100' : 'text-green-700 bg-slate-50'}`}><Banknote className="w-5 h-5" />₹{job.salary || 'N/A'}</span>
-                  </div>
 
-                  <div className="p-6 flex-1">
-                    <h3 className={`text-xl font-bold mb-4 line-clamp-2 ${job.isSoldOut ? 'text-slate-500' : 'text-slate-900'}`}>{job.subject} Tutor Required</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3 text-sm text-slate-600">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}><GraduationCap className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-blue-500'}`} /></div>
-                        <span className="font-medium">{job.grade}</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-sm text-slate-600">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}><MapPin className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-red-500'}`} /></div>
-                        <span className="font-medium">{job.location}{job.city ? `, ${job.city}` : ''}</span>
-                      </div>
+                    <div className="p-5 pt-0 mt-auto z-10 relative">
+                      {job.isSoldOut ? (
+                        <button disabled className="w-full py-3.5 bg-slate-100 text-red-700 border border-slate-200 rounded-xl font-bold tracking-wide cursor-not-allowed flex justify-center items-center gap-2">
+                          <Lock className="w-4 h-4" /> Lead already Sold out
+                        </button>
+                      ) : (
+                        <button onClick={() => openUnlockModal(job)} className="w-full py-3.5 bg-slate-900 text-amber-400 rounded-xl font-bold tracking-wide border border-amber-500/30 shadow-lg hover:bg-slate-800 hover:border-amber-400 hover:shadow-amber-500/20 hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 group">
+                          Unlock for ₹{job.price || 49}
+                          <span className="opacity-50 group-hover:opacity-100 transition-opacity">→</span>
+                        </button>
+                      )}
                     </div>
-                    {job.requirements && (
-                      <div className="mt-5 p-4 bg-slate-50 rounded-xl text-sm text-slate-600 border border-slate-100 relative">
-                        <BookOpen className={`w-4 h-4 absolute top-4 left-4 ${job.isSoldOut ? 'text-slate-400' : 'text-yellow-400'}`} />
-                        <p className="pl-7 line-clamp-3">{job.requirements}</p>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="p-5 pt-0 mt-auto z-10 relative">
-                    {job.isSoldOut ? (
-                      <button disabled className="w-full py-3.5 bg-slate-100 text-yellow-700 border border-slate-200 rounded-xl font-bold tracking-wide cursor-not-allowed flex justify-center items-center gap-2">
-                        <Lock className="w-4 h-4" /> Lead already Claimed
-                      </button>
-                    ) : (
-                      <button onClick={() => openUnlockModal(job)} className="w-full py-3.5 bg-slate-900 text-amber-400 rounded-xl font-bold tracking-wide border border-amber-500/30 shadow-lg hover:bg-slate-800 hover:border-amber-400 hover:shadow-amber-500/20 hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 group">
-                        Unlock for ₹{job.price || 49}
-                        <span className="opacity-50 group-hover:opacity-100 transition-opacity">→</span>
-                      </button>
-                    )}
                   </div>
                 </div>
               );

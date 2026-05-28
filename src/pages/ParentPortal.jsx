@@ -98,8 +98,10 @@ function ParentPortal() {
           <ArrowLeft className="w-4 h-4" /> Back to home
         </button>
         <div className="mb-10 text-center md:text-left">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">Find the Perfect Tutor</h1>
-          <p className="text-lg text-slate-600 max-w-2xl">Post your requirement for free. We'll connect you directly with verified university students from top local colleges.</p>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+  Find the <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-500">Perfect</span> Tutor
+</h1>
+          <p className="text-lg text-slate-600 max-w-2xl">Post your requirement for free. We'll connect you directly with verified tutors.</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
@@ -192,7 +194,7 @@ function ParentPortal() {
               <p className="text-sm text-slate-600 leading-relaxed">You never pay a single rupee to Tutor49. We are a free network designed to help you bypass expensive agency commissions.</p>
             </div>
             <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm relative overflow-hidden group">
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Verified Students</h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Verified tutors</h3>
               <p className="text-sm text-slate-600 leading-relaxed">We manually verify the ID of every tutor before they can view your requirements, ensuring a safe learning environment.</p>
             </div>
             <div className="bg-indigo-600 rounded-3xl p-6 shadow-md text-white relative overflow-hidden">

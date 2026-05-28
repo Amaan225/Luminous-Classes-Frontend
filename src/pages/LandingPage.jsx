@@ -173,8 +173,8 @@ function LandingPage() {
           </div>
 
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-slate-900 mb-8 drop-shadow-sm">
-            Tuto₹<span className="text-indigo-600">49</span>
-          </h1>
+  Tuto₹<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-500 to-blue-500">49</span>
+</h1>
           
           <p className="text-xl md:text-2xl lg:text-3xl text-slate-600 mb-14 max-w-3xl mx-auto leading-relaxed font-medium">
             Connecting dedicated parents with verified, top-tier tutors in the area.
@@ -191,7 +191,7 @@ function LandingPage() {
 
             <Link 
               to="/tutor" 
-              className="flex-1 bg-white/90 backdrop-blur-sm text-slate-700 border-2 border-slate-200 rounded-2xl py-6 px-8 font-semibold shadow-sm hover:border-indigo-200 hover:bg-indigo-50/90 hover:text-indigo-700 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
+              className="flex-1 bg-white/90 backdrop-blur-sm text-slate-700 border-2 border-violet-500 rounded-2xl py-6 px-8 font-semibold shadow-sm hover:border-indigo-200 hover:bg-indigo-50/90 hover:text-indigo-700 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
             >
               <div className="text-2xl md:text-3xl font-bold mb-1.5">I am a Tutor</div>
               <div className="text-slate-500 text-sm md:text-base font-medium">Browse verified local jobs</div>
