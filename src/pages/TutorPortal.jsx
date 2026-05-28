@@ -307,7 +307,7 @@ function TutorPortal() {
                         <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-900 font-bold shadow-sm text-sm">1</div>
                         <h5 className="font-bold text-slate-900">Zero Commissions</h5>
                       </div>
-                      <p className="text-sm text-slate-600 leading-relaxed pl-11">For Premium leads, you will not be charged any agency commission after this one-time unlock fee.</p>
+                      <p className="text-sm text-slate-600 leading-relaxed pl-11">For "Premium leads", you will not be charged any agency commission after this one-time unlock fee.</p>
                     </div>
                     <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                       <div className="flex items-center gap-3 mb-3">
@@ -329,7 +329,7 @@ function TutorPortal() {
                         <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold shadow-sm text-sm">4</div>
                         <h5 className="font-bold text-indigo-900">Refund Policy</h5>
                       </div>
-                      <p className="text-sm text-indigo-800 leading-relaxed pl-11 relative z-10">If you contact the client and they refuse a demo, you get a refund with nominal fee deduction.</p>
+                      <p className="text-sm text-indigo-800 leading-relaxed pl-11 relative z-10">If you contact the client within 48 hrs and they refuse a demo, you get a refund with nominal fee deduction.</p>
                     </div>
                   </div>
                   <div className="mb-8 max-w-2xl mx-auto w-full">
