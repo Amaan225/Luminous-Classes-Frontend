@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GraduationCap, Wallet, Zap, ChevronDown, Star, Quote, Menu, X } from 'lucide-react';
+import { Phone, Mail, MessageCircle } from 'lucide-react';
 
 function LandingPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
@@ -355,6 +356,80 @@ function LandingPage() {
           </div>
         </div>
       </div>
+     {/* ==========================================
+    CONTACT US SECTION
+========================================== */}
+<div className="max-w-4xl mx-auto px-4 py-20">
+  <div className="text-center mb-12">
+    <h2 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 via-purple-500 to-blue-500 tracking-tight">
+      Contact <span className="text-slate-800">Us</span>
+    </h2>
+    <p className="text-slate-500 mt-4 text-lg font-medium">We are always here to help you.</p>
+  </div>
+
+  <div className="flex flex-col gap-6">
+    
+    {/* WhatsApp Gradient Border Bar */}
+    <a 
+      href="https://wa.me/919984580939" 
+      target="_blank" 
+      rel="noreferrer" 
+      className="group block p-[2px] rounded-3xl bg-gradient-to-r from-emerald-400 to-teal-500 shadow-sm hover:shadow-xl hover:shadow-emerald-500/20 hover:-translate-y-1 transition-all duration-300"
+    >
+      <div className="flex items-center gap-6 p-6 md:p-8 rounded-[22px] bg-white h-full w-full">
+        <div className="bg-emerald-50 p-4 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+          <MessageCircle className="w-8 h-8 md:w-10 md:h-10 text-emerald-500" />
+        </div>
+        <div>
+          <h3 className="text-2xl font-bold text-slate-900 tracking-wide mb-1">WhatsApp Us</h3>
+          <p className="text-emerald-600 text-lg md:text-xl font-semibold tracking-wider">+91 99845 80939</p>
+        </div>
+        <div className="ml-auto opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
+          <span className="text-3xl font-light text-emerald-500">→</span>
+        </div>
+      </div>
+    </a>
+
+    {/* Phone Gradient Border Bar */}
+    <a 
+      href="tel:+919984580939" 
+      className="group block p-[2px] rounded-3xl bg-gradient-to-r from-blue-500 to-indigo-600 shadow-sm hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1 transition-all duration-300"
+    >
+      <div className="flex items-center gap-6 p-6 md:p-8 rounded-[22px] bg-white h-full w-full">
+        <div className="bg-blue-50 p-4 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+          <Phone className="w-8 h-8 md:w-10 md:h-10 text-blue-600" />
+        </div>
+        <div>
+          <h3 className="text-2xl font-bold text-slate-900 tracking-wide mb-1">Call Us</h3>
+          <p className="text-blue-600 text-lg md:text-xl font-semibold tracking-wider">+91 99845 80939</p>
+        </div>
+        <div className="ml-auto opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
+          <span className="text-3xl font-light text-blue-600">→</span>
+        </div>
+      </div>
+    </a>
+
+    {/* Email Gradient Border Bar */}
+    <a 
+      href="mailto:tutor49.official@gmail.com" 
+      className="group block p-[2px] rounded-3xl bg-gradient-to-r from-purple-500 to-pink-500 shadow-sm hover:shadow-xl hover:shadow-purple-500/20 hover:-translate-y-1 transition-all duration-300"
+    >
+      <div className="flex items-center gap-6 p-6 md:p-8 rounded-[22px] bg-white h-full w-full">
+        <div className="bg-purple-50 p-4 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+          <Mail className="w-8 h-8 md:w-10 md:h-10 text-purple-600" />
+        </div>
+        <div>
+          <h3 className="text-2xl font-bold text-slate-900 tracking-wide mb-1">Email Us</h3>
+          <p className="text-purple-600 text-lg md:text-xl font-semibold tracking-wider">tutor49.official@gmail.com</p>
+        </div>
+        <div className="ml-auto opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
+          <span className="text-3xl font-light text-purple-600">→</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
 
       {/* ========================================== */}
       {/* 5. FOOTER                                  */}
