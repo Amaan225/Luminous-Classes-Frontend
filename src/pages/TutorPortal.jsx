@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, BookOpen, GraduationCap, ArrowLeft, Search, ShieldCheck, Banknote, ChevronDown, Lock } from 'lucide-react';
+import { MapPin, BookOpen, GraduationCap, ArrowLeft, Search, ShieldCheck, Banknote, ChevronDown, Lock, Book } from 'lucide-react';
+
 
 function TutorPortal() {
   const navigate = useNavigate();
@@ -234,15 +235,34 @@ function TutorPortal() {
                         {job.title || job.subject}
                       </h3>
                       <div className="space-y-3">
-                        <div className="flex items-center gap-3 text-sm text-slate-600">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}><GraduationCap className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-blue-500'}`} /></div>
-                          <span className="font-medium">{job.grade}</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm text-slate-600">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}><MapPin className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-red-500'}`} /></div>
-                          <span className="font-medium">{job.location}{job.city ? `, ${job.city}` : ''}</span>
-                        </div>
-                      </div>
+  
+  {/* --- NEW SUBJECT ROW --- */}
+  {job.subject && (
+    <div className="flex items-center gap-3 text-sm text-slate-600">
+      <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
+        <Book className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-indigo-500'}`} />
+      </div>
+      <span className="font-medium line-clamp-1">{job.subject}</span>
+    </div>
+  )}
+
+  {/* EXISTING GRADE ROW */}
+  <div className="flex items-center gap-3 text-sm text-slate-600">
+    <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
+      <GraduationCap className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-blue-500'}`} />
+    </div>
+    <span className="font-medium">{job.grade}</span>
+  </div>
+
+  {/* EXISTING LOCATION ROW */}
+  <div className="flex items-center gap-3 text-sm text-slate-600">
+    <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
+      <MapPin className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-red-500'}`} />
+    </div>
+    <span className="font-medium">{job.location}{job.city ? `, ${job.city}` : ''}</span>
+  </div>
+  
+</div>
                       {job.requirements && (
                         <div className="mt-5 p-4 bg-slate-50 rounded-xl text-sm text-slate-600 border border-slate-100 relative">
                           <BookOpen className={`w-4 h-4 absolute top-4 left-4 ${job.isSoldOut ? 'text-slate-400' : 'text-yellow-400'}`} />
