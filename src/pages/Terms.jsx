@@ -55,7 +55,7 @@ function Terms() {
               </h2>
               <ul className="space-y-3 text-slate-600 leading-relaxed list-disc list-outside ml-5 marker:text-slate-400">
                 <li><strong>Free Usage:</strong> Posting a requirement on Tutor49 is 100% free. Parents are never charged a fee by the platform.</li>
-                <li><strong>Verification:</strong> We manually verify the college IDs of our tutors, but parents are strongly encouraged to independently verify the tutor's identity during the first meeting.</li>
+                <li><strong>Verification:</strong> We manually verify the IDs of the tutors, but parents are strongly encouraged to independently verify the tutor's identity during the first meeting.</li>
                 <li><strong>Direct Negotiation:</strong> Tutor49 does not dictate salaries. Fees, timings, and syllabus are negotiated directly between the parent and the chosen tutor.</li>
               </ul>
             </section>
@@ -77,16 +77,16 @@ function Terms() {
             <section className="bg-indigo-50 p-6 rounded-2xl border border-indigo-100 relative">
               <h2 className="text-xl font-bold text-indigo-900 mb-4 flex items-center gap-2">
                 <RefreshCcw className="w-5 h-5" />
-                4. The 100% Refund Policy
+                4. The Refund Policy
               </h2>
               <div className="space-y-3 text-indigo-800 leading-relaxed text-sm">
                 <p>
-                  We stand by the quality of our leads. If you pay ₹49 to unlock a requirement, you are eligible for a full refund under the following conditions:
+                  We stand by the quality of our leads. If you pay ₹49 to unlock a requirement, you are eligible for a refund with nominal deductions under the following conditions:
                 </p>
                 <ul className="list-disc list-outside ml-5 space-y-2 font-medium">
                   <li>The parent declines to take a free demo from you.</li>
-                  <li>The parent has already hired someone else before you could call.</li>
-                  <li>The phone number provided is invalid or unreachable after 48 hours.</li>
+                  <li>The parent does not respond to your calls or messages within 48 hours.</li>
+                  <li>The phone number provided is invalid or unreachable within 48 hours.</li>
                 </ul>
                 <p className="pt-2 text-xs opacity-80">
                   * Note: Refunds are not provided if the parent takes your demo but decides not to hire you based on performance, or if the lead is explicitly marked as a "Classic" 50% commission lead.
