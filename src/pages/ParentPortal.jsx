@@ -176,7 +176,7 @@ function ParentPortal() {
                 <div className="space-y-4 pt-4">
                   <div className="flex flex-col gap-1.5">
                     <label className="text-sm font-medium text-slate-700">Specific Requirements (Optional)</label>
-                    <textarea name="requirements" value={formData.requirements} onChange={handleChange} className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full h-32 resize-none" placeholder="e.g. Looking for a female tutor, 3 days a week..."></textarea>
+                    <textarea name="requirements" value={formData.requirements} onChange={handleChange} className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none w-full h-32 resize-none" placeholder="e.g. child requires personalized attention, fee is negotiable, 3 days a week..."></textarea>
                   </div>
                 </div>
                 {submitStatus === 'error' && (
