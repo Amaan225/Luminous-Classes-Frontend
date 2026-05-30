@@ -18,7 +18,6 @@ function AdminPortal() {
 
   // --- INJECTION FORM STATE ---
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // THE FIX: Added 'city' to initial state
   const [newLeadForm, setNewLeadForm] = useState({
     title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '', 
     leadType: 'classic',
@@ -46,7 +45,8 @@ function AdminPortal() {
         } catch (e) { console.error(e); }
 
         try {
-          const tutorsRes = await axios.get('https://luminous-classes-backend.onrender.com/api/tutors');
+          // THE FIX 1: Pointing to the new Admin Pending route
+          const tutorsRes = await axios.get('https://luminous-classes-backend.onrender.com/api/admin/tutors/pending');
           setTutors(tutorsRes.data);
         } catch (e) { console.error(e); }
       };
@@ -76,7 +76,8 @@ function AdminPortal() {
 
   const handleApproveTutor = async (id) => {
     try {
-      await axios.patch(`https://luminous-classes-backend.onrender.com/api/tutors/${id}/approve`);
+      // THE FIX 2: Pointing to the new Admin PUT route and passing the 'approved' status
+      await axios.put(`https://luminous-classes-backend.onrender.com/api/admin/tutors/${id}/status`, { status: 'approved' });
       setTutors(tutors.map(t => t._id === id ? { ...t, status: 'approved' } : t));
     } catch (error) { console.error("Error approving:", error); }
   };
@@ -89,7 +90,6 @@ function AdminPortal() {
     try {
      await axios.post('https://luminous-classes-backend.onrender.com/api/jobs?secret=amaan2026', newLeadForm);
       alert("Lead Successfully Injected!");
-      // Reset form, including city back to default
       setNewLeadForm({ title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '', leadType: 'classic', status: 'approved' });
       fetchJobs(); 
     } catch (error) {
