@@ -101,7 +101,7 @@ function TutorRegistration() {
                       <input 
                         type="text" name="name" required value={formData.name} onChange={handleChange}
                         className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
-                        placeholder="e.g. Amaan Khan"
+                        placeholder="e.g. Your beautiful name"
                       />
                     </div>
                     
