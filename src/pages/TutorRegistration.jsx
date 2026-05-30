@@ -49,7 +49,7 @@ function TutorRegistration() {
           </p>
           <div className="bg-indigo-50 p-4 rounded-xl mb-8 border border-indigo-100">
             <p className="text-sm text-indigo-800 font-medium">
-              Once approved, you will gain full access to unlock premium 0% commission leads on the Tutor Board.
+              Once approved, you will gain full access to unlock "premium" 0% commission leads on the Tutor Board.
             </p>
           </div>
           <button 
@@ -78,10 +78,10 @@ function TutorRegistration() {
 
         <div className="mb-10 text-center md:text-left">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
-            Join the Elite Network
+            Join the <span className="text-indigo-600">Elite</span> Network
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl">
-            Stop giving away 50% of your hard-earned money to traditional agencies. Register once, get verified, and keep 100% of your tuition fees.
+            Stop giving away 50% of your hard-earned money to traditional agencies. Register once, get verified, and keep 100% of your tuition fees on <span className="text-indigo-600">premium</span> leads.
           </p>
         </div>
 
@@ -120,16 +120,16 @@ function TutorRegistration() {
                     <input 
                       type="email" name="email" required value={formData.email} onChange={handleChange}
                       className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
-                      placeholder="e.g. tutor@university.edu"
+                      placeholder="e.g. tutor@gmail.com"
                     />
                   </div>
 
                   <div className="flex flex-col gap-1.5 pt-2">
-                    <label className="text-sm font-medium text-slate-700">College Name & Roll / ID Number <span className="text-red-500">*</span></label>
+                    <label className="text-sm font-medium text-slate-700">College Name / ID Number <span className="text-red-500">*</span></label>
                     <input 
                       type="text" name="collegeId" required value={formData.collegeId} onChange={handleChange}
                       className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
-                      placeholder="e.g. Lucknow University - CS2026-45"
+                      placeholder="e.g. Aadhar Number"
                     />
                     <p className="text-xs text-slate-500 mt-1">This is required for our manual safety verification process.</p>
                   </div>
@@ -166,7 +166,7 @@ function TutorRegistration() {
               </div>
               <h3 className="text-lg font-bold mb-2">Keep 100% of your pay</h3>
               <p className="text-sm text-indigo-100 leading-relaxed relative z-10">
-                Agencies take 50% of your first month's salary. At Tutor49, you pay a flat ₹49 to unlock a premium lead, and the rest is entirely yours.
+                Agencies take 50% of your first month's salary. At Tutor49, you pay a flat ₹49 to unlock a "premium" lead, and the rest is entirely yours.
               </p>
             </div>
 
@@ -177,9 +177,9 @@ function TutorRegistration() {
               <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-4 text-slate-700 border border-slate-100">
                 <ShieldCheck className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Exclusively for Students</h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Trusted by Parents</h3>
               <p className="text-sm text-slate-600 leading-relaxed relative z-10">
-                We are a closed network. Parents trust us because we only allow verified university students onto the platform.
+                We are a closed network. Parents trust us because we only allow verified tutors onto the platform.
               </p>
             </div>
 
@@ -192,7 +192,7 @@ function TutorRegistration() {
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">Protected by Refund</h3>
               <p className="text-sm text-slate-600 leading-relaxed relative z-10">
-                If you pay to unlock a lead and the parent genuinely declines a demo or has hired someone else, our support team will refund you.
+                If you pay to unlock a lead and the parent genuinely declines a demo, our support team will refund you.
               </p>
             </div>
           </div>
