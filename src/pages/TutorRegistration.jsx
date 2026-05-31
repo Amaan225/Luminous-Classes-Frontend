@@ -12,7 +12,9 @@ function TutorRegistration() {
     name: '',
     email: '',
     phone: '',
-    collegeId: ''
+    collegeId: '',
+    city: 'Lucknow', // Default city
+    preferredArea: '' // The new field
   });
 
   const handleChange = (e) => {
@@ -124,8 +126,27 @@ function TutorRegistration() {
                     />
                   </div>
 
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-sm font-medium text-slate-700">City <span className="text-red-500">*</span></label>
+                      <input 
+                        type="text" name="city" required value={formData.city} onChange={handleChange}
+                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all w-full"
+                      />
+                    </div>
+                    
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-sm font-medium text-slate-700">Preferred Teaching Area <span className="text-red-500">*</span></label>
+                      <input 
+                        type="text" name="preferredArea" required value={formData.preferredArea} onChange={handleChange}
+                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all w-full"
+                        placeholder="e.g. Gomti Nagar"
+                      />
+                    </div>
+                  </div>
+
                   <div className="flex flex-col gap-1.5 pt-2">
-                    <label className="text-sm font-medium text-slate-700">College Name / ID Number <span className="text-red-500">*</span></label>
+                    <label className="text-sm font-medium text-slate-700">Aadhar Number <span className="text-red-500">*</span></label>
                     <input 
                       type="text" name="collegeId" required value={formData.collegeId} onChange={handleChange}
                       className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
