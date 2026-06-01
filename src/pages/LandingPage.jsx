@@ -65,12 +65,12 @@ function LandingPage() {
       answer: "We act as a direct, verified bulletin board. Parents post their requirements for free. Verified tutors browse these requirements on their dashboard. If a tutor is interested, they unlock the contact details and negotiate directly with the parent. No middlemen dictating terms."
     },
     {
-      question: "What is a Premium Lead?",
-      answer: "A Premium Lead is an organic requirement posted directly by a parent on our platform. Tutors unlock these leads with a flat one-time ₹49 fee. After that, 100% of the tuition fee goes directly to the tutor. We charge 0% commission on Premium Leads."
+      question: "What is a Direct Lead?",
+      answer: "A Direct Lead is an organic requirement posted directly by a parent on our platform. Tutors unlock these leads with a flat one-time ₹49 fee. After that, 100% of the tuition fee goes directly to the tutor. We charge 0% commission on Direct Leads."
     },
     {
-      question: "What is a Classic Lead?",
-      answer: "Classic Leads are sourced from our network of partner agencies in Lucknow. Because these come from traditional agencies, the agency will require their standard 50% commission of the first month's fee. We clearly mark these so tutors can choose which leads they want."
+      question: "What is a Agency Lead?",
+      answer: "Agency Leads are sourced from our network of partner agencies in Lucknow. Because these come from traditional agencies, the agency will require their standard 50% commission of the first month's fee. We clearly mark these so tutors can choose which leads they want."
     },
     {
       question: "How are tutors verified?",
@@ -246,7 +246,7 @@ function LandingPage() {
               </div>
               <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Zero Commissions</h3>
               <p className="text-slate-600 leading-relaxed font-medium">
-                Agencies take up to 50% of a teacher's salary. We don't. On Premium leads, tutors keep 100% of what they earn.
+                Agencies take up to 50% of a teacher's salary. We don't. On Direct leads, tutors keep 100% of what they earn.
               </p>
             </div>
           </div>

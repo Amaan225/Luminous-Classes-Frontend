@@ -51,7 +51,7 @@ function TutorRegistration() {
           </p>
           <div className="bg-indigo-50 p-4 rounded-xl mb-8 border border-indigo-100">
             <p className="text-sm text-indigo-800 font-medium">
-              Once approved, you will gain full access to unlock "premium" 0% commission leads on the Tutor Board.
+              Once approved, you will gain full access to unlock "Direct" 0% commission leads on the Tutor Board.
             </p>
           </div>
           <button 
@@ -83,7 +83,7 @@ function TutorRegistration() {
             Join the <span className="text-indigo-600">Elite</span> Network
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl">
-            Stop giving away 50% of your hard-earned money to traditional agencies. Register once, get verified, and keep 100% of your tuition fees on <span className="text-indigo-600">premium</span> leads.
+            Stop giving away 50% of your hard-earned money to traditional agencies. Register once, get verified, and keep 100% of your tuition fees on <span className="text-indigo-600">Direct</span> leads.
           </p>
         </div>
 
@@ -187,7 +187,7 @@ function TutorRegistration() {
               </div>
               <h3 className="text-lg font-bold mb-2">Keep 100% of your pay</h3>
               <p className="text-sm text-indigo-100 leading-relaxed relative z-10">
-                Agencies take 50% of your first month's salary. At Tutor49, you pay a flat ₹49 to unlock a "premium" lead, and the rest is entirely yours.
+                Agencies take 50% of your first month's salary. At Tutor49, you pay a flat ₹49 to unlock a "Direct" lead, and the rest is entirely yours.
               </p>
             </div>
 

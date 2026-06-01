@@ -66,9 +66,9 @@ function Terms() {
                 3. For Tutors
               </h2>
               <ul className="space-y-3 text-slate-600 leading-relaxed list-disc list-outside ml-5 marker:text-slate-400">
-                <li><strong>The Unlock Fee:</strong> Tutors pay a flat, non-recurring fee of ₹49 to unlock a Premium lead's contact number.</li>
+                <li><strong>The Unlock Fee:</strong> Tutors pay a flat, non-recurring fee of ₹49 to unlock a Direct lead's contact number.</li>
                 <li><strong>No Conversion Guarantee:</strong> Unlocking a lead provides the contact number; it does <strong>not</strong> guarantee the parent will hire you. Hiring depends on your communication skills and demo performance.</li>
-                <li><strong>Zero Commission:</strong> Once you are hired via a Premium lead, you keep 100% of your earnings. Tutor49 will never ask for a percentage of your salary.</li>
+                <li><strong>Zero Commission:</strong> Once you are hired via a Direct lead, you keep 100% of your earnings. Tutor49 will never ask for a percentage of your salary.</li>
                 <li><strong>Code of Conduct:</strong> Any harassment, spamming, or unprofessional behavior toward parents will result in an immediate, permanent ban from the platform.</li>
               </ul>
             </section>

@@ -23,7 +23,7 @@ function TutorPortal() {
     'All Areas', 
     'Alambagh', 
     'Aliganj', 
-    'Ashiyana', 
+    'Aashiyana', 
     'Ashok Nagar', 
     'Banda', 
     'Chinhat', 
@@ -164,7 +164,7 @@ function TutorPortal() {
                 Available <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 via-slate-600 to-slate-500">Requirements</span> 
               </h1>
               <p className="text-xs text-slate-500 font-medium mt-1 flex items-center justify-center sm:justify-end gap-1">
-                <ShieldCheck className="w-3 h-3 text-emerald-500"/> Unlock parent contact only when interested
+                <ShieldCheck className="w-3 h-3 text-emerald-500"/> Unlock contact only when interested
               </p>
             </div>
           </div>
@@ -201,8 +201,8 @@ function TutorPortal() {
         {/* TYPE FILTERS */}
         <div className="flex flex-wrap gap-3 mb-8">
           <button onClick={() => setFilter('all')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${filter === 'all' ? 'bg-slate-900 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'}`}>All Leads ({jobs.length})</button>
-          <button onClick={() => setFilter('direct')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${filter === 'direct' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'}`}><span className="w-2 h-2 rounded-full bg-indigo-500"></span>Direct (0% Commission)</button>
-          <button onClick={() => setFilter('classic')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${filter === 'classic' ? 'bg-amber-50 text-amber-700 border border-amber-200 shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'}`}><span className="w-2 h-2 rounded-full bg-amber-500"></span>Classic (50% Agency Commission)</button>
+          <button onClick={() => setFilter('direct')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${filter === 'direct' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-sm' : 'bg-white text-slate-600 border border-green-600 hover:border-slate-300'}`}><span className="w-2 h-2 rounded-full bg-green-500"></span>Direct (only pay ₹49)</button>
+          <button onClick={() => setFilter('classic')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${filter === 'classic' ? 'bg-amber-50 text-amber-700 border border-amber-200 shadow-sm' : 'bg-white text-slate-600 border border-amber-500 hover:border-slate-300'}`}><span className="w-2 h-2 rounded-full bg-amber-500"></span>Classic (50% first month commision)</button>
         </div>
 
         {/* JOB GRID */}
@@ -230,9 +230,9 @@ function TutorPortal() {
                       <div className="flex flex-col gap-2">
                         <span className="text-xs font-bold text-slate-400 tracking-wider">{job.displayId || 'TK-XXXX'}</span>
                         {isDirect ? (
-                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-green-500 border-slate-300' : 'bg-indigo-50 text-indigo-700 border border-indigo-100'}`}><ShieldCheck className="w-3.5 h-3.5"/> 0% DIRECT</span>
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-green-500 border-slate-300' : 'bg-indigo-50 text-green-700 border border-indigo-100'}`}><ShieldCheck className="w-3.5 h-3.5"/> DIRECT ₹49</span>
                         ) : (
-                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-slate-500 border-slate-300' : 'bg-amber-50 text-amber-800 border border-amber-200'}`}>CLASSIC AGENCY LEAD</span>
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-slate-500 border-slate-300' : 'bg-amber-50 text-amber-800 border border-amber-200'}`}>AGENCY LEAD</span>
                         )}
                       </div>
                       <span className={`inline-flex items-center gap-1.5 text-lg font-black px-3 py-1 rounded-lg shadow-sm border border-slate-100 ${job.isSoldOut ? 'text-green-500 bg-slate-100' : 'text-green-700 bg-slate-50'}`}><Banknote className="w-5 h-5"/>₹{job.salary || 'N/A'}+</span>
@@ -301,7 +301,7 @@ function TutorPortal() {
               <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
               <div className="relative z-10">
                 <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Secure this Lead</h3>
-                <p className="text-indigo-100 text-sm md:text-base font-medium">Pay a flat ₹{selectedJob.price || 49} to instantly reveal the parent's contact number.</p>
+                <p className="text-indigo-100 text-sm md:text-base font-medium">Pay a flat ₹{selectedJob.price || 49} to instantly reveal the contact number.</p>
               </div>
             </div>
 
@@ -311,7 +311,7 @@ function TutorPortal() {
                   <div className="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6"><ShieldCheck className="w-12 h-12 text-emerald-600"/></div>
                   <h4 className="text-3xl font-extrabold text-slate-900 mb-8">Lead Unlocked Successfully</h4>
                   <div className="bg-slate-50 border border-slate-200 rounded-2xl p-10 mb-8 relative max-w-2xl mx-auto shadow-sm">
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-xs font-bold tracking-wide">PARENT CONTACT NUMBER</span>
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-xs font-bold tracking-wide"> CONTACT NUMBER</span>
                     <p className="text-5xl md:text-6xl font-black text-slate-900 tracking-wider mt-4">{unlockedNumber}</p>
                   </div>
                   <p className="text-slate-500 text-sm md:text-base font-medium mb-10 px-4 max-w-2xl mx-auto">Important: Please mention Tutor49 when you WhatsApp them. Maintain professional conduct at all times to avoid platform bans.</p>
@@ -336,7 +336,7 @@ function TutorPortal() {
                         <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-900 font-bold shadow-sm text-sm">2</div>
                         <h5 className="font-bold text-slate-900">Contact Access Only</h5>
                       </div>
-                      <p className="text-sm text-slate-600 leading-relaxed pl-11">This payment gives you the parent's contact number. It does not instantly guarantee you the job.</p>
+                      <p className="text-sm text-slate-600 leading-relaxed pl-11">This payment gives you the contact number. It does not instantly guarantee you the job.</p>
                     </div>
                     <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                       <div className="flex items-center gap-3 mb-3">
