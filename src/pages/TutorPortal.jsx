@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, BookOpen, GraduationCap, ArrowLeft, Search, ShieldCheck, Banknote, ChevronDown, Lock, Book } from 'lucide-react';
 
-
 function TutorPortal() {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
@@ -19,18 +18,37 @@ function TutorPortal() {
   const [paymentStatus, setPaymentStatus] = useState('idle'); 
   const [unlockedNumber, setUnlockedNumber] = useState('');
 
+  // ALPHABETIZED AREAS LIST
   const lucknowAreas = [
-    'All Areas', 'Gomti Nagar', 'Indira Nagar', 'Aliganj', 'Mahanagar',
-    'Hazratganj', 'Alambagh', 'Ashiyana', 'Jankipuram', 'Vikram Nagar', 'Chinhat', 'Kalyanpur', 'Nishatganj', 'Rajajipuram', 'Sarai Mir', 'Talkatora', 'Thakurganj', 'Banda', 'Kursi Road', 'Ashok Nagar'
+    'All Areas', 
+    'Alambagh', 
+    'Aliganj', 
+    'Ashiyana', 
+    'Ashok Nagar', 
+    'Banda', 
+    'Chinhat', 
+    'Gomti Nagar', 
+    'Hazratganj', 
+    'Indira Nagar', 
+    'Jankipuram', 
+    'Kalyanpur', 
+    'Kursi Road', 
+    'Mahanagar', 
+    'Nishatganj', 
+    'Rajajipuram', 
+    'Sarai Mir', 
+    'Talkatora', 
+    'Thakurganj', 
+    'Vikram Nagar'
   ];
 
   // --- GROWTH HACK: PHANTOM "SOLD OUT" LEADS ---
   const phantomSoldOutLeads = [
     {
-      _id: 'phantom_1', displayId: 'TK-9284', subject: '8th class All subjects (CBSE)', grade: '8', city: 'Lucknow', location: 'Gomti Nagar', salary: 12000, leadType: 'premium', isSoldOut: true, requirements: 'Looking for an experienced tutor who can help with  exam preparation.'
+      _id: 'phantom_1', displayId: 'TK-9284', subject: '8th class All subjects (CBSE)', grade: '8', city: 'Lucknow', location: 'Gomti Nagar', salary: 12000, leadType: 'direct', isSoldOut: true, requirements: 'Looking for an experienced tutor who can help with exam preparation.'
     },
     {
-      _id: 'phantom_2', displayId: 'TK-4712', subject: 'All Subjects', grade: '6', city: 'Lucknow', location: 'Aliganj', salary: 10500, leadType: 'premium', isSoldOut: true, requirements: 'Need a tutor for my kid who is struggling with science subjects. Must be patient and good with kids.'
+      _id: 'phantom_2', displayId: 'TK-4712', subject: 'All Subjects', grade: '6', city: 'Lucknow', location: 'Aliganj', salary: 10500, leadType: 'direct', isSoldOut: true, requirements: 'Need a tutor for my kid who is struggling with science subjects. Must be patient and good with kids.'
     }
   ];
 
@@ -38,7 +56,6 @@ function TutorPortal() {
     const fetchJobs = async () => {
       try {
         const response = await axios.get('https://luminous-classes-backend.onrender.com/api/jobs');
-        // Phantom leads go to the top for maximum panic
         setJobs([...phantomSoldOutLeads, ...response.data]);
       } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -107,7 +124,12 @@ function TutorPortal() {
   };
 
   const filteredJobs = jobs.filter(job => {
-    const matchesType = filter === 'all' || job.leadType === filter;
+    // Smart filter matching for backward compatibility with old 'premium' leads
+    const isJobDirect = job.leadType === 'direct' || job.leadType === 'premium' || !job.leadType;
+    const matchesType = filter === 'all' || 
+                        (filter === 'direct' && isJobDirect) || 
+                        (filter === 'classic' && job.leadType === 'classic');
+
     const searchLower = searchTerm.toLowerCase();
     const isLucknowSearch = searchLower.includes('lucknow');
     
@@ -135,15 +157,14 @@ function TutorPortal() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-center py-4 gap-4">
             <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors self-start sm:self-auto">
-              <ArrowLeft className="w-4 h-4" /> Exit Board
+              <ArrowLeft className="w-4 h-4"/> Exit Board
             </button>
             <div className="text-center sm:text-right">
-              {/* --- THE FIX: Gradient Header --- */}
               <h1 className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-500 tracking-tight">
                 Available <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 via-slate-600 to-slate-500">Requirements</span> 
               </h1>
               <p className="text-xs text-slate-500 font-medium mt-1 flex items-center justify-center sm:justify-end gap-1">
-                <ShieldCheck className="w-3 h-3 text-emerald-500" /> Unlock parent contact only when interested
+                <ShieldCheck className="w-3 h-3 text-emerald-500"/> Unlock parent contact only when interested
               </p>
             </div>
           </div>
@@ -155,7 +176,7 @@ function TutorPortal() {
         {/* SEARCH AND AREA FILTER */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-6 flex flex-col md:flex-row gap-4">
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"/>
             <input 
               type="text" 
               placeholder="Search subjects, grades (e.g., '10th CBSE')" 
@@ -165,7 +186,7 @@ function TutorPortal() {
             />
           </div>
           <div className="relative md:w-64 flex-shrink-0">
-            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-indigo-500" />
+            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-indigo-500"/>
             <select 
               value={selectedArea}
               onChange={(e) => setSelectedArea(e.target.value)}
@@ -173,14 +194,14 @@ function TutorPortal() {
             >
               {lucknowAreas.map(area => <option key={area} value={area}>{area}</option>)}
             </select>
-            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none"/>
           </div>
         </div>
 
         {/* TYPE FILTERS */}
         <div className="flex flex-wrap gap-3 mb-8">
           <button onClick={() => setFilter('all')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${filter === 'all' ? 'bg-slate-900 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'}`}>All Leads ({jobs.length})</button>
-          <button onClick={() => setFilter('premium')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${filter === 'premium' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'}`}><span className="w-2 h-2 rounded-full bg-indigo-500"></span>Premium (0% Commission)</button>
+          <button onClick={() => setFilter('direct')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${filter === 'direct' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'}`}><span className="w-2 h-2 rounded-full bg-indigo-500"></span>Direct (0% Commission)</button>
           <button onClick={() => setFilter('classic')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${filter === 'classic' ? 'bg-amber-50 text-amber-700 border border-amber-200 shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'}`}><span className="w-2 h-2 rounded-full bg-amber-500"></span>Classic (50% Agency Commission)</button>
         </div>
 
@@ -192,77 +213,58 @@ function TutorPortal() {
           </div>
         ) : filteredJobs.length === 0 ? (
           <div className="bg-white rounded-2xl border border-slate-200 border-dashed p-12 text-center">
-            <Search className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+            <Search className="w-12 h-12 text-slate-300 mx-auto mb-4"/>
             <h3 className="text-xl font-bold text-slate-900 mb-2">No leads found</h3>
             <p className="text-slate-500">There are currently no requirements matching this filter. Check back soon!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredJobs.map((job) => {
-              const isPremium = job.leadType === 'premium' || !job.leadType;
+              const isDirect = job.leadType === 'direct' || job.leadType === 'premium' || !job.leadType;
               const opacityClass = job.isSoldOut ? 'opacity-70 grayscale-[20%]' : ''; 
 
               return (
-                /* --- THE FIX: Gradient Border Wrapper --- */
                 <div key={job._id} className={`rounded-2xl p-[2px] bg-gradient-to-br from-indigo-200 via-slate-200 to-emerald-200 transition-all duration-300 ${job.isSoldOut ? opacityClass : 'hover:shadow-xl hover:from-indigo-500 hover:via-purple-500 hover:to-emerald-500 hover:-translate-y-1'}`}>
-                  
-                  {/* Inner White Card */}
                   <div className={`bg-white rounded-[14px] flex flex-col h-full overflow-hidden relative`}>
-                    
-                    {/* {job.isSoldOut && (
-                      <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                        <div className="border-8 border-red-600 px-8 py-3 rounded-2xl transform -rotate-12 bg-white/70 backdrop-blur-sm">
-                          <span className="text-red-600 text-6xl font-black uppercase tracking-tighter shadow-sm">SOLD OUT</span>
-                        </div>
-                      </div>
-                    )} */}
-
                     <div className={`p-5 border-b border-slate-100 flex justify-between items-start ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50/50'}`}>
                       <div className="flex flex-col gap-2">
                         <span className="text-xs font-bold text-slate-400 tracking-wider">{job.displayId || 'TK-XXXX'}</span>
-                        {isPremium ? (
-                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-green-500 border-slate-300' : 'bg-indigo-50 text-indigo-700 border border-indigo-100'}`}><ShieldCheck className="w-3.5 h-3.5" /> 0% COMMISSION</span>
+                        {isDirect ? (
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-green-500 border-slate-300' : 'bg-indigo-50 text-indigo-700 border border-indigo-100'}`}><ShieldCheck className="w-3.5 h-3.5"/> 0% DIRECT</span>
                         ) : (
                           <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-slate-500 border-slate-300' : 'bg-amber-50 text-amber-800 border border-amber-200'}`}>CLASSIC AGENCY LEAD</span>
                         )}
                       </div>
-                      <span className={`inline-flex items-center gap-1.5 text-lg font-black px-3 py-1 rounded-lg shadow-sm border border-slate-100 ${job.isSoldOut ? 'text-green-500 bg-slate-100' : 'text-green-700 bg-slate-50'}`}><Banknote className="w-5 h-5" />₹{job.salary || 'N/A'}+</span>
+                      <span className={`inline-flex items-center gap-1.5 text-lg font-black px-3 py-1 rounded-lg shadow-sm border border-slate-100 ${job.isSoldOut ? 'text-green-500 bg-slate-100' : 'text-green-700 bg-slate-50'}`}><Banknote className="w-5 h-5"/>₹{job.salary || 'N/A'}+</span>
                     </div>
 
                     <div className="p-6 flex-1">
-                      {/* --- THE FIX: Title fallback, NO MORE ghost text! --- */}
                       <h3 className={`text-xl font-bold mb-4 line-clamp-2 ${job.isSoldOut ? 'text-slate-500' : 'text-slate-900'}`}>
                         {job.title || job.subject}
                       </h3>
                       <div className="space-y-3">
-  
-  {/* --- NEW SUBJECT ROW --- */}
-  {job.subject && (
-    <div className="flex items-center gap-3 text-sm text-slate-600">
-      <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
-        <Book className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-indigo-500'}`} />
-      </div>
-      <span className="font-medium line-clamp-1">{job.subject}</span>
-    </div>
-  )}
-
-  {/* EXISTING GRADE ROW */}
-  <div className="flex items-center gap-3 text-sm text-slate-600">
-    <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
-      <GraduationCap className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-blue-500'}`} />
-    </div>
-    <span className="font-medium">{job.grade}</span>
-  </div>
-
-  {/* EXISTING LOCATION ROW */}
-  <div className="flex items-center gap-3 text-sm text-slate-600">
-    <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
-      <MapPin className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-red-500'}`} />
-    </div>
-    <span className="font-medium">{job.location}{job.city ? `, ${job.city}` : ''}</span>
-  </div>
-  
-</div>
+                        {job.subject && (
+                          <div className="flex items-center gap-3 text-sm text-slate-600">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
+                              <Book className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-indigo-500'}`} />
+                            </div>
+                            <span className="font-medium line-clamp-1">{job.subject}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-3 text-sm text-slate-600">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
+                            <GraduationCap className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-blue-500'}`} />
+                          </div>
+                          <span className="font-medium">{job.grade}</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-sm text-slate-600">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
+                            <MapPin className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-red-500'}`} />
+                          </div>
+                          <span className="font-medium">{job.location}{job.city ? `, ${job.city}` : ''}</span>
+                        </div>
+                      </div>
+                      
                       {job.requirements && (
                         <div className="mt-5 p-4 bg-slate-50 rounded-xl text-sm text-slate-600 border border-slate-100 relative">
                           <BookOpen className={`w-4 h-4 absolute top-4 left-4 ${job.isSoldOut ? 'text-slate-400' : 'text-yellow-400'}`} />
@@ -274,11 +276,11 @@ function TutorPortal() {
                     <div className="p-5 pt-0 mt-auto z-10 relative">
                       {job.isSoldOut ? (
                         <button disabled className="w-full py-3.5 bg-slate-100 text-red-700 border border-slate-200 rounded-xl font-bold tracking-wide cursor-not-allowed flex justify-center items-center gap-2">
-                          <Lock className="w-4 h-4" /> Lead already Sold out
+                          <Lock className="w-4 h-4"/> Lead already Sold out
                         </button>
                       ) : (
                         <button onClick={() => openUnlockModal(job)} className="w-full py-3.5 bg-slate-900 text-amber-400 rounded-xl font-bold tracking-wide border border-amber-500/30 shadow-lg hover:bg-slate-800 hover:border-amber-400 hover:shadow-amber-500/20 hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 group">
-                          Unlock for ₹{job.price || 49}
+                          Unlock contact for ₹{job.price || 49}
                           <span className="opacity-50 group-hover:opacity-100 transition-opacity">→</span>
                         </button>
                       )}
@@ -291,7 +293,7 @@ function TutorPortal() {
         )}
       </div>
 
-      {/* RAZORPAY UNLOCK MODAL UNCHANGED BELOW */}
+      {/* RAZORPAY UNLOCK MODAL */}
       {isModalOpen && selectedJob && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/80 backdrop-blur-md p-4 md:p-8 overflow-y-auto">
           <div className="bg-white rounded-3xl shadow-2xl w-[95vw] max-w-6xl min-h-[90vh] flex flex-col transform transition-all my-auto overflow-hidden">
@@ -306,7 +308,7 @@ function TutorPortal() {
             <div className="p-6 md:p-12 flex-1 flex flex-col justify-center max-w-5xl mx-auto w-full">
               {paymentStatus === 'success' ? (
                 <div className="text-center py-4">
-                  <div className="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6"><ShieldCheck className="w-12 h-12 text-emerald-600" /></div>
+                  <div className="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6"><ShieldCheck className="w-12 h-12 text-emerald-600"/></div>
                   <h4 className="text-3xl font-extrabold text-slate-900 mb-8">Lead Unlocked Successfully</h4>
                   <div className="bg-slate-50 border border-slate-200 rounded-2xl p-10 mb-8 relative max-w-2xl mx-auto shadow-sm">
                     <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-xs font-bold tracking-wide">PARENT CONTACT NUMBER</span>
@@ -327,7 +329,7 @@ function TutorPortal() {
                         <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-900 font-bold shadow-sm text-sm">1</div>
                         <h5 className="font-bold text-slate-900">Zero Commissions</h5>
                       </div>
-                      <p className="text-sm text-slate-600 leading-relaxed pl-11">For "Premium leads", you will not be charged any agency commission after this one-time unlock fee.</p>
+                      <p className="text-sm text-slate-600 leading-relaxed pl-11">For "Direct leads", you will not be charged any agency commission after this one-time unlock fee.</p>
                     </div>
                     <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                       <div className="flex items-center gap-3 mb-3">
@@ -344,7 +346,7 @@ function TutorPortal() {
                       <p className="text-sm text-slate-600 leading-relaxed pl-11">You secure the job only after contacting the parent, giving a free demo, and getting their approval.</p>
                     </div>
                     <div className="bg-indigo-50 p-6 rounded-2xl border border-indigo-100 relative overflow-hidden">
-                      <div className="absolute -right-4 -top-4 opacity-10 text-indigo-600"><ShieldCheck className="w-32 h-32" /></div>
+                      <div className="absolute -right-4 -top-4 opacity-10 text-indigo-600"><ShieldCheck className="w-32 h-32"/></div>
                       <div className="flex items-center gap-3 mb-3 relative z-10">
                         <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold shadow-sm text-sm">4</div>
                         <h5 className="font-bold text-indigo-900">Refund Policy</h5>

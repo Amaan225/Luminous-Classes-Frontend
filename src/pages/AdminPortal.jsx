@@ -20,7 +20,7 @@ function AdminPortal() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [newLeadForm, setNewLeadForm] = useState({
     title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '', 
-    leadType: 'classic',
+    leadType: 'direct', // UPDATED: Changed default from classic/premium to direct
     status: 'approved' 
   });
 
@@ -45,7 +45,6 @@ function AdminPortal() {
         } catch (e) { console.error(e); }
 
         try {
-          // THE FIX 1: Pointing to the new Admin Pending route
           const tutorsRes = await axios.get('https://luminous-classes-backend.onrender.com/api/admin/tutors/pending');
           setTutors(tutorsRes.data);
         } catch (e) { console.error(e); }
@@ -76,7 +75,6 @@ function AdminPortal() {
 
   const handleApproveTutor = async (id) => {
     try {
-      // THE FIX 2: Pointing to the new Admin PUT route and passing the 'approved' status
       await axios.put(`https://luminous-classes-backend.onrender.com/api/admin/tutors/${id}/status`, { status: 'approved' });
       setTutors(tutors.map(t => t._id === id ? { ...t, status: 'approved' } : t));
     } catch (error) { console.error("Error approving:", error); }
@@ -90,7 +88,8 @@ function AdminPortal() {
     try {
      await axios.post('https://luminous-classes-backend.onrender.com/api/jobs?secret=amaan2026', newLeadForm);
       alert("Lead Successfully Injected!");
-      setNewLeadForm({ title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '', leadType: 'classic', status: 'approved' });
+      // UPDATED: Reset form defaults to 'direct'
+      setNewLeadForm({ title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '', leadType: 'direct', status: 'approved' });
       fetchJobs(); 
     } catch (error) {
       console.error("Error creating lead:", error);
@@ -300,9 +299,10 @@ function AdminPortal() {
               </div>
               <div className="flex flex-col gap-1.5 md:col-span-2">
                 <label className="text-sm font-semibold text-slate-700">Commission Structure <span className="text-red-500">*</span></label>
+                {/* UPDATED: Changed premium to direct in the UI options */}
                 <select name="leadType" value={newLeadForm.leadType} onChange={handleLeadChange} className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full font-medium">
                   <option value="classic">CLASSIC - 50% Partner Agency Fee</option>
-                  <option value="premium">PREMIUM - 0% Organic Direct Lead</option>
+                  <option value="direct">DIRECT - 0% Organic Lead</option>
                 </select>
               </div>
               <div className="flex flex-col gap-1.5 md:col-span-2">
@@ -380,16 +380,19 @@ function AdminPortal() {
             ) : (
               filteredActiveJobs.map((job) => {
                 const jobApps = applications.filter(app => app.jobId === job._id);
-                const isPremium = job.leadType === 'premium' || !job.leadType;
+                
+                // UPDATED: Added fallback logic so old 'premium' leads don't crash
+                const isDirect = job.leadType === 'direct' || job.leadType === 'premium' || !job.leadType;
 
                 return (
                   <div key={job._id} className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden flex flex-col relative">
                     
                     {/* Status Badge */}
                     <div className="absolute top-6 right-6">
-                      {isPremium ? (
+                      {isDirect ? (
                         <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-200">
-                          0% PREMIUM
+                          {/* UPDATED BADGE TEXT */}
+                          0% DIRECT
                         </span>
                       ) : (
                         <span className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-xs font-bold border border-amber-200">
@@ -441,9 +444,10 @@ function AdminPortal() {
                             </div>
                             <div className="flex flex-col gap-1.5 md:col-span-2">
                               <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Lead Type</label>
-                              <select name="leadType" value={editLeadForm.leadType || 'premium'} onChange={handleEditChange} className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full">
+                              {/* UPDATED: Changed amend option defaults */}
+                              <select name="leadType" value={editLeadForm.leadType || 'direct'} onChange={handleEditChange} className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full">
                                 <option value="classic">CLASSIC - 50% FEE</option>
-                                <option value="premium">PREMIUM - 0% FEE</option>
+                                <option value="direct">DIRECT - 0% FEE</option>
                               </select>
                             </div>
                             <div className="flex flex-col gap-1.5 md:col-span-2">
