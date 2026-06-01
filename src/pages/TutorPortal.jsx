@@ -143,7 +143,7 @@ function TutorPortal() {
                 Available <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 via-slate-600 to-slate-500">Requirements</span> 
               </h1>
               <p className="text-xs text-slate-500 font-medium mt-1 flex items-center justify-center sm:justify-end gap-1">
-                <ShieldCheck className="w-3 h-3 text-emerald-500" /> All leads manually verified
+                <ShieldCheck className="w-3 h-3 text-emerald-500" /> Unlock parent contact only when interested
               </p>
             </div>
           </div>

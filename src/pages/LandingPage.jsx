@@ -173,8 +173,8 @@ function LandingPage() {
             Lucknow's Direct Network
           </div>
 
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-slate-900 mb-8 drop-shadow-sm">
-  Tuto₹<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-500 to-blue-500">49</span>
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-slate-900 mb-8 drop-shadow-sm"><span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-800 via-slate-600 to-slate-500">Tuto₹</span> 
+  <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-500 to-blue-500">49</span>
 </h1>
           
           <p className="text-xl md:text-2xl lg:text-3xl text-slate-600 mb-14 max-w-3xl mx-auto leading-relaxed font-medium">
