@@ -21,7 +21,7 @@ function TutorPortal() {
 
   const lucknowAreas = [
     'All Areas', 'Gomti Nagar', 'Indira Nagar', 'Aliganj', 'Mahanagar',
-    'Hazratganj', 'Alambagh', 'Ashiyana', 'Jankipuram'
+    'Hazratganj', 'Alambagh', 'Ashiyana', 'Jankipuram', 'Vikram Nagar', 'Chinhat', 'Kalyanpur', 'Nishatganj', 'Rajajipuram', 'Sarai Mir', 'Talkatora', 'Thakurganj', 'Banda', 'Kursi Road', 'Ashok Nagar'
   ];
 
   // --- GROWTH HACK: PHANTOM "SOLD OUT" LEADS ---
