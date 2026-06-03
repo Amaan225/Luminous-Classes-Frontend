@@ -84,7 +84,7 @@ function TutorPortal() {
       const order = orderRes.data;
 
       const options = {
-        key: "YOUR_RAZORPAY_KEY_ID", 
+        key: import.meta.env.VITE_RAZORPAY_LIVE_KEY_ID, 
         amount: order.amount,
         currency: order.currency,
         name: "Tutor49",
