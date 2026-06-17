@@ -25,8 +25,16 @@ function TutorPortal() {
     'Aliganj', 
     'Aashiyana', 
     'Ashok Nagar', 
+    'Amausi',
+    'Aliganj',
+    'Aashiyana',
     'Banda', 
-    'Chinhat', 
+    'Cantt',
+    'Chinhat',
+    'Chowk',
+    'Daliganj',
+    'Dubagga',
+    
     'Gomti Nagar', 
     'Hazratganj', 
     'Indira Nagar', 
@@ -39,6 +47,7 @@ function TutorPortal() {
     'Sarai Mir', 
     'Talkatora', 
     'Thakurganj', 
+    'Transport Nagar',
     'Vikram Nagar'
   ];
 
