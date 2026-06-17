@@ -62,11 +62,11 @@ function LandingPage() {
   const faqs = [
     {
       question: "How do we work?",
-      answer: "We act as a direct, verified bulletin board. Parents post their requirements for free. Verified tutors browse these requirements on their dashboard. If a tutor is interested, they unlock the contact details and negotiate directly with the parent. No middlemen dictating terms."
+      answer: "We act as a direct, verified Platform. Parents post their requirements for free. Verified tutors browse these requirements on their dashboard. If a tutor is interested, they unlock the contact details and negotiate directly with the parent. No middlemen in between, just a transparent connection."
     },
     {
       question: "What is a Direct Lead?",
-      answer: "A Direct Lead is an organic requirement posted directly by a parent on our platform. Tutors unlock these leads with a flat one-time ₹49 fee. After that, 100% of the tuition fee goes directly to the tutor. We charge 0% commission on Direct Leads."
+      answer: "A Direct Lead is requirement posted directly by a parent on our platform. Tutors unlock these leads with a flat one-time ₹49 fee. After that, 100% of the tuition fee goes directly to the tutor. We charge 0% commission on Direct Leads."
     },
     {
       question: "What is a Agency Lead?",
@@ -74,7 +74,7 @@ function LandingPage() {
     },
     {
       question: "How are tutors verified?",
-      answer: "Quality and safety are our highest priorities. Every tutor must register with a Aadhaar card number. Our admin team manually verifies these credentials before a tutor is granted access to unlock any parent requirements."
+      answer: "Quality and safety are our highest priorities. Every tutor must register with a Aadhaar card number. Our admin team manually verifies these credentials. We also encourage parents to leave reviews and ratings after their experience, which helps maintain a trustworthy community."
     },
     {
       question: "What if the parent declines the demo?",
@@ -452,9 +452,9 @@ function LandingPage() {
             <p className="text-sm font-medium">© 2026. Empowering Students in Lucknow.</p>
             
             <div className="flex gap-8 text-sm font-bold uppercase tracking-widest">
-              <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
-              <Link to="/terms" className="hover:text-white transition-colors">Privacy</Link>
-              <Link to="/terms" className="hover:text-white transition-colors">Refunds</Link>
+              
+              <Link to="/terms" className="hover:text-white transition-colors">Terms and Conditions</Link>
+              
             </div>
           </div>
         </div>

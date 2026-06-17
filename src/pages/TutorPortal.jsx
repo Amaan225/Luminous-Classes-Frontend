@@ -314,7 +314,7 @@ function TutorPortal() {
                     <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-xs font-bold tracking-wide"> CONTACT NUMBER</span>
                     <p className="text-5xl md:text-6xl font-black text-slate-900 tracking-wider mt-4">{unlockedNumber}</p>
                   </div>
-                  <p className="text-slate-500 text-sm md:text-base font-medium mb-10 px-4 max-w-2xl mx-auto">Important: Please mention Tutor49 when you WhatsApp them. Maintain professional conduct at all times to avoid platform bans.</p>
+                  <p className="text-slate-500 text-sm md:text-base font-medium mb-10 px-4 max-w-2xl mx-auto">Important: Please mention Tutor49 when you WhatsApp (preferably) or call them. Maintain professional conduct at all times to avoid platform bans.</p>
                   <button onClick={() => { setIsModalOpen(false); setPaymentStatus('idle'); setTutorPhone(''); setUnlockedNumber(''); }} className="w-full max-w-lg mx-auto block bg-slate-900 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-slate-800 transition-colors">Close & Return to Dashboard</button>
                 </div>
               ) : (
@@ -329,8 +329,10 @@ function TutorPortal() {
                         <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-900 font-bold shadow-sm text-sm">1</div>
                         <h5 className="font-bold text-slate-900">Commissions</h5>
                       </div>
-                      <p className="text-sm text-slate-600 leading-relaxed pl-11">For "Agency leads", YOU WILL BE CHARGED  agency commission after this one-time unlock fee, after the first month of teaching.
-                      For "Direct leads",YOU WILL NOT BE CHARGED ANY AGENCY COMMISSION after this one-time unlock fee.</p>
+                      <p className="text-sm text-slate-600 leading-relaxed pl-11"> <li>For "Agency leads", <span className="font-bold">YOU WILL BE CHARGED</span>  agency commission after the first month of teaching.</li> 
+                      
+
+                      <li>For "Direct leads", <span className="font-bold">YOU WILL NOT BE CHARGED</span> any agency commission after this one-time unlock fee.</li></p>
                     </div>
                     <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                       <div className="flex items-center gap-3 mb-3">
@@ -344,7 +346,7 @@ function TutorPortal() {
                         <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-900 font-bold shadow-sm text-sm">3</div>
                         <h5 className="font-bold text-slate-900">The Hiring Process</h5>
                       </div>
-                      <p className="text-sm text-slate-600 leading-relaxed pl-11">You secure the job only after contacting the parent, giving a free demo, and getting their approval.</p>
+                      <p className="text-sm text-slate-600 leading-relaxed pl-11">You secure the job only after contacting the Client / Parent, giving a free demo, and getting their approval.</p>
                     </div>
                     <div className="bg-indigo-50 p-6 rounded-2xl border border-indigo-100 relative overflow-hidden">
                       <div className="absolute -right-4 -top-4 opacity-10 text-indigo-600"><ShieldCheck className="w-32 h-32"/></div>
@@ -352,7 +354,7 @@ function TutorPortal() {
                         <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold shadow-sm text-sm">4</div>
                         <h5 className="font-bold text-indigo-900">Refund Policy</h5>
                       </div>
-                      <p className="text-sm text-indigo-800 leading-relaxed pl-11 relative z-10">If you contact the client within 48 hrs and they refuse a demo, you get a refund with nominal fee deduction.</p>
+                      <p className="text-sm text-indigo-800 leading-relaxed pl-11 relative z-10">If you contact the client / parent within 48 hrs and they refuse a demo, you get a refund with nominal fee deduction.</p>
                     </div>
                   </div>
                   <div className="mb-8 max-w-2xl mx-auto w-full">
