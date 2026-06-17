@@ -202,7 +202,7 @@ function TutorPortal() {
         <div className="flex flex-wrap gap-3 mb-8">
           <button onClick={() => setFilter('all')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${filter === 'all' ? 'bg-slate-900 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'}`}>All Leads ({jobs.length})</button>
           <button onClick={() => setFilter('direct')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${filter === 'direct' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-sm' : 'bg-white text-slate-600 border border-green-600 hover:border-slate-300'}`}><span className="w-2 h-2 rounded-full bg-green-500"></span>Direct (only pay ₹49)</button>
-          <button onClick={() => setFilter('classic')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${filter === 'classic' ? 'bg-amber-50 text-amber-700 border border-amber-200 shadow-sm' : 'bg-white text-slate-600 border border-amber-500 hover:border-slate-300'}`}><span className="w-2 h-2 rounded-full bg-amber-500"></span>Classic (50% first month commision)</button>
+          <button onClick={() => setFilter('classic')} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${filter === 'classic' ? 'bg-amber-50 text-amber-700 border border-amber-200 shadow-sm' : 'bg-white text-slate-600 border border-amber-500 hover:border-slate-300'}`}><span className="w-2 h-2 rounded-full bg-amber-500"></span>Agency Leads (50% first month commision)</button>
         </div>
 
         {/* JOB GRID */}
@@ -327,9 +327,10 @@ function TutorPortal() {
                     <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                       <div className="flex items-center gap-3 mb-3">
                         <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-900 font-bold shadow-sm text-sm">1</div>
-                        <h5 className="font-bold text-slate-900">Zero Commissions</h5>
+                        <h5 className="font-bold text-slate-900">Commissions</h5>
                       </div>
-                      <p className="text-sm text-slate-600 leading-relaxed pl-11">For "Direct leads", you will not be charged any agency commission after this one-time unlock fee.</p>
+                      <p className="text-sm text-slate-600 leading-relaxed pl-11">For "Agency leads", YOU WILL BE CHARGED  agency commission after this one-time unlock fee, after the first month of teaching.
+                      For "Direct leads",YOU WILL NOT BE CHARGED ANY AGENCY COMMISSION after this one-time unlock fee.</p>
                     </div>
                     <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                       <div className="flex items-center gap-3 mb-3">
