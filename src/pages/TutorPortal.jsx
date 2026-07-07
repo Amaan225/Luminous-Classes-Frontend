@@ -36,7 +36,9 @@ function TutorPortal() {
     'Dubagga',
     
     'Gomti Nagar', 
-    'Hazratganj', 
+    'Hazratganj',
+    'Hussainabad',
+    'Hussainganj', 
     'Indira Nagar', 
     'Jankipuram', 
     'Kalyanpur', 
