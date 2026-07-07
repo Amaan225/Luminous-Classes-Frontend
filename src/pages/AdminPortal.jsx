@@ -174,6 +174,36 @@ function AdminPortal() {
     );
   }
 
+  // --- SURGICAL INJECTION: HIDE/UNHIDE FUNCTION ---
+  const toggleVisibility = async (jobId, currentStatus) => {
+    const newStatus = currentStatus === 'hidden' ? 'approved' : 'hidden';
+    try {
+      // 1. Tell the backend to update
+      await axios.put(`https://luminous-classes-backend.onrender.com/api/jobs/${jobId}`, { 
+        status: newStatus 
+      });
+
+      // 2. Update the frontend state instantly without reloading
+      setJobs(prevJobs => prevJobs.map(job => 
+        job._id === jobId ? { ...job, status: newStatus } : job
+      ));
+      
+    } catch (error) {
+      console.error("Failed to toggle job visibility:", error);
+      alert("Could not update job status. Check console.");
+    }
+  };
+
+  // --- SURGICAL INJECTION: SORT HIDDEN JOBS TO THE TOP ---
+  const sortedJobs = [...jobs].sort((a, b) => {
+    // If 'a' is hidden and 'b' is not, move 'a' up
+    if (a.status === 'hidden' && b.status !== 'hidden') return -1;
+    // If 'b' is hidden and 'a' is not, move 'b' up
+    if (a.status !== 'hidden' && b.status === 'hidden') return 1;
+    // Otherwise, keep their original order
+    return 0; 
+  });
+
   // --- THE ACTUAL ADMIN PORTAL ---
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 pb-20">
@@ -244,6 +274,7 @@ function AdminPortal() {
                     <button onClick={() => handleApproveLead(job)} className="flex-1 md:flex-none px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold text-sm shadow-sm hover:shadow-md transition-all flex justify-center items-center gap-2">
                       <CheckCircle2 className="w-4 h-4" /> Verify & Publish
                     </button>
+                   
                   </div>
                 </div>
               ))}
@@ -378,8 +409,15 @@ function AdminPortal() {
                 {searchQuery ? "No records match your search." : "No active jobs in the database."}
               </div>
             ) : (
-              filteredActiveJobs.map((job) => {
+              sortedJobs.map((job) => {
                 const jobApps = applications.filter(app => app.jobId === job._id);
+
+                {/* SURGICAL INJECTION: HIDDEN BADGE */}
+{job.status === 'hidden' && (
+  <span className="bg-red-100 text-red-800 text-xs font-semibold px-2 py-0.5 rounded ml-2 border border-red-400">
+    Hidden
+  </span>
+)}
                 
                 // UPDATED: Added fallback logic so old 'premium' leads don't crash
                 const isDirect = job.leadType === 'direct' || job.leadType === 'premium' || !job.leadType;
@@ -484,6 +522,17 @@ function AdminPortal() {
                             <button onClick={() => startEditing(job)} className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
                               <Edit className="w-4 h-4" /> Amend
                             </button>
+                             {/* SURGICAL INJECTION: HIDE/UNHIDE BUTTON */}
+<button
+  onClick={() => toggleVisibility(job._id, job.status)}
+  className={`px-3 py-1 text-sm font-bold rounded-md shadow-sm transition-all duration-200 ${
+    job.status === 'hidden' 
+      ? 'bg-gray-500 hover:bg-gray-600 text-white'  
+      : 'bg-indigo-500 hover:bg-indigo-600 text-white' 
+  }`}
+>
+  {job.status === 'hidden' ? '👁️ Unhide' : '🙈 Hide'}
+</button>
                             <button onClick={() => handleDeleteJob(job._id)} className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
                               <Trash2 className="w-4 h-4" /> Purge
                             </button>
