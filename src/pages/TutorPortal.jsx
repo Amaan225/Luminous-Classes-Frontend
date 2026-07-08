@@ -277,12 +277,15 @@ function TutorPortal() {
                       </div>
                       
                       {job.requirements && (
-                        <div className="mt-5 p-4 bg-slate-50 rounded-xl text-sm text-slate-600 border border-slate-100 relative">
+                        <div className="mt-5 p-4 bg-slate-50 rounded-xl border border-blue-400 text-sm text-slate-600 border border-slate-100 relative">
                           <BookOpen className={`w-4 h-4 absolute top-4 left-4 ${job.isSoldOut ? 'text-slate-400' : 'text-yellow-400'}`} />
                           <p className="pl-7 line-clamp-3">{job.requirements}</p>
                         </div>
+                        
                       )}
                     </div>
+
+                    <p className="text-center text-slate-500 text-sm mt-4 mb-2">Click "Unlock contact" to book demo session</p>
 
                     <div className="p-5 pt-0 mt-auto z-10 relative">
                       {job.isSoldOut ? (
@@ -290,10 +293,18 @@ function TutorPortal() {
                           <Lock className="w-4 h-4"/> Lead already Sold out
                         </button>
                       ) : (
-                        <button onClick={() => openUnlockModal(job)} className="w-full py-3.5 bg-slate-900 text-amber-400 rounded-xl font-bold tracking-wide border border-amber-500/30 shadow-lg hover:bg-slate-800 hover:border-amber-400 hover:shadow-amber-500/20 hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 group">
-                          Unlock contact for ₹{job.price || 49}
-                          <span className="opacity-50 group-hover:opacity-100 transition-opacity">→</span>
-                        </button>
+                       <button onClick={() => openUnlockModal(job)} className="w-full py-3.5 bg-slate-900 text-amber-400 rounded-xl font-bold tracking-wide border border-amber-500/30 shadow-lg hover:bg-slate-800 hover:border-amber-400 hover:shadow-amber-500/20 hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 group">
+  Unlock contact for{" "}
+  {/* The Anchored Original Price (Strikethrough) */}
+  <span className="line-through text-amber-400/70 text-xl font-normal ml-1">
+    ₹199
+  </span>
+  {/* The Real Discounted Price */}
+  <span className="text-md font-bold text-slate-100 ml-1">
+    ₹{job.price || 49}
+  </span>
+  <span className="opacity-50 group-hover:opacity-100 transition-opacity">→</span>
+</button>
                       )}
                     </div>
                   </div>
