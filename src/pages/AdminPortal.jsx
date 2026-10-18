@@ -20,7 +20,7 @@ function AdminPortal() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [newLeadForm, setNewLeadForm] = useState({
     title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '', 
-    leadType: 'direct', // UPDATED: Changed default from classic/premium to direct
+    leadType: 'direct', 
     status: 'approved' 
   });
 
@@ -88,7 +88,6 @@ function AdminPortal() {
     try {
      await axios.post('https://luminous-classes-backend.onrender.com/api/jobs?secret=amaan2026', newLeadForm);
       alert("Lead Successfully Injected!");
-      // UPDATED: Reset form defaults to 'direct'
       setNewLeadForm({ title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '', leadType: 'direct', status: 'approved' });
       fetchJobs(); 
     } catch (error) {
@@ -121,20 +120,28 @@ function AdminPortal() {
     }
   };
 
-  // --- FILTERING LOGIC ---
+  // --- FILTERING & STABLE SORTING LOGIC ---
   const pendingLeads = jobs.filter(job => job.status === 'pending');
-  
-  const activeJobs = jobs.filter(job => job.status === 'approved' || !job.status);
-  
-  const filteredActiveJobs = activeJobs.filter(job => {
-    if (!searchQuery) return true;
-    const query = searchQuery.toLowerCase();
-    const displayIdMatch = job.displayId && job.displayId.toLowerCase().includes(query);
-    const parentNameMatch = job.parentName && job.parentName.toLowerCase().includes(query);
-    return displayIdMatch || parentNameMatch;
-  });
-
   const pendingTutors = tutors.filter(t => t.status === 'pending');
+
+  // Unified Filtering and Sorting for Active Ledger
+  const filteredActiveJobs = jobs
+    .filter(job => job.status === 'approved' || job.status === 'hidden' || !job.status)
+    .filter(job => {
+      if (!searchQuery) return true;
+      const query = searchQuery.toLowerCase().trim();
+      const displayIdMatch = (job.displayId && job.displayId.toLowerCase().includes(query)) || 
+                             (job.ticketId && job.ticketId.toLowerCase().includes(query));
+      const parentNameMatch = job.parentName && job.parentName.toLowerCase().includes(query);
+      const titleMatch = job.title && job.title.toLowerCase().includes(query);
+      return displayIdMatch || parentNameMatch || titleMatch;
+    })
+    .sort((a, b) => {
+      // Stable sorting by creation date (Newest First) so sequence never scrambles
+      const dateA = new Date(a.createdAt || a._id).getTime();
+      const dateB = new Date(b.createdAt || b._id).getTime();
+      return dateB - dateA;
+    });
 
   // --- THE LOCK SCREEN UI ---
   if (!isAuthenticated) {
@@ -174,35 +181,22 @@ function AdminPortal() {
     );
   }
 
-  // --- SURGICAL INJECTION: HIDE/UNHIDE FUNCTION ---
+  // --- HIDE/UNHIDE FUNCTION ---
   const toggleVisibility = async (jobId, currentStatus) => {
     const newStatus = currentStatus === 'hidden' ? 'approved' : 'hidden';
     try {
-      // 1. Tell the backend to update
       await axios.put(`https://luminous-classes-backend.onrender.com/api/jobs/${jobId}`, { 
         status: newStatus 
       });
 
-      // 2. Update the frontend state instantly without reloading
       setJobs(prevJobs => prevJobs.map(job => 
         job._id === jobId ? { ...job, status: newStatus } : job
       ));
-      
     } catch (error) {
       console.error("Failed to toggle job visibility:", error);
       alert("Could not update job status. Check console.");
     }
   };
-
-  // --- SURGICAL INJECTION: SORT HIDDEN JOBS TO THE TOP ---
-  const sortedJobs = [...jobs].sort((a, b) => {
-    // If 'a' is hidden and 'b' is not, move 'a' up
-    if (a.status === 'hidden' && b.status !== 'hidden') return -1;
-    // If 'b' is hidden and 'a' is not, move 'b' up
-    if (a.status !== 'hidden' && b.status === 'hidden') return 1;
-    // Otherwise, keep their original order
-    return 0; 
-  });
 
   // --- THE ACTUAL ADMIN PORTAL ---
   return (
@@ -274,7 +268,6 @@ function AdminPortal() {
                     <button onClick={() => handleApproveLead(job)} className="flex-1 md:flex-none px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold text-sm shadow-sm hover:shadow-md transition-all flex justify-center items-center gap-2">
                       <CheckCircle2 className="w-4 h-4" /> Verify & Publish
                     </button>
-                   
                   </div>
                 </div>
               ))}
@@ -330,7 +323,6 @@ function AdminPortal() {
               </div>
               <div className="flex flex-col gap-1.5 md:col-span-2">
                 <label className="text-sm font-semibold text-slate-700">Commission Structure <span className="text-red-500">*</span></label>
-                {/* UPDATED: Changed premium to direct in the UI options */}
                 <select name="leadType" value={newLeadForm.leadType} onChange={handleLeadChange} className="px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full font-medium">
                   <option value="classic">CLASSIC - 50% Partner Agency Fee</option>
                   <option value="direct">DIRECT - 0% Organic Lead</option>
@@ -409,27 +401,22 @@ function AdminPortal() {
                 {searchQuery ? "No records match your search." : "No active jobs in the database."}
               </div>
             ) : (
-              sortedJobs.map((job) => {
+              filteredActiveJobs.map((job) => {
                 const jobApps = applications.filter(app => app.jobId === job._id);
-
-                {/* SURGICAL INJECTION: HIDDEN BADGE */}
-{job.status === 'hidden' && (
-  <span className="bg-red-100 text-red-800 text-xs font-semibold px-2 py-0.5 rounded ml-2 border border-red-400">
-    Hidden
-  </span>
-)}
-                
-                // UPDATED: Added fallback logic so old 'premium' leads don't crash
                 const isDirect = job.leadType === 'direct' || job.leadType === 'premium' || !job.leadType;
 
                 return (
                   <div key={job._id} className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden flex flex-col relative">
                     
-                    {/* Status Badge */}
-                    <div className="absolute top-6 right-6">
+                    {/* Status Badge & Hidden Indicator */}
+                    <div className="absolute top-6 right-6 flex items-center gap-2">
+                      {job.status === 'hidden' && (
+                        <span className="bg-red-100 text-red-800 text-xs font-semibold px-2 py-0.5 rounded border border-red-400">
+                          Hidden
+                        </span>
+                      )}
                       {isDirect ? (
                         <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-200">
-                          {/* UPDATED BADGE TEXT */}
                           0% DIRECT
                         </span>
                       ) : (
@@ -482,7 +469,6 @@ function AdminPortal() {
                             </div>
                             <div className="flex flex-col gap-1.5 md:col-span-2">
                               <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Lead Type</label>
-                              {/* UPDATED: Changed amend option defaults */}
                               <select name="leadType" value={editLeadForm.leadType || 'direct'} onChange={handleEditChange} className="px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none w-full">
                                 <option value="classic">CLASSIC - 50% FEE</option>
                                 <option value="direct">DIRECT - 0% FEE</option>
@@ -509,6 +495,11 @@ function AdminPortal() {
                             {job.displayId && <span className="text-sm font-bold text-slate-400">{job.displayId}</span>}
                             <h3 className="text-2xl font-bold text-slate-900">{job.title || "STUDENT LEAD"}</h3>
                           </div>
+
+                          {/* Creation Date Badge Added Here */}
+                          <div className="text-xs font-semibold text-indigo-600 mb-3">
+                            📅 Added on: {job.createdAt ? new Date(job.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : 'N/A'}
+                          </div>
                           
                           <div className="flex flex-wrap items-center gap-3 mt-4 text-sm font-medium text-slate-600">
                             <span className="bg-slate-100 px-3 py-1 rounded-lg">📍 {job.location}{job.city && `, ${job.city}`}</span>
@@ -522,17 +513,16 @@ function AdminPortal() {
                             <button onClick={() => startEditing(job)} className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors">
                               <Edit className="w-4 h-4" /> Amend
                             </button>
-                             {/* SURGICAL INJECTION: HIDE/UNHIDE BUTTON */}
-<button
-  onClick={() => toggleVisibility(job._id, job.status)}
-  className={`px-3 py-1 text-sm font-bold rounded-md shadow-sm transition-all duration-200 ${
-    job.status === 'hidden' 
-      ? 'bg-gray-500 hover:bg-gray-600 text-white'  
-      : 'bg-indigo-500 hover:bg-indigo-600 text-white' 
-  }`}
->
-  {job.status === 'hidden' ? '👁️ Unhide' : '🙈 Hide'}
-</button>
+                            <button
+                              onClick={() => toggleVisibility(job._id, job.status)}
+                              className={`px-3 py-1 text-sm font-bold rounded-md shadow-sm transition-all duration-200 ${
+                                job.status === 'hidden' 
+                                  ? 'bg-gray-500 hover:bg-gray-600 text-white'  
+                                  : 'bg-indigo-500 hover:bg-indigo-600 text-white' 
+                              }`}
+                            >
+                              {job.status === 'hidden' ? '👁️ Unhide' : '🙈 Hide'}
+                            </button>
                             <button onClick={() => handleDeleteJob(job._id)} className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
                               <Trash2 className="w-4 h-4" /> Purge
                             </button>
