@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserPlus, ShieldCheck, Wallet, ArrowLeft, CheckCircle2, Award } from 'lucide-react';
@@ -13,9 +13,17 @@ function TutorRegistration() {
     email: '',
     phone: '',
     collegeId: '',
-    city: 'Lucknow', // Default city
-    preferredArea: '' // The new field
+    city: 'Lucknow',
+    preferredArea: ''
   });
+
+  // Load Razorpay Script dynamically if not present
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,13 +35,65 @@ function TutorRegistration() {
     setSubmitStatus('idle');
 
     try {
-      await axios.post('https://luminous-classes-backend.onrender.com/api/tutors', formData);
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', phone: '', collegeId: '' });
+      // Step 1: Create Razorpay Order on Backend for Registration Fee (₹49)
+      const orderRes = await axios.post('https://luminous-classes-backend.onrender.com/api/create-registration-order', {
+        amount: 49,
+        email: formData.email,
+        phone: formData.phone
+      });
+
+      const { orderId, amount, currency, keyId } = orderRes.data;
+
+      // Step 2: Open Razorpay Checkout Modal
+      const options = {
+        key: keyId || 'rzp_live_your_actual_key_here', // Fallback or backend supplied key
+        amount: amount,
+        currency: currency || 'INR',
+        name: 'Tutor49.in',
+        description: 'Elite Tutor Registration Fee (₹49)',
+        order_id: orderId,
+        handler: async function (response) {
+          try {
+            // Step 3: Verify Payment & Submit Tutor Application
+            await axios.post('https://luminous-classes-backend.onrender.com/api/tutors/verify-and-register', {
+              ...formData,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpayOrderId: response.razorpay_order_id,
+              razorpaySignature: response.razorpay_signature
+            });
+
+            setSubmitStatus('success');
+            setFormData({ name: '', email: '', phone: '', collegeId: '', city: 'Lucknow', preferredArea: '' });
+          } catch (verifyErr) {
+            console.error('Payment verification error:', verifyErr);
+            alert('Payment received but registration verification failed. Contact support.');
+            setSubmitStatus('error');
+          } finally {
+            setIsSubmitting(false);
+          }
+        },
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phone
+        },
+        theme: {
+          color: '#4f46e5'
+        },
+        modal: {
+          ondismiss: function() {
+            setIsSubmitting(false);
+          }
+        }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error('Registration order error:', error);
+      alert('Failed to initiate payment gateway. Please try again.');
       setSubmitStatus('error');
-    } finally {
       setIsSubmitting(false);
     }
   };
@@ -45,13 +105,13 @@ function TutorRegistration() {
         <div className="max-w-md w-full bg-white rounded-2xl shadow-lg border border-slate-100 p-8 text-center relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-2 bg-indigo-600"></div>
           <CheckCircle2 className="w-20 h-20 text-indigo-600 mx-auto mb-6" strokeWidth={1.5} />
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">Application Received!</h2>
+          <h2 className="text-3xl font-bold text-slate-900 mb-4">Application & Payment Received!</h2>
           <p className="text-slate-600 mb-6 leading-relaxed">
-            Your profile is now in our verification queue. Our admin team will manually review your details and college ID shortly.
+            Your profile and registration fee (₹49) have been processed successfully. Your profile is now in our verification queue.
           </p>
           <div className="bg-indigo-50 p-4 rounded-xl mb-8 border border-indigo-100">
             <p className="text-sm text-indigo-800 font-medium">
-              Once approved, you will gain full access to unlock "Direct" 0% commission leads on the Tutor Board.
+              Once approved by admin, you will gain full access to unlock "Direct" 0% commission leads on the Tutor Board.
             </p>
           </div>
           <button 
@@ -139,7 +199,7 @@ function TutorRegistration() {
                       <label className="text-sm font-medium text-slate-700">Preferred Teaching Area <span className="text-red-500">*</span></label>
                       <input 
                         type="text" name="preferredArea" required value={formData.preferredArea} onChange={handleChange}
-                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all w-full"
+                        className="px-4 py-3.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all w-full"
                         placeholder="e.g. Gomti Nagar"
                       />
                     </div>
@@ -158,7 +218,7 @@ function TutorRegistration() {
 
                 {submitStatus === 'error' && (
                   <div className="p-4 bg-red-50 text-red-700 rounded-xl text-sm font-medium border border-red-100">
-                    Registration failed. This email or phone number might already be registered.
+                    Payment or registration failed. Please try again or check your details.
                   </div>
                 )}
 
@@ -167,10 +227,10 @@ function TutorRegistration() {
                   disabled={isSubmitting}
                   className="w-full py-4 bg-indigo-600 text-white rounded-xl text-lg font-semibold shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:shadow-indigo-600/30 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 flex justify-center items-center gap-2 mt-4"
                 >
-                  {isSubmitting ? 'Submitting Profile...' : 'Submit Application'}
+                  {isSubmitting ? 'Opening Payment Gateway...' : 'Pay ₹49 & Submit Application'}
                 </button>
                 <p className="text-center text-xs text-slate-500 mt-4">
-                  By registering, you agree to maintain professional conduct. We reserve the right to ban unverified accounts.
+                  By registering and paying, you agree to maintain professional conduct. We reserve the right to ban unverified accounts.
                 </p>
               </form>
             </div>
@@ -187,7 +247,7 @@ function TutorRegistration() {
               </div>
               <h3 className="text-lg font-bold mb-2">Keep 100% of your pay</h3>
               <p className="text-sm text-indigo-100 leading-relaxed relative z-10">
-                Agencies take 50% of your first month's salary. At Tutor49, you pay a flat ₹49 to unlock a "Direct" lead, and the rest is entirely yours.
+                Agencies take 50% of your first month's salary. At Tutor49, you pay a flat ₹49 registration fee, and the rest is entirely yours.
               </p>
             </div>
 
