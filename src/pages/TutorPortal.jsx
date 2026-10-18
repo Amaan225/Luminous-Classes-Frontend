@@ -56,10 +56,10 @@ function TutorPortal() {
   // --- GROWTH HACK: PHANTOM "SOLD OUT" LEADS ---
   const phantomSoldOutLeads = [
     {
-      _id: 'phantom_1', displayId: 'TK-9284', subject: '8th class All subjects (CBSE)', grade: '8', city: 'Lucknow', location: 'Gomti Nagar', salary: 12000, leadType: 'direct', isSoldOut: true, requirements: 'Looking for an experienced tutor who can help with exam preparation.'
+      _id: 'phantom_1', displayId: 'TK-9564', subject: '7th class All subjects (ICSE)', grade: '7', city: 'Lucknow', location: 'Indira Nagar', salary: 17000, leadType: 'direct', isSoldOut: true, requirements: 'Looking for a tutor for my child who is struggling with all subjects. Must be patient and experienced with ICSE curriculum.'
     },
     {
-      _id: 'phantom_2', displayId: 'TK-4712', subject: 'All Subjects', grade: '6', city: 'Lucknow', location: 'Aliganj', salary: 10500, leadType: 'direct', isSoldOut: true, requirements: 'Need a tutor for my kid who is struggling with science subjects. Must be patient and good with kids.'
+      _id: 'phantom_2', displayId: 'TK-4562', subject: 'PCM', grade: '9', city: 'Lucknow', location: 'Hussainganj', salary: 13000, leadType: 'direct', isSoldOut: true, requirements: 'Need a tutor for my 9th-grade child to help with Physics, Chemistry, and Math. Prefer someone who can provide both online and offline sessions.'
     }
   ];
 
