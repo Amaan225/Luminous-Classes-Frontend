@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
 import { Analytics } from '@vercel/analytics/react'; // <-- 1. Import Analytics
 
@@ -31,6 +31,8 @@ const page = (path, el) => (
 );
 
 function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
   return (
     // Your modern premium wrapper
     <div className="min-h-screen font-sans text-slate-900 bg-slate-50 selection:bg-indigo-100 selection:text-indigo-900">
@@ -48,7 +50,8 @@ function App() {
       {/* 2. Drop the component here so it tracks every page! */}
       <Analytics /> 
 
-    {/* Floating WhatsApp Button */}
+    {/* Floating WhatsApp Button (hidden on the admin console, where it covers records on mobile) */}
+{!isAdminRoute && (
 <a
   href="https://wa.me/919838580939?text=Hi%20Tutor49%2C%20I%20have%20a%20question!"
   target="_blank"
@@ -71,6 +74,7 @@ function App() {
     <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500 border-2 border-white"></span>
   </span>
 </a>
+)}
     </div>
 
     

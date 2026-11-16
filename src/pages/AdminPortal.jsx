@@ -74,6 +74,7 @@ function AdminPortal() {
   const [unlocksStatus, setUnlocksStatus] = useState('loading');
   const [tutors, setTutors] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('pending');
 
   // --- INJECTION FORM STATE ---
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -211,6 +212,14 @@ function AdminPortal() {
       return dateB - dateA;
     });
 
+  // --- SECTION TABS (top navigation; only the selected section renders) ---
+  const sections = [
+    { id: 'pending', label: 'Pending Leads', count: pendingLeads.length },
+    { id: 'inject', label: 'Inject Lead', count: null },
+    { id: 'tutors', label: 'Tutor Verification', count: pendingTutors.length },
+    { id: 'ledger', label: 'Active Ledger', count: filteredActiveJobs.length },
+  ];
+
   // --- THE LOCK SCREEN UI ---
   if (!isAuthenticated) {
     return (
@@ -293,13 +302,41 @@ function AdminPortal() {
             </button>
           </div>
         </div>
+
+        {/* SECTION NAVIGATION TABS */}
+        <div className="border-t border-slate-100">
+          <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-2 overflow-x-auto py-2.5" aria-label="Admin sections">
+            {sections.map(section => (
+              <button
+                key={section.id}
+                onClick={() => { setActiveTab(section.id); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                aria-current={activeTab === section.id ? 'page' : undefined}
+                className={`whitespace-nowrap flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                  activeTab === section.id
+                    ? 'bg-indigo-600 text-white shadow-sm'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                {section.label}
+                {section.count !== null && (
+                  <span className={`px-1.5 py-0.5 rounded-full text-xs font-bold ${
+                    activeTab === section.id ? 'bg-white/20 text-white' : 'bg-white text-slate-500 border border-slate-200'
+                  }`}>
+                    {section.count}
+                  </span>
+                )}
+              </button>
+            ))}
+          </nav>
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-12">
 
         {/* SECTION 1: QUARANTINE ZONE (PENDING LEADS) */}
+        {activeTab === 'pending' && (
         <section>
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex flex-wrap items-center gap-3 mb-6">
             <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
               <ShieldAlert className="w-6 h-6 text-amber-500" />
               Pending Leads ({pendingLeads.length})
@@ -325,7 +362,7 @@ function AdminPortal() {
                     <p className="text-sm font-medium text-slate-500 mt-1 flex items-center gap-2">
                       📞 <span className="text-slate-700">{job.contactNumber}</span>
                     </p>
-                    <div className="mt-3 inline-flex items-center gap-2 bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg text-sm font-medium border border-slate-100">
+                    <div className="mt-3 flex flex-wrap items-center gap-2 bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg text-sm font-medium border border-slate-100">
                       <span>{job.grade} {job.subject}</span>
                       <span className="text-slate-300">|</span>
                       <span>{job.location} {job.city && `, ${job.city}`}</span>
@@ -347,8 +384,10 @@ function AdminPortal() {
             </div>
           )}
         </section>
+        )}
 
         {/* SECTION 2: MANUAL LEAD INJECTION */}
+        {activeTab === 'inject' && (
         <section className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
           <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-100">
             <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
@@ -412,8 +451,10 @@ function AdminPortal() {
             </button>
           </form>
         </section>
+        )}
 
         {/* SECTION 3: PENDING TUTORS */}
+        {activeTab === 'tutors' && (
         <section>
           <div className="flex items-center gap-3 mb-6">
             <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
@@ -431,7 +472,7 @@ function AdminPortal() {
                 <div key={tutor._id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
                   <div className="mb-6">
                     <h3 className="font-bold text-lg text-slate-900">{tutor.name}</h3>
-                    <div className="space-y-1.5 mt-3 text-sm text-slate-600">
+                    <div className="space-y-1.5 mt-3 text-sm text-slate-600 break-all">
                       <p>✉️ {tutor.email}</p>
                       <p>📞 {tutor.phone}</p>
                     </div>
@@ -448,8 +489,10 @@ function AdminPortal() {
             </div>
           )}
         </section>
+        )}
 
         {/* SECTION 4: ACTIVE JOBS BOARD WITH SEARCH BAR */}
+        {activeTab === 'ledger' && (
         <section>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-4">
             <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
@@ -479,10 +522,10 @@ function AdminPortal() {
                 const isDirect = job.leadType === 'direct' || job.leadType === 'premium' || !job.leadType;
 
                 return (
-                  <div key={job._id} className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden flex flex-col relative">
+                  <div key={job._id} className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden flex flex-col">
 
-                    {/* Status Badge & Hidden Indicator */}
-                    <div className="absolute top-6 right-6 flex items-center gap-2">
+                    {/* Status Badge & Hidden Indicator (in normal flow so it never overlaps the title on narrow screens) */}
+                    <div className="flex flex-wrap items-center justify-end gap-2 px-6 md:px-8 pt-5">
                       {job.status === 'hidden' && (
                         <span className="bg-red-100 text-red-800 text-xs font-semibold px-2 py-0.5 rounded border border-red-400">
                           Hidden
@@ -500,7 +543,7 @@ function AdminPortal() {
                     </div>
 
                     {editingJobId === job._id ? (
-                      <div className="p-6 md:p-8 bg-indigo-50/50">
+                      <div className="p-6 md:p-8 pt-4 bg-indigo-50/50">
                         <div className="flex items-center gap-2 mb-6 pb-4 border-b border-indigo-100">
                           <Edit className="w-5 h-5 text-indigo-600" />
                           <h3 className="text-xl font-bold text-slate-900">Amend Record: {job.displayId}</h3>
@@ -560,13 +603,13 @@ function AdminPortal() {
                         </form>
                       </div>
                     ) : (
-                      <div className="p-6 md:p-8 flex flex-col md:flex-row gap-8">
+                      <div className="px-6 md:px-8 pb-6 md:pb-8 pt-4 flex flex-col md:flex-row gap-8">
 
                         {/* Job Details */}
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            {job.displayId && <span className="text-sm font-bold text-slate-400">{job.displayId}</span>}
-                            <h3 className="text-2xl font-bold text-slate-900">{job.title || "STUDENT LEAD"}</h3>
+                        <div className="flex-1 min-w-0">
+                          <div className="mb-2 min-w-0">
+                            {job.displayId && <span className="block text-sm font-bold text-slate-400 whitespace-nowrap mb-1">{job.displayId}</span>}
+                            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 break-words">{job.title || "STUDENT LEAD"}</h3>
                           </div>
 
                           {/* Creation Date Badge Added Here */}
@@ -640,6 +683,7 @@ function AdminPortal() {
             )}
           </div>
         </section>
+        )}
 
       </div>
     </div>
