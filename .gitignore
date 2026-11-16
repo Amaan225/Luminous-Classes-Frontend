@@ -26,3 +26,5 @@ dist-ssr
 # Environment variables
 .env
 .env.*
+# Temporary server bundle used only by the static HTML build
+.prerender
