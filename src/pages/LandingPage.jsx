@@ -431,9 +431,9 @@ function LandingPage() {
         <div className="bg-purple-50 p-4 rounded-2xl group-hover:scale-110 transition-transform duration-300">
           <Mail className="w-8 h-8 md:w-10 md:h-10 text-purple-600" />
         </div>
-        <div>
+        <div className="min-w-0">
           <h3 className="text-2xl font-bold text-slate-900 tracking-wide mb-1">Email Us</h3>
-          <p className="text-purple-600 text-lg md:text-xl font-semibold tracking-wider">tutor49.official@gmail.com</p>
+          <p className="text-purple-600 text-sm sm:text-lg md:text-xl font-semibold tracking-normal sm:tracking-wider break-all">tutor49.official@gmail.com</p>
         </div>
         <div className="ml-auto opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
           <span className="text-3xl font-light text-purple-600">→</span>
@@ -455,7 +455,7 @@ function LandingPage() {
             <p className="text-base text-slate-400 mb-2 font-medium uppercase tracking-widest">Need Help? Contact our Support Desk</p>
             <a 
               href="mailto:tutor49.official@gmail.com" 
-              className="text-indigo-400 hover:text-indigo-300 transition-colors font-bold text-xl md:text-2xl"
+              className="text-indigo-400 hover:text-indigo-300 transition-colors font-bold text-base sm:text-xl md:text-2xl break-all"
             >
               tutor49.official@gmail.com
             </a>

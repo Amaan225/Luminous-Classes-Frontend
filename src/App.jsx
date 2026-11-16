@@ -9,6 +9,25 @@ import ParentPortal from './pages/ParentPortal';
 import TutorPortal from './pages/TutorPortal';
 import AdminPortal from './pages/AdminPortal';
 import Terms from './pages/Terms';
+import Seo from './Seo';
+
+function NotFound() {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center text-center px-6">
+      <Seo title="Page not found | Tutor49" noindex />
+      <h1 className="text-3xl font-black mb-3">Page not found</h1>
+      <p className="text-slate-600 mb-6">We could not find that page.</p>
+      <a href="/" className="text-indigo-600 font-semibold underline">Go to the Tutor49 home page</a>
+    </div>
+  );
+}
+
+const page = (title, description, path, el) => (
+  <>
+    <Seo title={title} description={description} path={path} />
+    {el}
+  </>
+);
 
 function App() {
   return (
@@ -17,12 +36,13 @@ function App() {
       <BrowserRouter>
         <ScrollToTop /> 
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/parent" element={<ParentPortal />} />
-          <Route path="/tutor" element={<TutorPortal />} />
-          <Route path="/admin" element={<AdminPortal />} />
-          <Route path="/register" element={<TutorRegistration />} />
-          <Route path="/terms" element={<Terms />} />
+          <Route path="/" element={page('Tutor49 | Verified Home Tutors in Lucknow', 'Zero-commission platform connecting Lucknow parents directly with Aadhar-verified university students for home tuition.', '/', <LandingPage />)} />
+          <Route path="/parent" element={page('Request a Home Tutor | Tutor49', 'Tell Tutor49 what you need and get matched with a home tutor in Lucknow.', '/parent', <ParentPortal />)} />
+          <Route path="/tutor" element={page('Tutor Board: Home Tuition Requests | Tutor49', 'Browse current home tuition requests from parents on Tutor49.', '/tutor', <TutorPortal />)} />
+          <Route path="/admin" element={<><Seo title="Admin | Tutor49" noindex /><AdminPortal /></>} />
+          <Route path="/register" element={page('Tutor Registration | Tutor49', 'Register as a home tutor on Tutor49.', '/register', <TutorRegistration />)} />
+          <Route path="/terms" element={page('Terms and Conditions | Tutor49', 'Terms and conditions for using Tutor49.', '/terms', <Terms />)} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
       
