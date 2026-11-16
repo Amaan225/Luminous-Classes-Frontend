@@ -169,6 +169,8 @@ function LandingPage() {
       {/* 1. HERO SECTION                            */}
       {/* ========================================== */}
       <div className="relative overflow-hidden border-b border-slate-200 min-h-screen flex flex-col justify-center pt-24">
+        {/* Decorative tutor/student illustration, fitted into existing hero whitespace. */}
+        <img src="/hero-tutor-student.svg" alt="" aria-hidden="true" width="500" height="190" className="pointer-events-none select-none absolute top-[5.25rem] left-1/2 -translate-x-1/2 w-60 h-auto" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-gradient-to-b from-indigo-50/80 to-transparent -z-10 rounded-full blur-3xl opacity-80"></div>
         
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center relative z-10 w-full py-20">
