@@ -92,7 +92,7 @@ function TutorPortal() {
     setPaymentStatus('submitting');
 
     try {
-      const orderRes = await axios.post('https://luminous-classes-backend.onrender.com/api/payment/create-order');
+      const orderRes = await axios.post('https://luminous-classes-backend.onrender.com/api/payment/create-order', { jobId: selectedJob._id, tutorPhone });
       const order = orderRes.data;
 
       const options = {
@@ -104,14 +104,26 @@ function TutorPortal() {
         order_id: order.id,
         handler: async function (response) {
           try {
-            const verifyRes = await axios.post('https://luminous-classes-backend.onrender.com/api/unlocks', {
+            const proof = {
               jobId: selectedJob._id,
-              tutorPhone: tutorPhone,
-              transactionId: response.razorpay_payment_id
-            });
+              tutorPhone,
+              transactionId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
+              signature: response.razorpay_signature
+            };
+            let verifyRes;
+            for (let attempt = 0; attempt < 5; attempt++) {
+              try {
+                verifyRes = await axios.post('https://luminous-classes-backend.onrender.com/api/unlocks', proof);
+                break;
+              } catch (error) {
+                if (error.response?.status !== 409 || attempt === 4) throw error;
+                await new Promise(resolve => setTimeout(resolve, 2000));
+              }
+            }
             setUnlockedNumber(verifyRes.data.unlockedContact);
             setPaymentStatus('success');
-          } catch (err) {
+          } catch {
             alert("Payment verification failed. Please contact support.");
             setPaymentStatus('idle');
           }
@@ -124,7 +136,7 @@ function TutorPortal() {
       const rzp = new window.Razorpay(options);
       rzp.open();
 
-    } catch (error) {
+    } catch {
       alert("Could not initialize payment gateway.");
       setPaymentStatus('idle');
     }
