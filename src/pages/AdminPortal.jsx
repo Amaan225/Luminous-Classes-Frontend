@@ -239,10 +239,10 @@ function AdminPortal() {
 
   // --- SECTION TABS (top navigation; only the selected section renders) ---
   const sections = [
-    { id: 'pending', label: 'Pending Leads', count: pendingLeads.length },
-    { id: 'inject', label: 'Inject Lead', count: null },
-    { id: 'tutors', label: 'Tutor Verification', count: pendingTutors.length },
     { id: 'ledger', label: 'Active Ledger', count: filteredActiveJobs.length },
+    { id: 'pending', label: 'Pending Leads', count: pendingLeads.length },
+    { id: 'tutors', label: 'Tutor Verification', count: pendingTutors.length },
+    { id: 'inject', label: 'Inject Lead', count: null },
   ];
 
   // --- THE LOCK SCREEN UI ---
