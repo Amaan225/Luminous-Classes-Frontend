@@ -75,6 +75,8 @@ function AdminPortal() {
   const [tutors, setTutors] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('pending');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [unlockFilter, setUnlockFilter] = useState('all');
 
   // --- INJECTION FORM STATE ---
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -194,8 +196,27 @@ function AdminPortal() {
   const pendingTutors = tutors.filter(t => t.status === 'pending');
 
   // Unified Filtering and Sorting for Active Ledger
-  const filteredActiveJobs = jobs
-    .filter(job => job.status === 'approved' || job.status === 'hidden' || !job.status)
+  const ledgerJobs = jobs.filter(job => job.status === 'approved' || job.status === 'hidden' || !job.status);
+  const unlocksReady = unlocksStatus === 'ready';
+  const isUnlocked = job => unlocksReady && approvedUnlocksForJob(unlocks, job._id).length > 0;
+  const statusCounts = {
+    all: ledgerJobs.length,
+    active: ledgerJobs.filter(job => job.status !== 'hidden').length,
+    hidden: ledgerJobs.filter(job => job.status === 'hidden').length,
+  };
+  const unlockedCount = ledgerJobs.filter(isUnlocked).length;
+  const unlockCounts = {
+    all: ledgerJobs.length,
+    unlocked: unlocksReady ? unlockedCount : null,
+    locked: unlocksReady ? ledgerJobs.length - unlockedCount : null,
+  };
+  const filtersActive = statusFilter !== 'all' || unlockFilter !== 'all';
+  const filteredActiveJobs = ledgerJobs
+    .filter(job => statusFilter === 'all' || (statusFilter === 'hidden' ? job.status === 'hidden' : job.status !== 'hidden'))
+    .filter(job => {
+      if (unlockFilter === 'all' || !unlocksReady) return true;
+      return unlockFilter === 'unlocked' ? isUnlocked(job) : !isUnlocked(job);
+    })
     .filter(job => {
       if (!searchQuery) return true;
       const query = searchQuery.toLowerCase().trim();
@@ -511,10 +532,38 @@ function AdminPortal() {
             </div>
           </div>
 
+
+          <div className="mb-6 flex flex-col gap-3" aria-label="Ledger filters">
+            <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by status">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 w-full sm:w-auto sm:mr-1">Status</span>
+              {[['all','All'],['active','Active'],['hidden','Hidden']].map(([id,label]) => (
+                <button key={id} type="button" aria-pressed={statusFilter === id} onClick={() => setStatusFilter(id)}
+                  className={`px-3.5 py-1.5 rounded-full text-sm font-semibold border transition-colors ${statusFilter === id ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'}`}>
+                  {label} ({statusCounts[id]})
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by unlock">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 w-full sm:w-auto sm:mr-1">Unlocks</span>
+              {[['all','All'],['unlocked','Unlocked'],['locked','Not unlocked']].map(([id,label]) => (
+                <button key={id} type="button" aria-pressed={unlockFilter === id} disabled={id !== 'all' && !unlocksReady} onClick={() => setUnlockFilter(id)}
+                  className={`px-3.5 py-1.5 rounded-full text-sm font-semibold border transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${unlockFilter === id ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'}`}>
+                  {label} ({unlockCounts[id] ?? '...'})
+                </button>
+              ))}
+              {unlockFilter !== 'all' && !unlocksReady && (
+                <span className="text-xs text-amber-700 w-full">Unlock records not loaded, so this filter is not applied.</span>
+              )}
+              {filtersActive && (
+                <button type="button" onClick={() => { setStatusFilter('all'); setUnlockFilter('all'); }} className="text-sm font-semibold text-indigo-700 hover:underline ml-1">Clear filters</button>
+              )}
+            </div>
+          </div>
+
           <div className="flex flex-col gap-6">
             {filteredActiveJobs.length === 0 ? (
               <div className="bg-white rounded-2xl border border-slate-200 border-dashed p-12 text-center text-slate-500">
-                {searchQuery ? "No records match your search." : "No active jobs in the database."}
+                {(searchQuery || filtersActive) ? "No records match your search or filters." : "No active jobs in the database."}
               </div>
             ) : (
               filteredActiveJobs.map((job) => {
