@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { SITE } from './routeMetadata.js';
+const SITE = 'https://www.tutor49.in';
 
 function setMeta(selector, create) {
   let el = document.head.querySelector(selector);

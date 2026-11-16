@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
 import { Analytics } from '@vercel/analytics/react'; // <-- 1. Import Analytics
 
@@ -10,7 +10,6 @@ import TutorPortal from './pages/TutorPortal';
 import AdminPortal from './pages/AdminPortal';
 import Terms from './pages/Terms';
 import Seo from './Seo';
-import { routeMetadata } from './routeMetadata.js';
 
 function NotFound() {
   return (
@@ -23,9 +22,9 @@ function NotFound() {
   );
 }
 
-const page = (path, el) => (
+const page = (title, description, path, el) => (
   <>
-    <Seo {...routeMetadata[path]} path={path} />
+    <Seo title={title} description={description} path={path} />
     {el}
   </>
 );
@@ -34,16 +33,18 @@ function App() {
   return (
     // Your modern premium wrapper
     <div className="min-h-screen font-sans text-slate-900 bg-slate-50 selection:bg-indigo-100 selection:text-indigo-900">
+      <BrowserRouter>
         <ScrollToTop /> 
         <Routes>
-          <Route path="/" element={page('/', <LandingPage />)} />
-          <Route path="/parent" element={page('/parent', <ParentPortal />)} />
-          <Route path="/tutor" element={page('/tutor', <TutorPortal />)} />
+          <Route path="/" element={page('Tutor49 | Verified Home Tutors in Lucknow', 'Zero-commission platform connecting Lucknow parents directly with Aadhar-verified university students for home tuition.', '/', <LandingPage />)} />
+          <Route path="/parent" element={page('Request a Home Tutor | Tutor49', 'Tell Tutor49 what you need and get matched with a home tutor in Lucknow.', '/parent', <ParentPortal />)} />
+          <Route path="/tutor" element={page('Tutor Board: Home Tuition Requests | Tutor49', 'Browse current home tuition requests from parents on Tutor49.', '/tutor', <TutorPortal />)} />
           <Route path="/admin" element={<><Seo title="Admin | Tutor49" noindex /><AdminPortal /></>} />
-          <Route path="/register" element={page('/register', <TutorRegistration />)} />
-          <Route path="/terms" element={page('/terms', <Terms />)} />
+          <Route path="/register" element={page('Tutor Registration | Tutor49', 'Register as a home tutor on Tutor49.', '/register', <TutorRegistration />)} />
+          <Route path="/terms" element={page('Terms and Conditions | Tutor49', 'Terms and conditions for using Tutor49.', '/terms', <Terms />)} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+      </BrowserRouter>
       
       {/* 2. Drop the component here so it tracks every page! */}
       <Analytics /> 
