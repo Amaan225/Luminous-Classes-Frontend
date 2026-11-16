@@ -560,6 +560,16 @@ function AdminPortal() {
             </div>
           </div>
 
+          {unlocksStatus === 'loading' && (
+            <p className="mb-4 text-sm text-slate-500" role="status">Loading unlock records...</p>
+          )}
+          {unlocksStatus === 'error' && (
+            <div role="alert" className="mb-4 rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+              Unlock records unavailable, so "Unlocked By" is hidden and unlock filters are off.
+              <button type="button" onClick={fetchUnlocks} className="ml-2 font-semibold text-indigo-700 hover:underline">Retry</button>
+            </div>
+          )}
+
           <div className="flex flex-col gap-6">
             {filteredActiveJobs.length === 0 ? (
               <div className="bg-white rounded-2xl border border-slate-200 border-dashed p-12 text-center text-slate-500">
@@ -694,36 +704,26 @@ function AdminPortal() {
                           </div>
                         </div>
 
-                        {/* Unlocks Panel */}
+                        {/* Unlocks Panel: only for leads with at least one recorded unlock */}
+                        {unlocksStatus === 'ready' && jobUnlocks.length > 0 && (
                         <div className="w-full md:w-72 bg-slate-50 rounded-2xl p-5 border border-slate-200 shrink-0">
                           <h4 className="text-sm font-bold text-slate-900 mb-4 flex items-center justify-between">
                             Unlocked By
-                            <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">{unlocksStatus === 'ready' ? jobUnlocks.length : unlocksStatus === 'loading' ? '...' : '?'}</span>
+                            <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">{jobUnlocks.length}</span>
                           </h4>
-
-                          {unlocksStatus === 'loading' ? (
-                            <p className="text-sm text-slate-500" role="status">Loading unlocks...</p>
-                          ) : unlocksStatus === 'error' ? (
-                            <div role="alert" className="text-sm text-slate-600">
-                              <p>Unlock records unavailable.</p>
-                              <button type="button" onClick={fetchUnlocks} className="mt-2 text-indigo-700 font-semibold hover:underline">Retry unlock records</button>
-                            </div>
-                          ) : jobUnlocks.length === 0 ? (
-                            <p className="text-sm text-slate-500 italic">No unlocks recorded.</p>
-                          ) : (
-                            <div className="space-y-3">
-                              {jobUnlocks.map(unlock => (
-                                <div key={unlock._id} className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-                                  <p className="font-bold text-slate-900 text-sm">{unlock.tutorPhone}</p>
-                                  <p className="text-xs text-slate-400 mt-0.5">ID: {unlock._id.substring(0,8)}</p>
-                                  <a href={`https://wa.me/91${unlock.tutorPhone}`} target="_blank" rel="noreferrer" className="mt-2 block w-full text-center bg-indigo-50 text-indigo-700 hover:bg-indigo-100 py-1.5 rounded-lg text-xs font-semibold transition-colors">
-                                    Message
-                                  </a>
-                                </div>
-                              ))}
-                            </div>
-                          )}
+                          <div className="space-y-3">
+                            {jobUnlocks.map(unlock => (
+                              <div key={unlock._id} className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                                <p className="font-bold text-slate-900 text-sm">{unlock.tutorPhone}</p>
+                                <p className="text-xs text-slate-400 mt-0.5">ID: {unlock._id.substring(0,8)}</p>
+                                <a href={`https://wa.me/91${unlock.tutorPhone}`} target="_blank" rel="noreferrer" className="mt-2 block w-full text-center bg-indigo-50 text-indigo-700 hover:bg-indigo-100 py-1.5 rounded-lg text-xs font-semibold transition-colors">
+                                  Message
+                                </a>
+                              </div>
+                            ))}
+                          </div>
                         </div>
+                        )}
                       </div>
                     )}
                   </div>
