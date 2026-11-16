@@ -174,7 +174,7 @@ function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center relative z-10 w-full py-20">
 
           {/* Lucknow skyline artwork behind the hero content */}
-          <img src="/hero-skyline.png" alt="" aria-hidden="true" className="pointer-events-none select-none absolute left-1/2 top-6 md:top-2 -translate-x-1/2 w-[44rem] md:w-[64rem] max-w-none object-contain -z-10" />
+          <img src="/hero-skyline.png" alt="" aria-hidden="true" className="pointer-events-none select-none absolute left-1/2 top-32 md:top-2 -translate-x-1/2 w-[44rem] md:w-[64rem] max-w-none object-contain -z-10" />
           
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-indigo-100 text-indigo-700 text-sm md:text-base font-bold mb-10 shadow-sm">
             <span className="flex h-2.5 w-2.5 rounded-full bg-indigo-600 animate-pulse"></span>
