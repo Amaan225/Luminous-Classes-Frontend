@@ -310,17 +310,11 @@ function AdminPortal() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-center py-4 gap-4">
             <div className="flex items-center gap-6">
-              <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">
+              <button onClick={async () => { await handleLogout(); navigate('/'); }} className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Exit
               </button>
               <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Command Center</h1>
             </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 bg-slate-100 text-slate-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-200 transition-colors"
-            >
-              <Lock className="w-4 h-4" /> Lock Vault
-            </button>
           </div>
         </div>
 
