@@ -186,7 +186,7 @@ function LandingPage() {
 </h1>
           
           <p className="text-xl md:text-2xl lg:text-3xl text-slate-600 mb-14 max-w-3xl mx-auto leading-relaxed font-medium">
-            Connecting dedicated parents with verified, top-tier tutors in the area.
+            Lucknow's best tutors, directly connected to you.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 w-full max-w-3xl justify-center mb-16">
