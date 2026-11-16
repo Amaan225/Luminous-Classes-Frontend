@@ -199,33 +199,37 @@ function AdminPortal() {
   const ledgerJobs = jobs.filter(job => job.status === 'approved' || job.status === 'hidden' || !job.status);
   const unlocksReady = unlocksStatus === 'ready';
   const isUnlocked = job => unlocksReady && approvedUnlocksForJob(unlocks, job._id).length > 0;
-  const statusCounts = {
-    all: ledgerJobs.length,
-    active: ledgerJobs.filter(job => job.status !== 'hidden').length,
-    hidden: ledgerJobs.filter(job => job.status === 'hidden').length,
+  const matchesSearch = job => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase().trim();
+    const displayIdMatch = (job.displayId && job.displayId.toLowerCase().includes(query)) ||
+                           (job.ticketId && job.ticketId.toLowerCase().includes(query));
+    const parentNameMatch = job.parentName && job.parentName.toLowerCase().includes(query);
+    const titleMatch = job.title && job.title.toLowerCase().includes(query);
+    return displayIdMatch || parentNameMatch || titleMatch;
   };
-  const unlockedCount = ledgerJobs.filter(isUnlocked).length;
+  const matchesStatus = (job, f) => f === 'all' || (f === 'hidden' ? job.status === 'hidden' : job.status !== 'hidden');
+  const matchesUnlock = (job, f) => {
+    if (f === 'all' || !unlocksReady) return true;
+    return f === 'unlocked' ? isUnlocked(job) : !isUnlocked(job);
+  };
+  // Facet counts follow the other active filters and the search, so each chip shows what it would yield.
+  const statusBase = ledgerJobs.filter(job => matchesSearch(job) && matchesUnlock(job, unlockFilter));
+  const statusCounts = {
+    all: statusBase.length,
+    active: statusBase.filter(job => job.status !== 'hidden').length,
+    hidden: statusBase.filter(job => job.status === 'hidden').length,
+  };
+  const unlockBase = ledgerJobs.filter(job => matchesSearch(job) && matchesStatus(job, statusFilter));
+  const unlockedCount = unlockBase.filter(isUnlocked).length;
   const unlockCounts = {
-    all: ledgerJobs.length,
+    all: unlockBase.length,
     unlocked: unlocksReady ? unlockedCount : null,
-    locked: unlocksReady ? ledgerJobs.length - unlockedCount : null,
+    locked: unlocksReady ? unlockBase.length - unlockedCount : null,
   };
   const filtersActive = statusFilter !== 'all' || unlockFilter !== 'all';
   const filteredActiveJobs = ledgerJobs
-    .filter(job => statusFilter === 'all' || (statusFilter === 'hidden' ? job.status === 'hidden' : job.status !== 'hidden'))
-    .filter(job => {
-      if (unlockFilter === 'all' || !unlocksReady) return true;
-      return unlockFilter === 'unlocked' ? isUnlocked(job) : !isUnlocked(job);
-    })
-    .filter(job => {
-      if (!searchQuery) return true;
-      const query = searchQuery.toLowerCase().trim();
-      const displayIdMatch = (job.displayId && job.displayId.toLowerCase().includes(query)) ||
-                             (job.ticketId && job.ticketId.toLowerCase().includes(query));
-      const parentNameMatch = job.parentName && job.parentName.toLowerCase().includes(query);
-      const titleMatch = job.title && job.title.toLowerCase().includes(query);
-      return displayIdMatch || parentNameMatch || titleMatch;
-    })
+    .filter(job => matchesStatus(job, statusFilter) && matchesUnlock(job, unlockFilter) && matchesSearch(job))
     .sort((a, b) => {
       // Stable sorting by creation date (Newest First) so sequence never scrambles
       const dateA = new Date(a.createdAt || a._id).getTime();
