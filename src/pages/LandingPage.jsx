@@ -1,3 +1,4 @@
+import HomepageDoodles from '../components/HomepageDoodles';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GraduationCap, Wallet, Zap, ChevronDown, Star, Quote, Menu, X, ArrowRight } from 'lucide-react';
@@ -229,7 +230,8 @@ function LandingPage() {
       {/* ========================================== */}
       {/* 2. VALUE PROPOSITION                       */}
       {/* ========================================== */}
-      <div className="max-w-7xl mx-auto px-6 py-24">
+      <div className="max-w-7xl mx-auto px-6 py-24 relative">
+        <HomepageDoodles variant="connect" />
         
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">
@@ -284,7 +286,8 @@ function LandingPage() {
       {/* ========================================== */}
       {/* 3. TESTIMONIAL MARQUEE SECTION             */}
       {/* ========================================== */}
-      <section className="py-24 border-y border-slate-200 bg-white/50">
+      <section className="py-24 border-y border-slate-200 bg-white/50 relative">
+        <HomepageDoodles variant="stories" />
         <div className="max-w-7xl mx-auto px-6 mb-20 text-center">
             <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 drop-shadow-sm"> 
               What <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-blue-500 to-cyan-500">users</span> say about us 
@@ -333,6 +336,7 @@ function LandingPage() {
       {/* ========================================== */}
       {/* UPDATED: Added scroll-mt-24 so the navbar doesn't cover the title when scrolling down */}
       <div id="faq" className="py-32 relative scroll-mt-24">
+        <HomepageDoodles variant="questions" />
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
@@ -374,7 +378,8 @@ function LandingPage() {
      {/* ==========================================
     CONTACT US SECTION
 ========================================== */}
-<div className="max-w-4xl mx-auto px-4 py-20">
+<div className="max-w-4xl mx-auto px-4 py-20 relative">
+  <HomepageDoodles variant="contact" />
   <div className="text-center mb-12">
     <h2 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 via-purple-500 to-blue-500 tracking-tight">
       Contact <span className="text-slate-800">Us</span>
