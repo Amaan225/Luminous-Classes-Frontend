@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GraduationCap, Wallet, Zap, ChevronDown, Star, Quote, Menu, X, ArrowRight } from 'lucide-react';
 import { Phone, Mail, MessageCircle } from 'lucide-react';
-import { GradCapDoodle, BookDoodle, ShieldDoodle, SparkleDoodle } from '../components/Doodles';
+import { GradCapDoodle, BookDoodle, ShieldDoodle, SparkleDoodle, RumiGateDoodle } from '../components/Doodles';
 
 function LandingPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
@@ -175,6 +175,8 @@ function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center relative z-10 w-full py-20">
 
           {/* Minimal floating outline figures around the hero */}
+          {/* Lucknow's Rumi Darwaza - minimal silhouette behind the hero */}
+          <RumiGateDoodle className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 md:w-[34rem] text-indigo-400/25" />
           <GradCapDoodle className="animate-doodle pointer-events-none absolute top-16 left-4 md:left-24 w-16 md:w-24 text-indigo-400/70" style={{'--doodle-rotate': '-10deg'}} />
           <ShieldDoodle className="animate-doodle-slow pointer-events-none absolute top-28 right-4 md:right-24 w-14 md:w-20 text-violet-400/70" style={{'--doodle-rotate': '8deg'}} />
           <BookDoodle className="animate-doodle-slow pointer-events-none absolute bottom-40 left-6 md:left-40 w-12 md:w-20 text-blue-400/60" style={{'--doodle-rotate': '10deg'}} />

@@ -53,6 +53,35 @@ export const RupeeCoinDoodle = ({ className = '', style }) => (
   </svg>
 );
 
+/* Minimal Rumi Darwaza (Lucknow) outline silhouette */
+export const RumiGateDoodle = ({ className = '', style }) => (
+  <svg viewBox="0 0 200 160" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className} style={style}>
+    {/* ground */}
+    <path d="M8 150h184" strokeDasharray="2 9" />
+    {/* side wings */}
+    <path d="M28 150v-44h34v44" />
+    <path d="M138 150v-44h34v44" />
+    {/* side arches */}
+    <path d="M37 150v-24a8 9 0 0 1 16 0v24" />
+    <path d="M147 150v-24a8 9 0 0 1 16 0v24" />
+    {/* main body */}
+    <path d="M70 150V68h60v82" />
+    {/* parapet finials */}
+    <path d="M70 68v-7" /><circle cx="70" cy="57" r="2.4" />
+    <path d="M130 68v-7" /><circle cx="130" cy="57" r="2.4" />
+    {/* main pointed arch */}
+    <path d="M83 150v-38q0-20 17-28q17 8 17 28v38" />
+    <path d="M90 150v-32q0-14 10-20q10 6 10 20v32" strokeWidth="2" />
+    {/* chhatri base */}
+    <path d="M85 68v-9h30v9" />
+    {/* chhatri columns */}
+    <path d="M90 59V48M97 59V48M103 59V48M110 59V48" strokeWidth="2" />
+    {/* dome + finial */}
+    <path d="M86 48c0-8.5 6.3-15 14-15s14 6.5 14 15" />
+    <path d="M100 33v-7" /><circle cx="100" cy="23" r="2.2" />
+  </svg>
+);
+
 /* One clean parent-and-child figure (for the Parent side) */
 export const ParentChildFigure = ({ className = '', style }) => (
   <svg viewBox="0 0 150 120" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className} style={style}>
