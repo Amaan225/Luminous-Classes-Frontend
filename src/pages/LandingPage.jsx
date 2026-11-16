@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GraduationCap, Wallet, Zap, ChevronDown, Star, Quote, Menu, X, ArrowRight } from 'lucide-react';
 import { Phone, Mail, MessageCircle } from 'lucide-react';
-import { GradCapDoodle, BookDoodle, ShieldDoodle, SparkleDoodle, RumiGateDoodle } from '../components/Doodles';
 
 function LandingPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
@@ -174,24 +173,17 @@ function LandingPage() {
         
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center relative z-10 w-full py-20">
 
-          {/* Minimal floating outline figures around the hero */}
-          <GradCapDoodle className="animate-doodle pointer-events-none absolute top-16 left-4 md:left-24 w-16 md:w-24 text-indigo-400/70" style={{'--doodle-rotate': '-10deg'}} />
-          <ShieldDoodle className="animate-doodle-slow pointer-events-none absolute top-28 right-4 md:right-24 w-14 md:w-20 text-violet-400/70" style={{'--doodle-rotate': '8deg'}} />
-          <BookDoodle className="animate-doodle-slow pointer-events-none absolute bottom-40 left-6 md:left-40 w-12 md:w-20 text-blue-400/60" style={{'--doodle-rotate': '10deg'}} />
-          <SparkleDoodle className="animate-doodle pointer-events-none absolute bottom-48 right-6 md:right-44 w-10 md:w-16 text-amber-400/60 hidden sm:block" style={{'--doodle-rotate': '6deg'}} />
+          {/* Lucknow skyline artwork behind the hero content */}
+          <img src="/hero-skyline.png" alt="" aria-hidden="true" className="pointer-events-none select-none absolute left-1/2 top-[-7rem] md:top-[-11rem] -translate-x-1/2 w-[38rem] md:w-[52rem] max-w-none object-contain -z-10" />
           
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-indigo-100 text-indigo-700 text-sm md:text-base font-bold mb-10 shadow-sm">
             <span className="flex h-2.5 w-2.5 rounded-full bg-indigo-600 animate-pulse"></span>
             Lucknow's Direct Network
           </div>
 
-          <div className="relative mb-8">
-            {/* Lucknow skyline - Rumi Darwaza centered behind the logo */}
-            <RumiGateDoodle className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] md:w-[54rem] text-indigo-400/30" />
-          <h1 className="relative text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-slate-900 drop-shadow-sm"><span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-800 via-slate-600 to-slate-500">Tuto₹</span> 
+          <h1 className="relative text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-slate-900 mb-8 drop-shadow-sm"><span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-800 via-slate-600 to-slate-500">Tuto₹</span> 
   <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-500 to-blue-500">49</span>
 </h1>
-          </div>
           
           <p className="text-xl md:text-2xl lg:text-3xl text-slate-600 mb-14 max-w-3xl mx-auto leading-relaxed font-medium">
             Connecting dedicated parents with verified, top-tier tutors in the area.
