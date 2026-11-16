@@ -1,4 +1,4 @@
-import HomepageDoodles from '../components/HomepageDoodles';
+import HomepageDoodles, { HeroSideDoodles } from '../components/HomepageDoodles';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GraduationCap, Wallet, Zap, ChevronDown, Star, Quote, Menu, X, ArrowRight } from 'lucide-react';
@@ -171,6 +171,7 @@ function LandingPage() {
       {/* ========================================== */}
       <div className="relative overflow-hidden border-b border-slate-200 min-h-screen flex flex-col justify-center pt-24">
         {/* Decorative tutor/student illustration, fitted into existing hero whitespace. */}
+        <HeroSideDoodles />
         <img src="/hero-tutor-student.svg" alt="" aria-hidden="true" width="500" height="190" className="pointer-events-none select-none absolute top-[5.25rem] left-1/2 -translate-x-1/2 w-60 h-auto" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-gradient-to-b from-indigo-50/80 to-transparent -z-10 rounded-full blur-3xl opacity-80"></div>
         
