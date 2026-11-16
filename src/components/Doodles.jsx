@@ -55,30 +55,62 @@ export const RupeeCoinDoodle = ({ className = '', style }) => (
 
 /* Minimal Rumi Darwaza (Lucknow) outline silhouette */
 export const RumiGateDoodle = ({ className = '', style }) => (
-  <svg viewBox="0 0 200 160" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className} style={style}>
+  <svg viewBox="0 0 800 200" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className} style={style}>
     {/* ground */}
-    <path d="M8 150h184" strokeDasharray="2 9" />
-    {/* side wings */}
-    <path d="M28 150v-44h34v44" />
-    <path d="M138 150v-44h34v44" />
-    {/* side arches */}
-    <path d="M37 150v-24a8 9 0 0 1 16 0v24" />
-    <path d="M147 150v-24a8 9 0 0 1 16 0v24" />
-    {/* main body */}
-    <path d="M70 150V68h60v82" />
-    {/* parapet finials */}
-    <path d="M70 68v-7" /><circle cx="70" cy="57" r="2.4" />
-    <path d="M130 68v-7" /><circle cx="130" cy="57" r="2.4" />
+    <path d="M20 190h760" strokeDasharray="2 10" />
+
+    {/* far left small building */}
+    <path d="M120 190v-40h60v40" />
+    <path d="M132 190v-20a8 9 0 0 1 16 0v20" />
+    <path d="M158 190v-20a8 9 0 0 1 16 0v20" />
+    <path d="M140 150c0-6 4.5-10 10-10s10 4 10 10" />
+
+    {/* left minaret */}
+    <path d="M228 190V96h16v94" />
+    <path d="M224 96h24" />
+    <path d="M228 96v-10h16v10" />
+    <path d="M228 86c0-6 3.6-10 8-10s8 4 8 10" />
+    <path d="M236 76v-8" /><circle cx="236" cy="65" r="2" />
+
+    {/* left inner building */}
+    <path d="M268 190v-58h72v58" />
+    <path d="M286 190v-28a10 12 0 0 1 20 0v28" />
+    <path d="M312 190v-28a10 12 0 0 1 20 0v28" />
+    <path d="M284 132c0-6 4-10 10-10s10 4 10 10" />
+    <path d="M312 132c0-6 4-10 10-10s10 4 10 10" />
+
+    {/* center gate body (Rumi Darwaza) */}
+    <path d="M352 190V80h96v110" />
+    <path d="M352 80v-8" /><circle cx="352" cy="68" r="2.4" />
+    <path d="M448 80v-8" /><circle cx="448" cy="68" r="2.4" />
     {/* main pointed arch */}
-    <path d="M83 150v-38q0-20 17-28q17 8 17 28v38" />
-    <path d="M90 150v-32q0-14 10-20q10 6 10 20v32" strokeWidth="2" />
-    {/* chhatri base */}
-    <path d="M85 68v-9h30v9" />
-    {/* chhatri columns */}
-    <path d="M90 59V48M97 59V48M103 59V48M110 59V48" strokeWidth="2" />
-    {/* dome + finial */}
-    <path d="M86 48c0-8.5 6.3-15 14-15s14 6.5 14 15" />
-    <path d="M100 33v-7" /><circle cx="100" cy="23" r="2.2" />
+    <path d="M370 190v-48q0-38 30-38q30 0 30 38v48" />
+    <path d="M380 190v-40q0-28 20-28q20 0 20 28v40" strokeWidth="2" />
+    {/* chhatri */}
+    <path d="M376 80v-10h48v10" />
+    <path d="M384 70V58M394 70V58M406 70V58M416 70V58" strokeWidth="2" />
+    <path d="M380 58c0-11 9-19 20-19s20 8 20 19" />
+    <path d="M400 39v-9" /><circle cx="400" cy="27" r="2.4" />
+
+    {/* right inner building */}
+    <path d="M460 190v-58h72v58" />
+    <path d="M478 190v-28a10 12 0 0 1 20 0v28" />
+    <path d="M504 190v-28a10 12 0 0 1 20 0v28" />
+    <path d="M476 132c0-6 4-10 10-10s10 4 10 10" />
+    <path d="M504 132c0-6 4-10 10-10s10 4 10 10" />
+
+    {/* right minaret */}
+    <path d="M556 190V96h16v94" />
+    <path d="M552 96h24" />
+    <path d="M556 96v-10h16v10" />
+    <path d="M556 86c0-6 3.6-10 8-10s8 4 8 10" />
+    <path d="M564 76v-8" /><circle cx="564" cy="65" r="2" />
+
+    {/* far right small building */}
+    <path d="M620 190v-40h60v40" />
+    <path d="M632 190v-20a8 9 0 0 1 16 0v20" />
+    <path d="M658 190v-20a8 9 0 0 1 16 0v20" />
+    <path d="M640 150c0-6 4.5-10 10-10s10 4 10 10" />
   </svg>
 );
 
