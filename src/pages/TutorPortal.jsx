@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, BookOpen, GraduationCap, ArrowLeft, Search, ShieldCheck, Banknote, ChevronDown, Lock, Book } from 'lucide-react';
+import { YoungTutorFigure, RupeeDoodle, RupeeCoinDoodle } from '../components/Doodles';
 
 function TutorPortal() {
   const navigate = useNavigate();
@@ -161,7 +162,14 @@ function TutorPortal() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 pb-20">
+    <div className="min-h-screen bg-slate-50 bg-[radial-gradient(#d1fae5_1.2px,transparent_1.2px)] [background-size:24px_24px] text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 pb-20 relative overflow-hidden">
+
+      {/* Soft money-side washes + floating ₹ figures in the background */}
+      <div className="pointer-events-none absolute -top-32 -left-32 w-[34rem] h-[34rem] bg-emerald-100/70 rounded-full blur-3xl"></div>
+      <div className="pointer-events-none absolute top-[45%] -right-40 w-[34rem] h-[34rem] bg-indigo-100/60 rounded-full blur-3xl"></div>
+      <RupeeCoinDoodle className="animate-doodle pointer-events-none absolute top-40 right-6 md:right-16 w-16 md:w-24 text-emerald-400/50" style={{'--doodle-rotate': '10deg'}} />
+      <RupeeDoodle className="animate-doodle-slow pointer-events-none absolute top-[55%] left-4 md:left-12 w-10 md:w-14 text-indigo-400/40" style={{'--doodle-rotate': '-8deg'}} />
+      <RupeeCoinDoodle className="animate-doodle-slow pointer-events-none absolute bottom-24 right-8 md:right-24 w-12 md:w-16 text-amber-400/40 hidden sm:block" style={{'--doodle-rotate': '-6deg'}} />
       
       {/* HEADER SECTION */}
       <div className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
@@ -170,19 +178,23 @@ function TutorPortal() {
             <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors self-start sm:self-auto">
               <ArrowLeft className="w-4 h-4"/> Exit Board
             </button>
-            <div className="text-center sm:text-right">
-              <h1 className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-500 tracking-tight">
-                Available <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 via-slate-600 to-slate-500">Requirements</span> 
-              </h1>
-              <p className="text-xs text-slate-500 font-medium mt-1 flex items-center justify-center sm:justify-end gap-1">
-                <ShieldCheck className="w-3 h-3 text-emerald-500"/> Unlock contact only when interested
-              </p>
+            <div className="text-center sm:text-right flex items-center gap-4">
+              <YoungTutorFigure className="animate-doodle w-16 sm:w-20 text-indigo-500/70 shrink-0" />
+              <div>
+                <h1 className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-500 tracking-tight">
+                  Available <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 via-slate-600 to-slate-500">Requirements</span>
+                </h1>
+                <p className="text-xs text-slate-500 font-medium mt-1 flex items-center justify-center sm:justify-end gap-1">
+                  <ShieldCheck className="w-3 h-3 text-emerald-500"/> Unlock contact only when interested
+                </p>
+              </div>
+              <RupeeCoinDoodle className="animate-doodle-slow w-10 sm:w-12 text-emerald-500/60 shrink-0" style={{'--doodle-rotate': '10deg'}} />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 relative z-10">
         
         {/* SEARCH AND AREA FILTER */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-6 flex flex-col md:flex-row gap-4">

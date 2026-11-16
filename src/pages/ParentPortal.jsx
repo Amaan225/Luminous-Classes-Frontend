@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, UserCheck, Sparkles, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { ParentChildFigure, ShieldDoodle } from '../components/Doodles';
 
 function ParentPortal() {
   const navigate = useNavigate();
@@ -92,16 +93,22 @@ function ParentPortal() {
   const availableAreas = hasDetailedAreas ? detailedLocations[formData.city] : [];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-slate-50 bg-[radial-gradient(#e0e7ff_1.2px,transparent_1.2px)] [background-size:22px_22px] text-slate-900 font-sans py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Soft brand wash + one clean parent figure in the background */}
+      <div className="pointer-events-none absolute -top-32 -right-32 w-[34rem] h-[34rem] bg-indigo-100/70 rounded-full blur-3xl"></div>
+      <div className="pointer-events-none absolute -bottom-32 -left-32 w-[30rem] h-[30rem] bg-violet-100/70 rounded-full blur-3xl"></div>
+      <div className="max-w-4xl mx-auto relative z-10">
         <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors mb-8">
           <ArrowLeft className="w-4 h-4" /> Back to home
         </button>
-        <div className="mb-10 text-center md:text-left">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+        <div className="mb-10 text-center md:text-left flex flex-col md:flex-row items-center gap-6">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
   Find the <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-500">Perfect</span> Tutor
 </h1>
-          <p className="text-lg text-slate-600 max-w-2xl">Post your requirement for free. We'll connect you directly with verified tutors.</p>
+            <p className="text-lg text-slate-600 max-w-2xl">Post your requirement for free. We'll connect you directly with verified tutors.</p>
+          </div>
+          <ParentChildFigure className="animate-doodle-slow w-28 md:w-36 text-indigo-400/80 shrink-0" />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
@@ -196,6 +203,7 @@ function ParentPortal() {
             <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm relative overflow-hidden group">
               <h3 className="text-lg font-bold text-slate-900 mb-2">Verified tutors</h3>
               <p className="text-sm text-slate-600 leading-relaxed">We manually verify the ID of every tutor before they can view your requirements, ensuring a safe learning environment.</p>
+              <ShieldDoodle className="absolute -bottom-3 -right-3 w-20 h-20 text-emerald-200/70" />
             </div>
             <div className="bg-indigo-600 rounded-3xl p-6 shadow-md text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 opacity-10">

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GraduationCap, Wallet, Zap, ChevronDown, Star, Quote, Menu, X, ArrowRight } from 'lucide-react';
 import { Phone, Mail, MessageCircle } from 'lucide-react';
+import { GradCapDoodle, BookDoodle, ShieldDoodle, SparkleDoodle } from '../components/Doodles';
 
 function LandingPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
@@ -89,7 +90,12 @@ function LandingPage() {
   const doubledTestimonials = [...testimonials, ...testimonials];
 
   return (
-    <div className="min-h-screen bg-slate-50 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-hidden relative">
+    <div className="min-h-screen bg-slate-50 bg-[radial-gradient(#c7d2fe_1.2px,transparent_1.2px)] [background-size:22px_22px] text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-hidden relative">
+
+      {/* Soft brand gradient washes */}
+      <div className="pointer-events-none absolute -top-40 -left-40 w-[42rem] h-[42rem] bg-indigo-200/50 rounded-full blur-3xl"></div>
+      <div className="pointer-events-none absolute top-[35%] -right-48 w-[40rem] h-[40rem] bg-violet-200/50 rounded-full blur-3xl"></div>
+      <div className="pointer-events-none absolute -bottom-32 left-[15%] w-[38rem] h-[38rem] bg-emerald-100/60 rounded-full blur-3xl"></div>
       
       <style>
         {`
@@ -167,6 +173,12 @@ function LandingPage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-gradient-to-b from-indigo-50/80 to-transparent -z-10 rounded-full blur-3xl opacity-80"></div>
         
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center relative z-10 w-full py-20">
+
+          {/* Minimal floating outline figures around the hero */}
+          <GradCapDoodle className="animate-doodle pointer-events-none absolute top-16 left-4 md:left-24 w-16 md:w-24 text-indigo-400/70" style={{'--doodle-rotate': '-10deg'}} />
+          <ShieldDoodle className="animate-doodle-slow pointer-events-none absolute top-28 right-4 md:right-24 w-14 md:w-20 text-violet-400/70" style={{'--doodle-rotate': '8deg'}} />
+          <BookDoodle className="animate-doodle-slow pointer-events-none absolute bottom-40 left-6 md:left-40 w-12 md:w-20 text-blue-400/60" style={{'--doodle-rotate': '10deg'}} />
+          <SparkleDoodle className="animate-doodle pointer-events-none absolute bottom-48 right-6 md:right-44 w-10 md:w-16 text-amber-400/60 hidden sm:block" style={{'--doodle-rotate': '6deg'}} />
           
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-indigo-100 text-indigo-700 text-sm md:text-base font-bold mb-10 shadow-sm">
             <span className="flex h-2.5 w-2.5 rounded-full bg-indigo-600 animate-pulse"></span>
