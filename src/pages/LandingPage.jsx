@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { GraduationCap, Wallet, Zap, ChevronDown, Star, Quote, Menu, X } from 'lucide-react';
+import { GraduationCap, Wallet, Zap, ChevronDown, Star, Quote, Menu, X, ArrowRight } from 'lucide-react';
 import { Phone, Mail, MessageCircle } from 'lucide-react';
 
 function LandingPage() {
@@ -199,9 +199,14 @@ function LandingPage() {
             </Link>
           </div>
 
-          <div className="mt-4">
-            <Link to="/register" className="text-base md:text-lg font-semibold text-slate-500 hover:text-indigo-600 transition-colors">
-              New Tutor? <span className="underline underline-offset-4 decoration-slate-300 hover:decoration-indigo-600">Register Here First</span>
+          <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <span className="text-base md:text-lg font-semibold text-slate-500">New Tutor?</span>
+            <Link
+              to="/register"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 via-violet-600 to-blue-600 text-white px-7 py-3 rounded-full text-base md:text-lg font-bold shadow-lg shadow-indigo-600/25 hover:shadow-indigo-600/50 hover:-translate-y-0.5 hover:scale-[1.03] transition-all duration-300"
+            >
+              Register Here First
+              <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </div>
