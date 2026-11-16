@@ -308,13 +308,12 @@ function AdminPortal() {
       {/* HEADER */}
       <div className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center py-4 gap-4">
-            <div className="flex items-center gap-6">
-              <button onClick={async () => { await handleLogout(); navigate('/'); }} className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">
-                <ArrowLeft className="w-4 h-4" /> Exit
-              </button>
-              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Command Center</h1>
-            </div>
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center py-4 gap-2">
+            <button onClick={async () => { await handleLogout(); navigate('/'); }} className="justify-self-start flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">
+              <ArrowLeft className="w-4 h-4" /> Exit
+            </button>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight text-center whitespace-nowrap">Command Center</h1>
+            <div aria-hidden="true" />
           </div>
         </div>
 
