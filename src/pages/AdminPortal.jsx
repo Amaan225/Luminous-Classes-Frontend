@@ -307,7 +307,7 @@ function AdminPortal() {
 
   // --- THE ACTUAL ADMIN PORTAL ---
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 pb-20">
+    <div className="min-h-screen bg-slate-200 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 pb-20">
 
       {/* HEADER */}
       <div className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
@@ -372,7 +372,7 @@ function AdminPortal() {
           ) : (
             <div className="grid grid-cols-1 gap-4">
               {pendingLeads.map(job => (
-                <div key={job._id} className="bg-white rounded-2xl border border-amber-200 shadow-sm p-6 relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div key={job._id} className="bg-white rounded-2xl border-2 border-amber-300 shadow-md p-6 relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                   <div className="absolute top-0 left-0 w-1 h-full bg-amber-400"></div>
 
                   <div>
@@ -406,7 +406,7 @@ function AdminPortal() {
 
         {/* SECTION 2: MANUAL LEAD INJECTION */}
         {activeTab === 'inject' && (
-        <section className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+        <section className="bg-white rounded-3xl p-8 border border-slate-300 shadow-md">
           <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-100">
             <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
               <Plus className="w-5 h-5" />
@@ -487,7 +487,7 @@ function AdminPortal() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {pendingTutors.map(tutor => (
-                <div key={tutor._id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div key={tutor._id} className="bg-white p-6 rounded-2xl border border-slate-300 shadow-md flex flex-col justify-between">
                   <div className="mb-6">
                     <h3 className="font-bold text-lg text-slate-900">{tutor.name}</h3>
                     <div className="space-y-1.5 mt-3 text-sm text-slate-600 break-all">
@@ -578,7 +578,7 @@ function AdminPortal() {
                 const isDirect = job.leadType === 'direct' || job.leadType === 'premium' || !job.leadType;
 
                 return (
-                  <div key={job._id} className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden flex flex-col">
+                  <div key={job._id} className="bg-white border border-slate-300 rounded-3xl shadow-md overflow-hidden flex flex-col">
 
                     {/* Status Badge & Hidden Indicator (in normal flow so it never overlaps the title on narrow screens) */}
                     <div className="flex flex-wrap items-center justify-end gap-2 px-6 md:px-8 pt-5">
