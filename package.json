@@ -8,7 +8,8 @@
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir .prerender && node scripts/prerender.mjs && npm run test:html",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test:html": "node scripts/check-html.mjs"
+    "test:html": "node scripts/check-html.mjs",
+    "test": "node --test test/*.test.js"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

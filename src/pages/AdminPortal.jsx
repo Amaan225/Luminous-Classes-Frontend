@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
+import { approvedUnlocksForJob } from '../lib/unlocks';
 import { useNavigate } from 'react-router-dom';
 import { ShieldAlert, ShieldCheck, UserCheck, Trash2, Edit, CheckCircle2, Lock, ArrowLeft, Search, Plus } from 'lucide-react';
 
@@ -17,7 +18,8 @@ function AdminPortal() {
     setSession(null);
     setPasscode('');
     setJobs([]);
-    setApplications([]);
+    setUnlocks([]);
+    setUnlocksStatus('loading');
     setTutors([]);
     setEditingJobId(null);
     setEditLeadForm({});
@@ -68,7 +70,8 @@ function AdminPortal() {
 
   // --- YOUR EXISTING ADMIN STATE ---
   const [jobs, setJobs] = useState([]);
-  const [applications, setApplications] = useState([]);
+  const [unlocks, setUnlocks] = useState([]);
+  const [unlocksStatus, setUnlocksStatus] = useState('loading');
   const [tutors, setTutors] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -90,16 +93,25 @@ function AdminPortal() {
     } catch (e) { console.error(e); }
   }, [adminApi]);
 
+  const fetchUnlocks = useCallback(async () => {
+    setUnlocksStatus('loading');
+    try {
+      const { data } = await adminApi.get('https://luminous-classes-backend.onrender.com/api/unlocks');
+      if (!Array.isArray(data)) throw new Error('Invalid unlock records response');
+      setUnlocks(data);
+      setUnlocksStatus('ready');
+    } catch (error) {
+      setUnlocksStatus('error');
+      console.error('Could not load unlock records', error);
+    }
+  }, [adminApi]);
+
   useEffect(() => {
     if (isAuthenticated) {
       fetchJobs();
+      fetchUnlocks();
 
       const fetchRest = async () => {
-        try {
-          const appsRes = await adminApi.get('https://luminous-classes-backend.onrender.com/api/applications');
-          setApplications(appsRes.data);
-        } catch (e) { console.error(e); }
-
         try {
           const tutorsRes = await adminApi.get('https://luminous-classes-backend.onrender.com/api/admin/tutors/pending');
           setTutors(tutorsRes.data);
@@ -107,7 +119,7 @@ function AdminPortal() {
       };
       fetchRest();
     }
-  }, [isAuthenticated, adminApi, fetchJobs]);
+  }, [isAuthenticated, adminApi, fetchJobs, fetchUnlocks]);
 
   const handleDeleteJob = async (id) => {
     if (window.confirm("Purge this record permanently?")) {
@@ -463,7 +475,7 @@ function AdminPortal() {
               </div>
             ) : (
               filteredActiveJobs.map((job) => {
-                const jobApps = applications.filter(app => app.jobId === job._id);
+                const jobUnlocks = approvedUnlocksForJob(unlocks, job._id);
                 const isDirect = job.leadType === 'direct' || job.leadType === 'premium' || !job.leadType;
 
                 return (
@@ -594,18 +606,25 @@ function AdminPortal() {
                         <div className="w-full md:w-72 bg-slate-50 rounded-2xl p-5 border border-slate-200 shrink-0">
                           <h4 className="text-sm font-bold text-slate-900 mb-4 flex items-center justify-between">
                             Unlocked By
-                            <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">{jobApps.length}</span>
+                            <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">{unlocksStatus === 'ready' ? jobUnlocks.length : unlocksStatus === 'loading' ? '...' : '?'}</span>
                           </h4>
 
-                          {jobApps.length === 0 ? (
+                          {unlocksStatus === 'loading' ? (
+                            <p className="text-sm text-slate-500" role="status">Loading unlocks...</p>
+                          ) : unlocksStatus === 'error' ? (
+                            <div role="alert" className="text-sm text-slate-600">
+                              <p>Unlock records unavailable.</p>
+                              <button type="button" onClick={fetchUnlocks} className="mt-2 text-indigo-700 font-semibold hover:underline">Retry unlock records</button>
+                            </div>
+                          ) : jobUnlocks.length === 0 ? (
                             <p className="text-sm text-slate-500 italic">No unlocks recorded.</p>
                           ) : (
                             <div className="space-y-3">
-                              {jobApps.map(app => (
-                                <div key={app._id} className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-                                  <p className="font-bold text-slate-900 text-sm">{app.tutorName}</p>
-                                  <p className="text-xs text-slate-400 mt-0.5">ID: {app._id.substring(0,8)}</p>
-                                  <a href={`https://wa.me/91${app.tutorPhone}`} target="_blank" rel="noreferrer" className="mt-2 block w-full text-center bg-indigo-50 text-indigo-700 hover:bg-indigo-100 py-1.5 rounded-lg text-xs font-semibold transition-colors">
+                              {jobUnlocks.map(unlock => (
+                                <div key={unlock._id} className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                                  <p className="font-bold text-slate-900 text-sm">{unlock.tutorPhone}</p>
+                                  <p className="text-xs text-slate-400 mt-0.5">ID: {unlock._id.substring(0,8)}</p>
+                                  <a href={`https://wa.me/91${unlock.tutorPhone}`} target="_blank" rel="noreferrer" className="mt-2 block w-full text-center bg-indigo-50 text-indigo-700 hover:bg-indigo-100 py-1.5 rounded-lg text-xs font-semibold transition-colors">
                                     Message
                                   </a>
                                 </div>
