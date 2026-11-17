@@ -54,6 +54,7 @@ function AdminPortal() {
     try {
       const { data } = await axios.post('https://luminous-classes-backend.onrender.com/api/admin/login', { password: passcode });
       setSession(data);
+      setActiveTab('ledger');
       setIsAuthenticated(true);
     } catch (error) {
       setLoginError(error.response?.data?.error || 'Could not sign in. Please try again.');
@@ -74,7 +75,7 @@ function AdminPortal() {
   const [unlocksStatus, setUnlocksStatus] = useState('loading');
   const [tutors, setTutors] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState('pending');
+  const [activeTab, setActiveTab] = useState('ledger');
   const [statusFilter, setStatusFilter] = useState('all');
   const [unlockFilter, setUnlockFilter] = useState('all');
 
