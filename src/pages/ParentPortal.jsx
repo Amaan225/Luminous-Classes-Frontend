@@ -56,6 +56,7 @@ function ParentPortal() {
 
     const payload = {
       ...formData,
+      leadType: 'direct',
       grade: formData.grade === 'Other' ? formData.customGrade : formData.grade,
       city: formData.city === 'Other' ? formData.customCity : formData.city,
       location: formData.location === 'Other' ? formData.customLocation : formData.location
