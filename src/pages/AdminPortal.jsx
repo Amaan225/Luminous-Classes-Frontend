@@ -83,7 +83,7 @@ function AdminPortal() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [newLeadForm, setNewLeadForm] = useState({
     title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '',
-    leadType: 'direct',
+    leadType: 'classic',
     status: 'approved'
   });
 
@@ -160,7 +160,7 @@ function AdminPortal() {
     try {
      await adminApi.post('https://luminous-classes-backend.onrender.com/api/jobs', newLeadForm);
       alert("Lead Successfully Injected!");
-      setNewLeadForm({ title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '', leadType: 'direct', status: 'approved' });
+      setNewLeadForm({ title: '', parentName: '', subject: '', grade: '', city: 'Lucknow', location: '', salary: '', contactNumber: '', requirements: '', leadType: 'classic', status: 'approved' });
       fetchJobs();
     } catch (error) {
       console.error("Error creating lead:", error);
