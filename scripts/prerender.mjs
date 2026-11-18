@@ -27,4 +27,12 @@ await mkdir('dist/admin', { recursive: true });
 await writeFile('dist/admin/index.html', template
   .replace(/<title>[^<]*<\/title>/, '<title>Admin | Tutor49</title>')
   .replace('</head>', '    <meta name="robots" content="noindex" />\n  </head>'));
+// The unlinked owner-only route must not inherit production analytics or checkout preload.
+await mkdir('dist/tutor-test',{recursive:true});
+await writeFile('dist/tutor-test/index.html',template
+ .replace(/<script[^>]*src="https:\/\/www\.googletagmanager\.com[^>]*><\/script>/g,'')
+ .replace(/<script>\s*window\.dataLayer[\s\S]*?<\/script>/g,'')
+ .replace(/<script[^>]*src="https:\/\/checkout\.razorpay\.com[^>]*><\/script>/g,'')
+ .replace(/<title>[^<]*<\/title>/,'<title>Owner test | Tutor49</title>')
+ .replace('</head>','<meta name="robots" content="noindex,nofollow" /></head>'));
 await rm('.prerender', { recursive: true, force: true });

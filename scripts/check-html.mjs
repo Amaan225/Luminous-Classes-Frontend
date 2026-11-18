@@ -21,3 +21,10 @@ assert.ok(notFound.includes('noindex'));
 assert.ok((await readFile('dist/robots.txt', 'utf8')).includes('/sitemap.xml'));
 assert.ok((await readFile('dist/sitemap.xml', 'utf8')).includes('<urlset'));
 console.log('Initial HTML checks passed for all five public pages, admin and crawl files.');
+
+const ownerTest=await readFile('dist/tutor-test/index.html','utf8');
+assert.ok(ownerTest.includes('noindex,nofollow'));
+assert.ok(!ownerTest.includes('googletagmanager'));
+assert.ok(!ownerTest.includes('window.dataLayer'));
+assert.ok(!ownerTest.includes('checkout.razorpay'));
+assert.ok(!ownerTest.includes('rel="canonical"'));

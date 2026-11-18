@@ -1,6 +1,18 @@
 {
   "rewrites": [
     {
+      "source": "/api/tutor-test/:path*",
+      "destination": "https://luminous-classes-backend.onrender.com/api/tutor-test/:path*"
+    },
+    {
+      "source": "/api/tutor-account/:path*",
+      "destination": "https://luminous-classes-backend.onrender.com/api/tutor-account/:path*"
+    },
+    {
+      "source": "/api/admin/tutor-accounts/:path*",
+      "destination": "https://luminous-classes-backend.onrender.com/api/admin/tutor-accounts/:path*"
+    },
+    {
       "source": "/",
       "destination": "/index.html"
     },
@@ -19,6 +31,10 @@
     {
       "source": "/terms",
       "destination": "/terms/index.html"
+    },
+    {
+      "source": "/tutor-test",
+      "destination": "/tutor-test/index.html"
     },
     {
       "source": "/admin",

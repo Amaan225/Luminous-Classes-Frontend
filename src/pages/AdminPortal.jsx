@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
+import TutorAccountReview from './TutorAccountReview';
 import { approvedUnlocksForJob } from '../lib/unlocks';
 import { useNavigate } from 'react-router-dom';
 import { ShieldAlert, ShieldCheck, UserCheck, Trash2, Edit, CheckCircle2, Lock, ArrowLeft, Search, Plus } from 'lucide-react';
@@ -26,6 +27,10 @@ function AdminPortal() {
   }, []);
   const adminApi = useMemo(() => {
     const client = axios.create();
+    if (import.meta.env.VITE_TUTOR_PREVIEW === 'true') client.interceptors.request.use(config => {
+      config.url = config.url.replace('https://luminous-classes-backend.onrender.com', '');
+      return config;
+    });
     client.interceptors.request.use(config => {
       if (session?.token) config.headers.Authorization = `Bearer ${session.token}`;
       return config;
@@ -52,7 +57,7 @@ function AdminPortal() {
     setIsLoggingIn(true);
     setLoginError('');
     try {
-      const { data } = await axios.post('https://luminous-classes-backend.onrender.com/api/admin/login', { password: passcode });
+      const { data } = await axios.post((import.meta.env.VITE_TUTOR_PREVIEW === 'true' ? '' : 'https://luminous-classes-backend.onrender.com') + '/api/admin/login', { password: passcode });
       setSession(data);
       setActiveTab('ledger');
       setIsAuthenticated(true);
@@ -243,6 +248,7 @@ function AdminPortal() {
     { id: 'ledger', label: 'Active Ledger', count: filteredActiveJobs.length },
     { id: 'pending', label: 'Pending Leads', count: pendingLeads.length },
     { id: 'tutors', label: 'Tutor Verification', count: pendingTutors.length },
+    ...(import.meta.env.VITE_TUTOR_ACCOUNTS_ENABLED === 'true' ? [{id:'account-review',label:'Account recovery',count:null}] : []),
     { id: 'inject', label: 'Inject Lead', count: null },
   ];
 
@@ -353,6 +359,7 @@ function AdminPortal() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-12">
 
         {/* SECTION 1: QUARANTINE ZONE (PENDING LEADS) */}
+        {activeTab === 'account-review' && <TutorAccountReview adminApi={adminApi} />}
         {activeTab === 'pending' && (
         <section>
           <div className="flex flex-wrap items-center gap-3 mb-6">
