@@ -10,6 +10,7 @@ import TutorPortal from './pages/TutorPortal';
 import AdminPortal from './pages/AdminPortal';
 import Terms from './pages/Terms';
 import TutorAccount from './pages/TutorAccount';
+import TutorAccountBoundary from './pages/TutorAccountBoundary';
 import Seo from './Seo';
 import { routeMetadata } from './routeMetadata.js';
 
@@ -44,7 +45,7 @@ function App() {
         <Routes>
           <Route path="/" element={page('/', <LandingPage />)} />
           <Route path="/parent" element={page('/parent', import.meta.env.VITE_TUTOR_PREVIEW === 'true' ? <div className="mx-auto max-w-xl p-8"><h1 className="text-3xl font-bold mb-4">Parent form is unchanged</h1><p>This test version cannot submit a real parent requirement. Parent submissions on the live site remain Direct and pending admin review.</p></div> : <ParentPortal />)} />
-          <Route path="/tutor" element={page('/tutor', tutorAccounts ? <TutorAccount /> : <TutorPortal />)} />
+          <Route path="/tutor" element={page('/tutor', tutorAccounts ? <TutorAccountBoundary><TutorAccount /></TutorAccountBoundary> : <TutorPortal />)} />
           <Route path="/tutor-test" element={<><Seo title="Owner test | Tutor49" noindex /><TutorAccount ownerTest /></>} />
           <Route path="/admin" element={<><Seo title="Admin | Tutor49" noindex /><AdminPortal /></>} />
           <Route path="/register" element={page('/register', <TutorRegistration />)} />
