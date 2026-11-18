@@ -23,7 +23,7 @@ function Terms() {
             Terms & Policies
           </h1>
           <p className="text-slate-500 font-medium">
-            Last Updated: May 24, 2026
+            Last Updated: November 18, 2026
           </p>
         </div>
 
@@ -66,6 +66,7 @@ function Terms() {
                 3. For Tutors
               </h2>
               <ul className="space-y-3 text-slate-600 leading-relaxed list-disc list-outside ml-5 marker:text-slate-400">
+                <li><strong>Registration:</strong> New tutors pay a one-time ₹49 registration fee and still need admin approval. Google sign-in confirms account identity, not tutor approval. Existing registrations need an ownership check, not another registration charge.</li>
                 <li><strong>The Unlock Fee:</strong> Tutors pay a flat, non-recurring fee of ₹49 to unlock a Direct lead's contact number.</li>
                 <li><strong>No Conversion Guarantee:</strong> Unlocking a lead provides the contact number; it does <strong>not</strong> guarantee the parent will hire you. Hiring depends on your communication skills and demo performance.</li>
                 <li><strong>Zero Commission:</strong> Once you are hired via a Direct lead, you keep 100% of your earnings. Tutor49 will never ask for a percentage of your salary.</li>
@@ -106,6 +107,9 @@ function Terms() {
                 </p>
                 <ul className="space-y-3 list-disc list-outside ml-5 marker:text-slate-400">
                   <li><strong>Number Masking:</strong> Parent contact numbers are masked securely on our database and are only revealed to verified tutors who execute a successful unlock transaction.</li>
+                  <li><strong>Google accounts:</strong> We use your Google account ID, verified email and name for sign-in. We store your tutor profile, session and payment references for account access and purchase history. We do not receive your Google password or access to your Gmail inbox. Session cookies keep you signed in; signing out ends that session.</li>
+                  <li><strong>Optional alerts:</strong> If you choose to enable browser notifications, we save a device push subscription to send masked lead alerts matching your saved city and preferred area. Parent phone numbers are not included. You can disable alerts on your device. Alerts may arrive late or not display, including when the free server sleeps or the browser limits delivery.</li>
+                  <li><strong>Purchase history:</strong> Verified purchases can retain contact access after a generic lead hide. Deleted or restricted contacts are not shown. Old purchases are linked only after support checks ownership and payment evidence.</li>
                   <li><strong>No Third-Party Selling:</strong> We do not sell your personal data, email addresses, or phone numbers to third-party marketing agencies.</li>
                   <li><strong>Payment Security:</strong> All transactions are handled securely by Razorpay. Tutor49 does not store your credit card or UPI details on our servers.</li>
                 </ul>

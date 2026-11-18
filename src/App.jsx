@@ -46,7 +46,8 @@ function App() {
           <Route path="/tutor" element={page('/tutor', tutorAccounts ? <TutorAccount /> : <TutorPortal />)} />
           <Route path="/tutor-test" element={<><Seo title="Owner test | Tutor49" noindex /><TutorAccount ownerTest /></>} />
           <Route path="/admin" element={<><Seo title="Admin | Tutor49" noindex /><AdminPortal /></>} />
-          <Route path="/register" element={page('/register', tutorAccounts ? <TutorAccount /> : <TutorRegistration />)} />
+          <Route path="/register" element={page('/register', <TutorRegistration />)} />
+          <Route path="/tutor-legacy" element={<><Seo title="Tuition board | Tutor49" noindex /><TutorPortal /></>} />
           <Route path="/terms" element={page('/terms', <Terms />)} />
           <Route path="*" element={<NotFound />} />
         </Routes>
