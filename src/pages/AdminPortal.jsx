@@ -14,6 +14,15 @@ function AdminPortal() {
   const [session, setSession] = useState(null);
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  useEffect(() => {
+    // One-time handoff from a verified Google admin; the server minted this short-lived admin session.
+    try {
+      const raw = sessionStorage.getItem('t49-admin-handoff');
+      sessionStorage.removeItem('t49-admin-handoff');
+      const s = raw && JSON.parse(raw);
+      if (s?.token && s.expiresAt > Date.now()) { setSession(s); setActiveTab('ledger'); setIsAuthenticated(true); }
+    } catch { /* ignore malformed handoff */ }
+  }, []);
   const clearSession = useCallback(() => {
     setIsAuthenticated(false);
     setSession(null);
