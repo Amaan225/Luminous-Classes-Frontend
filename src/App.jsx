@@ -36,6 +36,7 @@ function App() {
   const isAdminRoute = location.pathname.startsWith('/admin');
   const isOwnerTest=location.pathname==='/tutor-test';
   const tutorAccounts = import.meta.env.VITE_TUTOR_ACCOUNTS_ENABLED === 'true';
+  const isAccountDashboard=tutorAccounts&&location.pathname==='/tutor';
   return (
     // Your modern premium wrapper
     <div className="min-h-screen font-sans text-slate-900 bg-slate-50 selection:bg-indigo-100 selection:text-indigo-900">
@@ -56,7 +57,7 @@ function App() {
       {!isOwnerTest && import.meta.env.VITE_TUTOR_PREVIEW !== 'true' && <Analytics />}
 
     {/* Floating WhatsApp Button (hidden on the admin console, where it covers records on mobile) */}
-{!isAdminRoute && !isOwnerTest && import.meta.env.VITE_TUTOR_PREVIEW !== 'true' && (
+{!isAdminRoute && !isOwnerTest && !isAccountDashboard && import.meta.env.VITE_TUTOR_PREVIEW !== 'true' && (
 <a
   href="https://wa.me/919838580939?text=Hi%20Tutor49%2C%20I%20have%20a%20question!"
   target="_blank"
