@@ -35,4 +35,6 @@ await writeFile('dist/tutor-test/index.html',template
  .replace(/<script[^>]*src="https:\/\/checkout\.razorpay\.com[^>]*><\/script>/g,'')
  .replace(/<title>[^<]*<\/title>/,'<title>Owner test | Tutor49</title>')
  .replace('</head>','<meta name="robots" content="noindex,nofollow" /></head>'));
+await mkdir('dist/tutor-legacy',{recursive:true});
+await writeFile('dist/tutor-legacy/index.html',template.replace(/<title>[^<]*<\/title>/,'<title>Tuition board | Tutor49</title>').replace('</head>','<meta name="robots" content="noindex" /></head>'));
 await rm('.prerender', { recursive: true, force: true });

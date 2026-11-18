@@ -39,6 +39,10 @@
     {
       "source": "/admin",
       "destination": "/admin/index.html"
+    },
+    {
+      "source": "/tutor-legacy",
+      "destination": "/tutor-legacy/index.html"
     }
   ]
 }
