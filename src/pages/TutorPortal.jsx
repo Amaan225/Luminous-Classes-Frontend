@@ -270,29 +270,29 @@ function TutorPortal() {
                           <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold w-max ${job.isSoldOut ? 'bg-slate-200 text-slate-500 border-slate-300' : 'bg-amber-50 text-amber-800 border border-amber-200'}`}>AGENCY LEAD</span>
                         )}
                       </div>
-                      <span className={`inline-flex items-center gap-1.5 text-lg font-black px-3 py-1 rounded-lg shadow-sm border border-slate-100 ${job.isSoldOut ? 'text-green-500 bg-slate-100' : 'text-green-700 bg-slate-50'}`}><Banknote className="w-5 h-5"/>{job.salary ? '₹'+job.salary+'+' : 'Negotiable'}</span>
+                      <span className={`inline-flex items-center gap-1.5 text-xl font-black px-3.5 py-1.5 rounded-lg shadow-sm border border-slate-100 ${job.isSoldOut ? 'text-green-500 bg-slate-100' : 'text-green-700 bg-slate-50'}`}><Banknote className="w-5 h-5"/>{job.salary ? '₹'+job.salary+'+' : 'Negotiable'}</span>
                     </div>
 
                     <div className="p-6 flex-1">
                       <h3 className={`text-xl font-bold mb-4 line-clamp-2 ${job.isSoldOut ? 'text-slate-500' : 'text-slate-900'}`}>
                         {job.title || job.subject}
                       </h3>
-                      <div className="space-y-3">
+                      <div className="space-y-3.5">
                         {job.subject && (
-                          <div className="flex items-center gap-3 text-sm text-slate-600">
+                          <div className="flex items-center gap-3 text-base text-slate-700">
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
                               <Book className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-indigo-500'}`} />
                             </div>
                             <span className="font-medium line-clamp-1">{job.subject}</span>
                           </div>
                         )}
-                        <div className="flex items-center gap-3 text-sm text-slate-600">
+                        <div className="flex items-center gap-3 text-base text-slate-700">
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
                             <GraduationCap className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-blue-500'}`} />
                           </div>
                           <span className="font-medium">{job.grade}</span>
                         </div>
-                        <div className="flex items-center gap-3 text-sm text-slate-600">
+                        <div className="flex items-center gap-3 text-base text-slate-700">
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-slate-100 shrink-0 ${job.isSoldOut ? 'bg-slate-100' : 'bg-slate-50'}`}>
                             <MapPin className={`w-4 h-4 ${job.isSoldOut ? 'text-slate-400' : 'text-red-500'}`} />
                           </div>
@@ -301,7 +301,7 @@ function TutorPortal() {
                       </div>
                       
                       {job.requirements && (
-                        <div className="mt-5 p-4 bg-slate-50 rounded-xl border border-blue-400 text-sm text-slate-600 border border-slate-100 relative">
+                        <div className="mt-5 p-4 bg-slate-50 rounded-xl border border-blue-400 text-base text-slate-700 border border-slate-100 relative">
                           <BookOpen className={`w-4 h-4 absolute top-4 left-4 ${job.isSoldOut ? 'text-slate-400' : 'text-yellow-400'}`} />
                           <p className="pl-7 line-clamp-3">{job.requirements}</p>
                         </div>
