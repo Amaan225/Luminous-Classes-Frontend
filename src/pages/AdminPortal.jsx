@@ -423,7 +423,7 @@ function AdminPortal() {
                       <span className="text-slate-300">|</span>
                       <span>{job.location} {job.city && `, ${job.city}`}</span>
                       <span className="text-slate-300">|</span>
-                      <span className="text-indigo-600 font-bold">₹{job.salary}</span>
+                      <span className="text-indigo-600 font-bold">{job.salary ? `₹${job.salary}` : 'Negotiable'}</span>
                     </div>
                   </div>
 
@@ -714,7 +714,7 @@ function AdminPortal() {
 
                           <div className="flex flex-wrap items-center gap-3 mt-4 text-sm font-medium text-slate-600">
                             <span className="bg-slate-100 px-3 py-1 rounded-lg">📍 {job.location}{job.city && `, ${job.city}`}</span>
-                            <span className="bg-slate-100 px-3 py-1 rounded-lg">💰 ₹{job.salary}</span>
+                            <span className="bg-slate-100 px-3 py-1 rounded-lg">💰 {job.salary ? `₹${job.salary}` : 'Negotiable'}</span>
                             <span className="bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-1 rounded-lg">
                               👤 {job.parentName} ({job.contactNumber})
                             </span>
