@@ -2,6 +2,13 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import TutorAccountReview from './TutorAccountReview';
 import { approvedUnlocksForJob } from '../lib/unlocks';
+
+// Admin-only timestamps, always IST. Returns 'Not recorded' when the event time was never stored.
+const formatWhen = value => {
+  const d = value ? new Date(value) : null;
+  if (!d || Number.isNaN(d.getTime())) return 'Not recorded';
+  return d.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
+};
 import { useNavigate } from 'react-router-dom';
 import { ShieldAlert, ShieldCheck, UserCheck, Trash2, Edit, CheckCircle2, Lock, ArrowLeft, Search, Plus } from 'lucide-react';
 
@@ -87,6 +94,7 @@ function AdminPortal() {
   const [jobs, setJobs] = useState([]);
   const [unlocks, setUnlocks] = useState([]);
   const [unlocksStatus, setUnlocksStatus] = useState('loading');
+  const [purchases, setPurchases] = useState([]);
   const [tutors, setTutors] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('ledger');
@@ -124,10 +132,23 @@ function AdminPortal() {
     }
   }, [adminApi]);
 
+  // Verified dashboard purchases (new unlock flow). Older backend versions return no `purchases`
+  // field; treat that as an empty list so this view works before the backend deploy lands.
+  const fetchPurchases = useCallback(async () => {
+    try {
+      const { data } = await adminApi.get('https://luminous-classes-backend.onrender.com/api/admin/tutor-accounts');
+      setPurchases(Array.isArray(data?.purchases) ? data.purchases : []);
+    } catch (e) {
+      setPurchases([]);
+      console.error('Could not load dashboard purchases', e);
+    }
+  }, [adminApi]);
+
   useEffect(() => {
     if (isAuthenticated) {
       fetchJobs();
       fetchUnlocks();
+      fetchPurchases();
 
       const fetchRest = async () => {
         try {
@@ -137,7 +158,7 @@ function AdminPortal() {
       };
       fetchRest();
     }
-  }, [isAuthenticated, adminApi, fetchJobs, fetchUnlocks]);
+  }, [isAuthenticated, adminApi, fetchJobs, fetchUnlocks, fetchPurchases]);
 
   const handleDeleteJob = async (id) => {
     if (window.confirm("Purge this record permanently?")) {
@@ -592,6 +613,7 @@ function AdminPortal() {
             ) : (
               filteredActiveJobs.map((job) => {
                 const jobUnlocks = approvedUnlocksForJob(unlocks, job._id);
+                const jobPurchases = purchases.filter(p => String(p.jobId) === job._id);
                 const isDirect = job.leadType === 'direct' || job.leadType === 'premium' || !job.leadType;
 
                 return (
@@ -719,20 +741,29 @@ function AdminPortal() {
                         </div>
 
                         {/* Unlocks Panel: only for leads with at least one recorded unlock */}
-                        {unlocksStatus === 'ready' && jobUnlocks.length > 0 && (
+                        {unlocksStatus === 'ready' && (jobUnlocks.length > 0 || jobPurchases.length > 0) && (
                         <div className="w-full md:w-72 bg-slate-50 rounded-2xl p-5 border border-slate-200 shrink-0">
                           <h4 className="text-sm font-bold text-slate-900 mb-4 flex items-center justify-between">
                             Unlocked By
-                            <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">{jobUnlocks.length}</span>
+                            <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">{jobUnlocks.length + jobPurchases.length}</span>
                           </h4>
                           <div className="space-y-3">
                             {jobUnlocks.map(unlock => (
                               <div key={unlock._id} className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
                                 <p className="font-bold text-slate-900 text-sm">{unlock.tutorPhone}</p>
                                 <p className="text-xs text-slate-400 mt-0.5">ID: {unlock._id.substring(0,8)}</p>
+                                <p className="text-xs text-slate-500 mt-1">Requested: {formatWhen(unlock.createdAt)}</p>
+                                <p className="text-xs text-slate-500">{unlock.approvedAt ? `Approved: ${formatWhen(unlock.approvedAt)}` : 'Approval time not recorded'}</p>
                                 <a href={`https://wa.me/91${unlock.tutorPhone}`} target="_blank" rel="noreferrer" className="mt-2 block w-full text-center bg-indigo-50 text-indigo-700 hover:bg-indigo-100 py-1.5 rounded-lg text-xs font-semibold transition-colors">
                                   Message
                                 </a>
+                              </div>
+                            ))}
+                            {jobPurchases.map((purchase, idx) => (
+                              <div key={purchase.jobId + String(purchase.verifiedAt) + idx} className="bg-white p-3 rounded-xl border border-emerald-200 shadow-sm">
+                                <p className="font-bold text-slate-900 text-sm break-all">{purchase.email}</p>
+                                <p className="text-xs text-emerald-700 font-semibold mt-0.5">Dashboard purchase</p>
+                                <p className="text-xs text-slate-500 mt-1">Verified: {formatWhen(purchase.verifiedAt)}</p>
                               </div>
                             ))}
                           </div>
