@@ -7,7 +7,7 @@ import { approvedUnlocksForJob } from '../lib/unlocks';
 const formatWhen = value => {
   const d = value ? new Date(value) : null;
   if (!d || Number.isNaN(d.getTime())) return 'Not recorded';
-  return d.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
+  return d.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }) + ' IST';
 };
 import { useNavigate } from 'react-router-dom';
 import { ShieldAlert, ShieldCheck, UserCheck, Trash2, Edit, CheckCircle2, Lock, ArrowLeft, Search, Plus } from 'lucide-react';
