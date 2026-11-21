@@ -317,14 +317,14 @@ function TutorPortal() {
                           <Lock className="w-4 h-4"/> Lead already Sold out
                         </button>
                       ) : (
-                       <button onClick={() => openUnlockModal(job)} className="w-full py-3.5 bg-slate-900 text-amber-400 rounded-xl font-bold tracking-wide border border-amber-500/30 shadow-lg hover:bg-slate-800 hover:border-amber-400 hover:shadow-amber-500/20 hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 group">
+                       <button onClick={() => openUnlockModal(job)} className="w-full py-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl font-bold tracking-wide text-lg border border-indigo-400/40 shadow-lg hover:from-indigo-500 hover:to-violet-500 hover:shadow-indigo-500/30 hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 group">
   Unlock contact for{" "}
   {/* The Anchored Original Price (Strikethrough) */}
-  <span className="line-through text-amber-400/70 text-xl font-normal ml-1">
+  <span className="line-through text-white/60 text-xl font-normal ml-1">
     ₹199
   </span>
   {/* The Real Discounted Price */}
-  <span className="text-md font-bold text-slate-100 ml-1">
+  <span className="text-lg font-bold text-white ml-1">
     ₹{job.price || 49}
   </span>
   <span className="opacity-50 group-hover:opacity-100 transition-opacity">→</span>
@@ -360,6 +360,7 @@ function TutorPortal() {
                     <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-100 text-indigo-700 px-4 py-1 rounded-full text-xs font-bold tracking-wide"> CONTACT NUMBER</span>
                     <p className="text-5xl md:text-6xl font-black text-slate-900 tracking-wider mt-4">{unlockedNumber}</p>
                   </div>
+                  {String(unlockedNumber).replace(/\D/g,'')==='9984580939'&&<p className="text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl text-sm md:text-base font-semibold mb-6 px-4 py-3 max-w-2xl mx-auto">You have successfully unlocked this lead. Message on this number to fix the demo.</p>}
                   <p className="text-slate-500 text-sm md:text-base font-medium mb-10 px-4 max-w-2xl mx-auto">Important: Please mention Tutor49 when you WhatsApp (preferably) or call them. Maintain professional conduct at all times to avoid platform bans.</p>
                   <button onClick={() => { setIsModalOpen(false); setPaymentStatus('idle'); setTutorPhone(''); setUnlockedNumber(''); }} className="w-full max-w-lg mx-auto block bg-slate-900 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-slate-800 transition-colors">Close & Return to Dashboard</button>
                 </div>
