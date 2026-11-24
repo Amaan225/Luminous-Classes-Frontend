@@ -3,9 +3,11 @@ import {Sun,Moon,Monitor} from 'lucide-react';
 const KEY='t49-tutor-appearance';
 export function isTutorDark(mode,date=new Date()){return mode==='dark'||(mode==='auto'&&(date.getHours()>=18||date.getHours()<6));}
 export function useTutorAppearance(){
- const [mode,setMode]=useState(()=>{try{const m=localStorage.getItem(KEY);return ['light','dark','auto'].includes(m)?m:'auto'}catch{return 'auto'}});
+ const [mode,setMode]=useState('auto');
+ const [ready,setReady]=useState(false);
  const [now,setNow]=useState(()=>new Date());
- useEffect(()=>{try{localStorage.setItem(KEY,mode)}catch{}},[mode]);
+ useEffect(()=>{try{const m=localStorage.getItem(KEY);if(['light','dark','auto'].includes(m))setMode(m)}catch{}setReady(true)},[]);
+ useEffect(()=>{if(ready)try{localStorage.setItem(KEY,mode)}catch{}},[mode,ready]);
  useEffect(()=>{const update=()=>setNow(new Date());const id=setInterval(update,1000);document.addEventListener('visibilitychange',update);window.addEventListener('focus',update);return()=>{clearInterval(id);document.removeEventListener('visibilitychange',update);window.removeEventListener('focus',update)}},[]);
  return {mode,setMode,dark:isTutorDark(mode,now)};
 }
