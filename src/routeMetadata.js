@@ -2,16 +2,16 @@
 export const SITE = 'https://www.tutor49.in';
 export const routeMetadata = {
   '/': {
-    title: 'Tutor49 | Verified Home Tutors in Lucknow',
-    description: 'Zero-commission platform connecting Lucknow parents directly with Aadhar-verified university students for home tuition.',
+    title: 'Tutor49 | Find Home Tutors in Lucknow',
+    description: 'Connect with tutors for home tuition in Lucknow. Share the class, subjects, area and monthly budget with Tutor49.',
   },
   '/parent': {
-    title: 'Request a Home Tutor | Tutor49',
-    description: 'Tell Tutor49 what you need and get matched with a home tutor in Lucknow.',
+    title: 'Find a Home Tutor in Lucknow | Tutor49',
+    description: 'Post a home tuition requirement in Lucknow for free. Share the class, subjects, area and monthly budget for team review.',
   },
   '/tutor': {
-    title: 'Tutor Board: Home Tuition Requests | Tutor49',
-    description: 'Browse current home tuition requests from parents on Tutor49.',
+    title: 'Home Tuition Leads in Lucknow | Tutor49',
+    description: 'Sign in to Tutor49 to browse tuition requirements in Lucknow and review lead details before choosing to unlock contact information.',
   },
   '/register': {
     title: 'Tutor Registration | Tutor49',

@@ -63,7 +63,7 @@ function LandingPage() {
   const faqs = [
     {
       question: "How do we work?",
-      answer: "We act as a direct, verified Platform. Parents post their requirements for free. Verified tutors browse these requirements on their dashboard. If a tutor is interested, they unlock the contact details and negotiate directly with the parent. No middlemen in between, just a transparent connection."
+      answer: "Parents post tuition requirements for free. Our team reviews submissions before they appear on the tutor board. Tutors can browse leads and choose to unlock contact details. Parents and tutors discuss the teaching plan and agree the final fee. Agency leads are marked separately."
     },
     {
       question: "What is a Direct Lead?",
@@ -75,7 +75,7 @@ function LandingPage() {
     },
     {
       question: "How are tutors verified?",
-      answer: "Quality and safety are our highest priorities. Every tutor must register with a Aadhaar card number. Our admin team manually verifies these credentials. We also encourage parents to leave reviews and ratings after their experience, which helps maintain a trustworthy community."
+      answer: "Tutor registration requires admin review before lead purchases. Google sign-in confirms an email address, not teaching ability or identity. Parents should discuss qualifications, experience and suitability with the tutor before agreeing to tuition."
     },
     {
       question: "What if the parent declines the demo?",
@@ -185,13 +185,13 @@ function LandingPage() {
             Lucknow's Direct Network
           </div>
 
-          <h1 className="relative text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-slate-900 mb-8 drop-shadow-sm"><span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-800 via-slate-600 to-slate-500">Tuto₹</span> 
+          <div className="relative text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight text-slate-900 mb-8 drop-shadow-sm"><span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-800 via-slate-600 to-slate-500">Tuto₹</span> 
   <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-500 to-blue-500">49</span>
-</h1>
+</div>
           
-          <p className="text-xl md:text-2xl lg:text-3xl text-slate-600 mb-14 max-w-3xl mx-auto leading-relaxed font-medium">
-            Lucknow's best tutors, directly connected to you.
-          </p>
+          <h1 className="text-xl md:text-2xl lg:text-3xl text-slate-600 mb-14 max-w-3xl mx-auto leading-relaxed font-medium">
+            Find a home tutor in Lucknow
+          </h1>
           
           <div className="flex flex-col sm:flex-row gap-6 w-full max-w-3xl justify-center mb-16">
             <Link 
@@ -199,7 +199,7 @@ function LandingPage() {
               className="flex-1 bg-indigo-600 text-white rounded-2xl py-6 px-8 font-semibold shadow-xl shadow-indigo-600/20 hover:bg-indigo-700 hover:shadow-indigo-600/40 hover:-translate-y-1 transition-all duration-300"
             >
               <div className="text-2xl md:text-3xl font-bold mb-1.5">I am a Parent</div>
-              <div className="text-indigo-200 text-sm md:text-base font-medium">Post a requirement instantly</div>
+              <div className="text-indigo-200 text-sm md:text-base font-medium">Post a requirement for review</div>
             </Link>
 
             <Link 
@@ -207,7 +207,7 @@ function LandingPage() {
               className="flex-1 bg-white/90 backdrop-blur-sm text-slate-700 border-2 border-violet-500 rounded-2xl py-6 px-8 font-semibold shadow-sm hover:border-indigo-200 hover:bg-indigo-50/90 hover:text-indigo-700 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
             >
               <div className="text-2xl md:text-3xl font-bold mb-1.5">I am a Tutor</div>
-              <div className="text-slate-500 text-sm md:text-base font-medium">Browse verified local jobs</div>
+              <div className="text-slate-500 text-sm md:text-base font-medium">Sign in to browse tuition leads</div>
             </Link>
           </div>
 
@@ -239,7 +239,7 @@ function LandingPage() {
             A <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-blue-500 to-cyan-500">Smarter</span> Way to Connect
           </h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg md:text-xl font-medium">
-            We stripped away the heavy agency fees to create a direct, transparent connection between parents and teachers.
+            Connect with tutors for home tuition. Direct and agency leads have different fees, shown before tutors choose to unlock a contact.
           </p>
         </div>
 
@@ -250,9 +250,9 @@ function LandingPage() {
               <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <GraduationCap className="w-7 h-7 text-indigo-600" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">100% Verified</h3>
+              <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Admin review</h3>
               <p className="text-slate-600 leading-relaxed font-medium">
-                Every tutor on our platform is experienced and verified. We check IDs so you can trust exactly who is teaching your child.
+                Tutors need admin approval before purchasing leads. Discuss qualifications, experience and the teaching plan before agreeing to tuition.
               </p>
             </div>
           </div>
@@ -262,9 +262,9 @@ function LandingPage() {
               <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Wallet className="w-7 h-7 text-emerald-600" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Zero Commissions</h3>
+              <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Direct lead pricing</h3>
               <p className="text-slate-600 leading-relaxed font-medium">
-                Agencies take up to 50% of a teacher's salary. We don't. On Direct leads, tutors keep 100% of what they earn.
+                Direct leads have a one-time ₹49 contact-unlock fee with no tuition commission. Agency leads carry a separate 50% first-month commission.
               </p>
             </div>
           </div>
@@ -274,9 +274,9 @@ function LandingPage() {
               <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Zap className="w-7 h-7 text-amber-600" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Instant Access</h3>
+              <h3 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">Contact after unlock</h3>
               <p className="text-slate-600 leading-relaxed font-medium">
-                No endless waiting. Parents post a job, tutors apply, and you connect instantly via WhatsApp to discuss details.
+                Parent submissions go through team review. Tutors can unlock available contacts after payment verification, then discuss the requirement directly.
               </p>
             </div>
           </div>
