@@ -12,3 +12,14 @@
 .learn-back-link{display:inline-flex;align-items:center;gap:6px;margin:0 0 14px;font-weight:650;color:var(--learn-purple);text-decoration:none}.learn-back-link:hover{text-decoration:underline}
 .learn-signin-card{max-width:460px;margin:24px auto;padding:28px;background:#fff;border:1px solid var(--learn-line);border-radius:18px;text-align:center}.learn-signin-card h1{font-size:1.7rem;margin:10px 0 8px}.learn-signin-card .ld-google{display:flex;flex-direction:column;align-items:center;margin-top:18px}
 .learn-profile .learn-fields{margin-bottom:18px}.learn-profile .learn-next{margin-top:4px}
+
+/* Preview-faithful Home */
+.ld-hello{align-items:center}.ld-greet{font-size:13px;color:#7a7790;margin:0}.ld-hello h1{margin:0;font-size:30px}
+.ld-last{display:flex;justify-content:space-between;align-items:center;width:100%;margin:6px 0 22px;padding:20px;border:0;border-radius:24px;background:#111018;color:#fff;text-align:left;cursor:pointer;font:inherit}
+.ld-last small{display:block;color:#bdb9d3;font-size:12px}.ld-last b{display:block;font-size:19px;font-weight:800;margin:4px 0 6px;max-width:210px}.ld-last strong{font-size:26px;color:#b9a0f7}
+.ld-ring{--p:0%;width:64px;height:64px;border-radius:50%;background:conic-gradient(#b9a0f7 var(--p),#ffffff26 0);display:grid;place-items:center;flex-shrink:0}.ld-ring i{font-style:normal;width:50px;height:50px;border-radius:50%;background:#111018;display:grid;place-items:center;font-size:13px;font-weight:800}
+.ld-short{margin:0 0 22px}.ld-short h2{font-size:18px;font-weight:800;margin:0 0 12px}
+.ld-row svg{flex-shrink:0}.ld-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px;border-radius:22px;background:#f1f0f6;color:#16151f;text-decoration:none;margin-bottom:10px}.ld-row b{display:block;font-size:17px;font-weight:800;line-height:1.25}.ld-row small{display:block;margin-top:5px;color:#67647d;font-size:13px}
+.ld-row.lav{background:#b9a0f7;color:#1b1233}.ld-row.lav small{color:#2f2257}.ld-row.dark{background:#111018;color:#fff}.ld-row.dark small{color:#bdb9d3}
+.ld-account summary{cursor:pointer;list-style:none}.ld-account summary h2{margin:0;display:inline}.ld-account[open] summary{margin-bottom:14px}
+.ld-shell .ld-card,.ld-shell .ld-stats div{background:#f1f0f6;border:0;box-shadow:none}

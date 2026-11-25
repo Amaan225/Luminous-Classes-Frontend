@@ -57,3 +57,56 @@
 .learn-select{position:relative;margin:0 0 18px;display:inline-block;max-width:100%}.learn-select>summary{list-style:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;background:#fff;border:1px solid var(--learn-line);border-radius:99px;font-size:13px;font-weight:700;cursor:pointer;color:#2b2940;max-width:100%}.learn-select>summary::-webkit-details-marker{display:none}.learn-select>summary span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.learn-select[open]>summary{border-color:var(--learn-purple)}
 .learn-select-panel{position:absolute;z-index:25;left:0;top:calc(100% + 8px);width:min(560px,calc(100vw - 32px));display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;background:#fff;border:1px solid var(--learn-line);border-radius:20px;padding:18px;box-shadow:0 14px 36px #11101822}.learn-select-panel label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700}.learn-select-panel select{min-height:44px;border:1px solid #cfcbdf;border-radius:12px;padding:8px 10px;font-size:14px;background:#fff}
 @media(max-width:700px){.learn-select-panel{grid-template-columns:1fr}}
+
+/* Faithful preview surfaces (2026-11): flat soft fills, lavender actions, bold titles, compact rows. */
+.learn-shell{--learn-fill:#f1f0f6;--learn-lav:#b9a0f7;--learn-lav-ink:#1b1233}
+.learn-shell .learn-note,.learn-shell .learn-quiz,.learn-shell .ld-card,.learn-shell .ld-stats div,.learn-shell .learn-empty,.learn-shell .ld-empty{background:var(--learn-fill);border:0;box-shadow:none;border-radius:22px}
+.learn-shell .learn-note:hover,.learn-shell .learn-quiz:hover{box-shadow:none;background:#ebe9f3}
+.learn-shell .learn-filter button,.learn-shell .learn-tabs button{background:#e4dafc;border:0;color:#2a1b5e;font-weight:650}
+.learn-shell .learn-filter button[aria-pressed=true],.learn-shell .learn-tabs button.on{background:#111018;color:#fff}
+.learn-shell .learn-note h2,.learn-shell .learn-quiz h2{font-weight:800;letter-spacing:-.3px;line-height:1.25}
+.learn-shell .learn-note h2{font-size:19px}.learn-shell .learn-quiz h2{font-size:18px}
+.learn-shell .learn-note .learn-button{width:100%;justify-content:center;background:var(--learn-lav);border-color:var(--learn-lav);color:var(--learn-lav-ink);font-weight:750}
+.learn-shell .learn-note .learn-button:hover{background:#a98cf2;border-color:#a98cf2}
+.learn-shell .learn-note p:not(.learn-small){display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.learn-shell .learn-note-top{margin-bottom:14px}
+.learn-shell .learn-quiz-list .learn-quiz:first-child{background:var(--learn-lav);color:var(--learn-lav-ink)}
+.learn-shell .learn-quiz-list .learn-quiz:first-child p,.learn-shell .learn-quiz-list .learn-quiz:first-child .learn-metadata{color:#2f2257}
+.learn-shell .learn-quiz-list .learn-quiz:first-child .learn-icon{background:#ffffff55}
+.learn-shell .learn-quiz .learn-button{background:#111018;border-color:#111018;color:#fff;border-radius:99px}
+.learn-shell .learn-quiz-list{gap:12px}
+@media(max-width:700px){
+ .learn-shell .learn-quiz{padding:18px;gap:12px}.learn-shell .learn-quiz .learn-button{width:auto;align-self:flex-end;margin-left:auto;padding:0 18px;min-height:44px}
+ .learn-shell .learn-quiz>div{flex-basis:100%}
+ .learn-shell .learn-quiz p:not(.learn-kind){display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .learn-shell .learn-filter{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px}.learn-shell .learn-filter::-webkit-scrollbar{display:none}.learn-shell .learn-filter button{white-space:nowrap;flex:0 0 auto}
+ .learn-shell .learn-toolbar label{font-size:0}.learn-shell .learn-toolbar input{font-size:15px}
+}
+
+.learn-more{width:100%;margin:6px 0 0}.learn-more>summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--learn-purple);list-style:none;min-height:32px;display:flex;align-items:center}.learn-more>summary::-webkit-details-marker{display:none}.learn-more>summary::after{content:' +';margin-left:4px}.learn-more[open]>summary::after{content:' -'}
+.learn-shell .learn-quiz-list .learn-quiz:first-child .learn-more>summary{color:#2f2257}
+.learn-more p{margin:8px 0 0;font-size:14px;line-height:1.55}
+.learn-wm{margin:0 0 12px}
+.learn-shell .learn-note p:not(.learn-small){display:block;-webkit-line-clamp:unset}
+.learn-shell .learn-note{padding:18px}.learn-shell .learn-note-top{margin-bottom:8px}.learn-shell .learn-note h2{font-size:18px}.learn-shell .learn-note .learn-button{margin-top:12px}
+.learn-shell .learn-quiz{padding:16px 18px}.learn-shell .learn-quiz h2{font-size:17px;margin-bottom:4px}.learn-shell .learn-kind{margin-bottom:6px}
+@media(max-width:700px){.learn-shell .learn-quiz{flex-wrap:wrap}.learn-shell .learn-quiz>div{flex-basis:100%}.learn-shell .learn-quiz .learn-button{margin-top:-2px}}
+
+@media(max-width:700px){
+ .learn-shell .learn-quiz{display:grid;grid-template-columns:minmax(0,1fr) 48px;align-items:center;gap:6px 12px;padding:14px 16px}
+ .learn-shell .learn-quiz>.learn-icon{display:none}
+ .learn-shell .learn-quiz>div{grid-column:1;flex-basis:auto}
+ .learn-shell .learn-quiz .learn-button{grid-column:2;grid-row:1;width:48px;height:48px;min-height:48px;padding:0;border-radius:50%;margin:0;align-self:center;justify-self:end}
+ .learn-shell .learn-quiz .learn-start-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+ .learn-shell .learn-quiz .learn-kind{display:inline-flex;margin:4px 0}
+ .learn-shell .learn-quiz .learn-metadata{margin-top:2px;gap:4px 10px;flex-wrap:wrap}
+ .learn-shell .learn-quiz .learn-more>summary{min-height:28px}
+}
+
+.learn-shell .learn-timer{background:#f5c518;color:#15131f;border-radius:999px;padding:6px 16px}
+.learn-shell .learn-timer svg{color:#15131f}
+.learn-shell .learn-time-low{background:#fde2e2;color:#9b1c1c}
+.learn-shell .learn-progress{height:8px;border-radius:99px;background:#e5e2f0;overflow:hidden;margin:0 0 18px}
+.learn-shell .learn-progress i{display:block;height:100%;background:#6044cf;border-radius:99px;transition:width .25s}
+.learn-shell .learn-answers label,.learn-shell .learn-answers button{border-radius:20px}
+@media(prefers-reduced-motion:reduce){.learn-shell .learn-progress i{transition:none}}
