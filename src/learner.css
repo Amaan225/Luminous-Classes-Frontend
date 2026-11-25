@@ -25,3 +25,4 @@
 
 .learn-figure-btn{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;text-align:left;position:relative}.learn-figure-btn .learn-figure{width:100%}.learn-figure-hint{display:inline-block;font-size:12px;color:var(--learn-purple);font-weight:700;margin:-6px 0 8px}
 .learn-zoom{position:fixed;inset:0;z-index:80;background:#fff;display:flex;flex-direction:column}.learn-zoom-bar{display:flex;justify-content:flex-end;padding:10px 14px;border-bottom:1px solid var(--learn-line)}.learn-zoom-body{flex:1;overflow:auto;padding:12px;-webkit-overflow-scrolling:touch}.learn-zoom-body img{display:block;width:max(1100px,100%);max-width:none;height:auto;margin:0 auto}
+.learn-zoom-bar{align-items:center;justify-content:space-between;gap:12px}.learn-zoom-hint{font-size:12px;color:var(--learn-muted)}

@@ -41,7 +41,7 @@ await p.screenshot({path:`/downloads/c1-figure-q17-${w}.png`});
 const tm=async()=>{const t=await p.locator('[role=timer]').innerText();const [m,sec]=t.split(':').map(Number);return m*60+sec};
 const t0=await tm();await p.getByRole('button',{name:'Enlarge figure'}).click();const dlg=p.getByRole('dialog',{name:'Enlarged figure'});await dlg.waitFor();
 const z=await dlg.evaluate(d=>{const b=d.querySelector('.learn-zoom-body'),i=d.querySelector('img');return {imgW:i.clientWidth,scrollW:b.scrollWidth,boxW:b.clientWidth,focus:document.activeElement.textContent}});console.log(w,'zoom',JSON.stringify(z));
-await p.screenshot({path:`/downloads/c2-zoom-${w}.png`});await p.waitForTimeout(3200);
+const sc=await dlg.evaluate(d=>{const b=d.querySelector('.learn-zoom-body');b.scrollLeft=b.scrollWidth;b.scrollTop=b.scrollHeight;return {x:b.scrollLeft,y:b.scrollTop,canX:b.scrollWidth>b.clientWidth,canY:b.scrollHeight>b.clientHeight,imgH:d.querySelector('img').clientHeight,boxH:b.clientHeight}});console.log(w,'pan',JSON.stringify(sc));await dlg.evaluate(d=>{const b=d.querySelector('.learn-zoom-body');b.scrollLeft=0;b.scrollTop=0});await p.screenshot({path:`/downloads/c2-zoom-${w}.png`});await p.waitForTimeout(3200);
 await p.keyboard.press('Escape');await p.waitForTimeout(200);const t1=await tm();
 console.log(w,'after Escape: dialog',await dlg.count(),'focus',await p.evaluate(()=>document.activeElement.getAttribute('aria-label')),'timer dropped',t0-t1,'s');
 await p.getByRole('button',{name:'Enlarge figure'}).click();await p.getByRole('button',{name:'Close'}).click();await p.waitForTimeout(150);console.log(w,'Close button: dialog',await dlg.count(),'focus',await p.evaluate(()=>document.activeElement.getAttribute('aria-label')));
