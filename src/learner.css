@@ -41,7 +41,7 @@
 .learn-free{background:var(--learn-accent);color:#111018;border-radius:99px}
 .learn-fields select,.learn-toolbar input{border-radius:14px}
 .learn-answers button{border-radius:16px}.learn-answers button[aria-checked=true]{border-color:var(--learn-purple);background:#f3efff}
-.learn-numbers .answered{background:#111018;border-color:#111018}.learn-numbers .current{outline-color:var(--learn-purple)}
+.learn-numbers .current{outline-color:var(--learn-purple)}
 .learn-resume{border-radius:20px}
 .learn-shell .learn-signin-card{background:#111018;color:#fff;border:0;border-radius:28px;box-shadow:0 18px 50px #11101830}.learn-shell .learn-signin-card h1{color:#fff}.learn-shell .learn-signin-card .learn-small{color:#bdb9d3}.learn-shell .learn-signin-card .learn-eyebrow{color:var(--learn-accent)}
 /* keep the theme toggle clear of the bottom nav */
