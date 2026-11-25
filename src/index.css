@@ -45,3 +45,4 @@
 
 .t49-hourglass{display:inline-block;flex-shrink:0;line-height:0}.t49-hourglass svg{display:block}
 .t49-dark .t49-hourglass,[data-theme=dark] .t49-hourglass{filter:invert(1) hue-rotate(180deg)}
+.t49-loading .t49-skeleton-card,.t49-loading .t49-skeleton-card *{animation:none!important}
