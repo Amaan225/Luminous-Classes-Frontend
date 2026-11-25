@@ -6,8 +6,9 @@ export function useTutorAppearance(){
  const [mode,setMode]=useState('light');
  const [ready,setReady]=useState(false);
  const [now,setNow]=useState(()=>new Date());
- useEffect(()=>{try{const m=localStorage.getItem(KEY);if(['light','dark','auto'].includes(m))setMode(m)}catch{}setReady(true)},[]);
- useEffect(()=>{if(ready)try{localStorage.setItem(KEY,mode)}catch{}},[mode,ready]);
+ useEffect(()=>{try{const sm=localStorage.getItem('t49-site-theme-v1');const m=localStorage.getItem(KEY);if(sm==='dark'||sm==='light')setMode(sm);else if(['light','dark','auto'].includes(m))setMode(m)}catch{/* storage unavailable */}setReady(true)},[]);
+ useEffect(()=>{const on=()=>{try{const sm=localStorage.getItem('t49-site-theme-v1');if(sm==='dark'||sm==='light')setMode(sm)}catch{/* storage unavailable */}};window.addEventListener('t49-site-theme',on);return()=>window.removeEventListener('t49-site-theme',on)},[]);
+ useEffect(()=>{if(ready)try{localStorage.setItem(KEY,mode);if(mode==='dark'||mode==='light'){localStorage.setItem('t49-site-theme-v1',mode);document.documentElement.setAttribute('data-site-theme',mode);window.dispatchEvent(new Event('t49-site-theme'))}}catch{/* storage unavailable */}},[mode,ready]);
  useEffect(()=>{const update=()=>setNow(new Date());const id=setInterval(update,1000);document.addEventListener('visibilitychange',update);window.addEventListener('focus',update);return()=>{clearInterval(id);document.removeEventListener('visibilitychange',update);window.removeEventListener('focus',update)}},[]);
  return {mode,setMode,dark:isTutorDark(mode,now)};
 }

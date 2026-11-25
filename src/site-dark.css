@@ -1,0 +1,24 @@
+/* Sitewide dark theme for Landing, Parent, Register, Terms and Admin. Light stays the default; nothing changes unless html[data-site-theme=dark]. */
+.site-theme-btn{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:1px solid #cbd5e1;background:#fff;color:#4f46e5;cursor:pointer;flex:none}
+.site-theme-btn:focus-visible{outline:3px solid #a78bfa;outline-offset:2px}
+.site-theme-fab{position:fixed;right:16px;bottom:16px;z-index:60;box-shadow:0 4px 14px #0002}
+html[data-site-theme=dark] .site-theme-btn{background:#211e30;border-color:#514760;color:#c4b5fd}
+html[data-site-theme=dark] .t49-sd{--sd-bg:#14121e;--sd-s:#211e30;--sd-s2:#2b263d;--sd-ink:#f4f1fc;--sd-mut:#c4bed7;--sd-line:#514760;background-color:var(--sd-bg);color:var(--sd-ink)}
+html[data-site-theme=dark] .t49-sd :is(.bg-white,.bg-slate-50,.bg-slate-100,.bg-white\/80,.bg-white\/40){background-color:var(--sd-s)}
+html[data-site-theme=dark] .t49-sd :is(.bg-slate-200,.bg-slate-50.min-h-screen,.min-h-screen.bg-slate-50){background-color:var(--sd-bg);background-image:none}
+html[data-site-theme=dark] .t49-sd :is(.bg-slate-900,.bg-slate-800){background-color:#0b0a12}
+html[data-site-theme=dark] .t49-sd :is(.text-slate-900,.text-slate-800,.text-slate-700,.text-slate-200,.text-slate-100){color:var(--sd-ink)}
+html[data-site-theme=dark] .t49-sd :is(.text-slate-600,.text-slate-500,.text-slate-400,.text-slate-300){color:var(--sd-mut)}
+html[data-site-theme=dark] .t49-sd :is(.border-slate-100,.border-slate-200,.border-slate-300,.border-indigo-100,.border-indigo-100\/50,.border-indigo-200){border-color:var(--sd-line)}
+html[data-site-theme=dark] .t49-sd :is(.text-indigo-600,.text-indigo-700,.text-indigo-800,.text-indigo-900,.text-blue-600,.text-purple-600){color:#c4b5fd}
+html[data-site-theme=dark] .t49-sd :is(.bg-indigo-50,.bg-indigo-100,.bg-indigo-100\/70){background-color:#31264b}
+html[data-site-theme=dark] .t49-sd :is(.bg-emerald-50,.bg-emerald-100){background-color:#113c35}
+html[data-site-theme=dark] .t49-sd :is(.text-emerald-600,.text-emerald-700,.text-emerald-800){color:#a7f3d0}
+html[data-site-theme=dark] .t49-sd :is(.bg-amber-50){background-color:#423315}
+html[data-site-theme=dark] .t49-sd :is(.text-amber-700,.text-amber-800,.text-amber-900){color:#fde68a}
+html[data-site-theme=dark] .t49-sd :is(.bg-red-50,.bg-red-100){background-color:#461f2c}
+html[data-site-theme=dark] .t49-sd :is(.text-red-600,.text-red-800){color:#fecdd3}
+html[data-site-theme=dark] .t49-sd :is(input,select,textarea){background-color:var(--sd-s2);color:var(--sd-ink);border-color:var(--sd-line)}
+html[data-site-theme=dark] .t49-sd ::placeholder{color:#9b95b3}
+html[data-site-theme=dark] .t49-sd :is(.from-slate-50,.via-white,.to-white){--tw-gradient-from:#14121e;--tw-gradient-to:#14121e}
+html[data-site-theme=dark] .t49-sd .text-white{color:#fff}
