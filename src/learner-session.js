@@ -11,8 +11,8 @@ export function loadScript(src,id){return new Promise((resolve,reject)=>{const o
 // status: off (feature flag off) | loading | out | in | unavailable (server has accounts disabled or is unreachable)
 export function useLearnerAccount(){
  const [state,set]=useState({status:ACCOUNTS?'loading':'off',name:''});
- const refresh=useCallback(async()=>{if(!ACCOUNTS)return;try{const s=await api('/session',{root:'/api/tutor-account'});csrf=s.csrfToken||'';set({status:'in',name:s.account?.name||''})}catch(e){csrf='';set({status:e.status===401?'out':'unavailable',name:''})}},[]);
+ const refresh=useCallback(async()=>{if(!ACCOUNTS)return;try{const s=await api('/session',{root:'/api/tutor-account'});csrf=s.csrfToken||'';set({status:'in',name:s.account?.name||'',picture:s.account?.picture||''})}catch(e){csrf='';set({status:e.status===401?'out':'unavailable',name:'',picture:''})}},[]);
  // eslint-disable-next-line react-hooks/set-state-in-effect
  useEffect(()=>{refresh()},[refresh]);
- const signOut=useCallback(async()=>{try{await api('/logout',{method:'POST',root:'/api/tutor-account'})}catch{/* ignore */}csrf='';set({status:'out',name:''})},[]);
+ const signOut=useCallback(async()=>{try{await api('/logout',{method:'POST',root:'/api/tutor-account'})}catch{/* ignore */}csrf='';set({status:'out',name:'',picture:''})},[]);
  return {...state,refresh,signOut}}

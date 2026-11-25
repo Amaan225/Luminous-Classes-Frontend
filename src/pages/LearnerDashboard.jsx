@@ -1,5 +1,6 @@
 import React,{useCallback,useEffect,useState} from 'react';
 import {Link,useNavigate} from 'react-router-dom';
+import LearnHeaderAuto from '../components/LearnHeader';
 import LearnBottomNav from '../components/LearnBottomNav';
 import Seo from '../Seo.jsx';
 import LoadingState from '../components/LoadingState';
@@ -12,7 +13,7 @@ export default function LearnerDashboard(){
  useEffect(()=>{if(acct.status==='in')load();else if(acct.status!=='loading')setLoading(false)},[acct.status,load]);
  async function exportData(){try{const r=await api('/data/export',{raw:true});if(!r.ok)throw Error('Could not export your data.');const url=URL.createObjectURL(await r.blob()),a=document.createElement('a');a.href=url;a.download='tutor49-learner-data.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),30000)}catch(e){setMsg(e.message)}}
  async function act(path,text){try{const r=await api(path,{method:'POST'});setMsg(text);await load();return r}catch(e){setMsg(e.message)}}
- return <div className="learn-shell ld-shell"><Seo title="Your learner dashboard | Tutor49" noindex/><header className="learn-header"><Link className="learn-logo" to="/">TUTO₹<span>49</span></Link><nav aria-label="Main navigation"><Link to="/learn">Learn</Link></nav></header>
+ return <div className="learn-shell ld-shell"><Seo title="Your learner dashboard | Tutor49" noindex/><LearnHeaderAuto/>
   <main className="learn-main">
   {!ACCOUNTS||acct.status==='unavailable'||acct.status==='off'?<section className="ld-empty"><h1>Dashboard unavailable</h1><p className="learn-small">Sign-in is not available right now. You can still use Learn without an account.</p><Link className="learn-button" to="/learn">Back to Learn</Link></section>
   :acct.status==='loading'||loading?<LoadingState label="Loading your dashboard..." skeleton/>
