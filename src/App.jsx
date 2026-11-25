@@ -7,16 +7,17 @@ import TutorRegistration from './pages/TutorRegistration';
 import LandingPage from './pages/LandingPage';
 import ParentPortal from './pages/ParentPortal';
 import TutorPortal from './pages/TutorPortal';
-import AdminPortal from './pages/AdminPortal';
 import Terms from './pages/Terms';
 import TutorAccount from './pages/TutorAccount';
 import TutorAccountBoundary from './pages/TutorAccountBoundary';
 import Seo from './Seo';
+import LoadingState from './components/LoadingState';
 import LearnerPortal from './pages/LearnerPortal';
-import LearnerDashboardPreview from './pages/LearnerDashboardPreview';
-import LearnerDashboard from './pages/LearnerDashboard';
 import LearnSeoPage from './LearnSeoPage.jsx';
 import { routeMetadata } from './routeMetadata.js';
+const AdminPortal = React.lazy(() => import('./pages/AdminPortal'));
+const LearnerDashboardPreview = React.lazy(() => import('./pages/LearnerDashboardPreview'));
+const LearnerDashboard = React.lazy(() => import('./pages/LearnerDashboard'));
 
 function NotFound() {
   return (
@@ -54,11 +55,11 @@ function App() {
           <Route path="/parent" element={page('/parent', import.meta.env.VITE_TUTOR_PREVIEW === 'true' ? <div className="mx-auto max-w-xl p-8"><h1 className="text-3xl font-bold mb-4">Parent form is unchanged</h1><p>This test version cannot submit a real parent requirement. Parent submissions on the live site remain Direct and pending admin review.</p></div> : <ParentPortal />)} />
           <Route path="/tutor" element={page('/tutor', tutorAccounts ? <TutorAccountBoundary><TutorAccount /></TutorAccountBoundary> : <TutorPortal />)} />
           <Route path="/tutor-test" element={<><Seo title="Owner test | Tutor49" noindex /><TutorAccount ownerTest /></>} />
-          <Route path="/admin" element={<><Seo title="Admin | Tutor49" noindex /><AdminPortal /></>} />
+          <Route path="/admin" element={<><Seo title="Admin | Tutor49" noindex /><React.Suspense fallback={<LoadingState label="Loading..." />}><AdminPortal /></React.Suspense></>} />
           <Route path="/register" element={page('/register', <TutorRegistration />)} />
           <Route path="/tutor-legacy" element={<><Seo title="Tuition board | Tutor49" noindex /><TutorPortal /></>} />
-          <Route path="/learn/dashboard" element={<LearnerDashboard />} />
-          <Route path="/learn/dashboard-preview" element={import.meta.env.VITE_TUTOR_PREVIEW==='true'?<LearnerDashboardPreview />:<NotFound />} />
+          <Route path="/learn/dashboard" element={<React.Suspense fallback={<LoadingState label="Loading..." />}><LearnerDashboard /></React.Suspense>} />
+          <Route path="/learn/dashboard-preview" element={import.meta.env.VITE_TUTOR_PREVIEW==='true'?<React.Suspense fallback={<LoadingState label="Loading..." />}><LearnerDashboardPreview /></React.Suspense>:<NotFound />} />
           <Route path="/learn" element={page('/learn', <LearnerPortal />)} />
           <Route path="/learn/:exam" element={<LearnSeoRoute />} />
           <Route path="/learn/:exam/:subject" element={<LearnSeoRoute />} />
