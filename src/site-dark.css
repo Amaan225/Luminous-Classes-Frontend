@@ -22,3 +22,8 @@ html[data-site-theme=dark] .t49-sd :is(input,select,textarea){background-color:v
 html[data-site-theme=dark] .t49-sd ::placeholder{color:#9b95b3}
 html[data-site-theme=dark] .t49-sd :is(.from-slate-50,.via-white,.to-white){--tw-gradient-from:#14121e;--tw-gradient-to:#14121e}
 html[data-site-theme=dark] .t49-sd .text-white{color:#fff}
+html[data-site-theme=dark] .t49-sd :is(.bg-white\/90,.bg-white\/95,.bg-white\/70,.bg-white\/60){background-color:rgba(33,30,48,.92)}
+html[data-site-theme=dark] .t49-sd :is(.hover\:bg-indigo-50\/90:hover){background-color:#31264b}
+html[data-site-theme=dark] .t49-sd .from-slate-800{--tw-gradient-from:#f4f1fc var(--tw-gradient-from-position);--tw-gradient-to:#c4bed7 var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#d9d4ea var(--tw-gradient-via-position),var(--tw-gradient-to)}
+html[data-site-theme=dark] .t49-sd img[src*="hero-skyline"],html[data-site-theme=dark] .t49-sd img[src*="hero-tutor-student"]{filter:brightness(.5) contrast(1.1);mix-blend-mode:screen;opacity:.55}
+html[data-site-theme=dark] .t49-sd .from-indigo-50\/80{--tw-gradient-from:rgba(98,70,206,.22) var(--tw-gradient-from-position);--tw-gradient-to:rgba(98,70,206,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
