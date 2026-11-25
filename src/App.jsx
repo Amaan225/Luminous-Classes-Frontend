@@ -13,6 +13,8 @@ import TutorAccount from './pages/TutorAccount';
 import TutorAccountBoundary from './pages/TutorAccountBoundary';
 import Seo from './Seo';
 import LearnerPortal from './pages/LearnerPortal';
+import LearnerDashboardPreview from './pages/LearnerDashboardPreview';
+import LearnerDashboard from './pages/LearnerDashboard';
 import { routeMetadata } from './routeMetadata.js';
 
 function NotFound() {
@@ -52,6 +54,8 @@ function App() {
           <Route path="/admin" element={<><Seo title="Admin | Tutor49" noindex /><AdminPortal /></>} />
           <Route path="/register" element={page('/register', <TutorRegistration />)} />
           <Route path="/tutor-legacy" element={<><Seo title="Tuition board | Tutor49" noindex /><TutorPortal /></>} />
+          <Route path="/learn/dashboard" element={<LearnerDashboard />} />
+          <Route path="/learn/dashboard-preview" element={import.meta.env.VITE_TUTOR_PREVIEW==='true'?<LearnerDashboardPreview />:<NotFound />} />
           <Route path="/learn" element={page('/learn', <LearnerPortal />)} />
           <Route path="/terms" element={page('/terms', <Terms />)} />
           <Route path="*" element={<NotFound />} />
