@@ -14,6 +14,7 @@ import Seo from './Seo';
 import LoadingState from './components/LoadingState';
 import LearnerPortal from './pages/LearnerPortal';
 import LearnSeoPage from './LearnSeoPage.jsx';
+import MawaiyyaTuition from './pages/MawaiyyaTuition.jsx';
 import { routeMetadata } from './routeMetadata.js';
 const AdminPortal = React.lazy(() => import('./pages/AdminPortal'));
 const LearnerDashboardPreview = React.lazy(() => import('./pages/LearnerDashboardPreview'));
@@ -63,6 +64,7 @@ function App() {
           <Route path="/learn" element={page('/learn', <LearnerPortal />)} />
           <Route path="/learn/:exam" element={<LearnSeoRoute />} />
           <Route path="/learn/:exam/:subject" element={<LearnSeoRoute />} />
+          <Route path="/home-tuition-mawaiyya-lucknow" element={page('/home-tuition-mawaiyya-lucknow', <MawaiyyaTuition />)} />
           <Route path="/terms" element={page('/terms', <Terms />)} />
           <Route path="*" element={<NotFound />} />
         </Routes>

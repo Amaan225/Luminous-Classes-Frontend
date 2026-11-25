@@ -477,6 +477,7 @@ function LandingPage() {
             
             <div className="flex gap-8 text-sm font-bold uppercase tracking-widest">
               
+              <Link to="/home-tuition-mawaiyya-lucknow" className="hover:text-white transition-colors">Home tuition in Mawaiyya</Link>
               <Link to="/terms" className="hover:text-white transition-colors">Terms and Conditions</Link>
               
             </div>

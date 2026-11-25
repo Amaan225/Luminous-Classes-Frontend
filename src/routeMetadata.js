@@ -21,6 +21,10 @@ export const routeMetadata = {
     title: 'Learn with Tutor49 | Notes and Timed Practice',
     description: 'Browse learning material published by Tutor49, download watermarked notes and practise with timed quizzes.',
   },
+  '/home-tuition-mawaiyya-lucknow': {
+    title: 'Home Tuition in Mawaiyya, Lucknow | Tutor49',
+    description: 'Looking for home tuition in Mawaiyya, Lucknow? Post your class, subjects, locality, schedule and monthly budget free for Tutor49 team review.',
+  },
   '/terms': {
     title: 'Terms and Conditions | Tutor49',
     description: 'Terms and conditions for using Tutor49.',
