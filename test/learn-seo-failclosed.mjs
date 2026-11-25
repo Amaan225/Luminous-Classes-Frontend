@@ -1,0 +1,20 @@
+// PRIVATE local proof, fixtures only: a source outage or bad body must FAIL the build; a true empty catalog must not.
+import {spawn} from 'node:child_process';import http from 'node:http';import fs from 'node:fs';import assert from 'node:assert/strict';import {chromium} from 'playwright';
+const cat=JSON.parse(fs.readFileSync('/tmp/fixture-catalog.json','utf8'));let mode='ok';
+const srv=http.createServer((q,s)=>{if(mode==='500')return s.writeHead(500).end('x');if(mode==='junk')return s.end('<html>not json');if(mode==='shape')return s.end(JSON.stringify({quizzes:'no'}));s.setHeader('content-type','application/json');s.end(JSON.stringify(mode==='empty'?{notes:[],quizzes:[]}:mode==='stale'?{notes:[],quizzes:cat.quizzes.filter(x=>!x.subjects.includes('Reasoning'))}:cat))}).listen(5198);
+const run=env=>new Promise(res=>{const c=spawn('npm',['run','build'],{env:{...process.env,LEARN_CATALOG_RETRY_MS:'50',...env}});let err='';c.stderr.on('data',d=>err+=d);c.stdout.on('data',()=>{});c.on('close',status=>res({status,stderr:err}))});
+const URLENV={LEARN_CATALOG_URL:'http://127.0.0.1:5198/api/learn/catalog'};
+const cases=[['source down (connection refused)',{LEARN_CATALOG_URL:'http://127.0.0.1:1/x'}],['HTTP 500',URLENV,'500'],['non-JSON body',URLENV,'junk'],['wrong shape',URLENV,'shape'],['malformed file',{LEARN_CATALOG_FILE:'/tmp/seo-bad.json'}]];
+fs.writeFileSync('/tmp/seo-bad.json','{"notes":[],"quizzes":[{"x":1}]}');
+for(const [name,env,m] of cases){mode=m||'ok';const r=await run(env);assert.notEqual(r.status,0,name+' must fail the build');console.log('FAIL-CLOSED ok:',name,'-> exit',r.status,'|',(r.stderr.match(/(Learn catalog[^\n]*|Refusing[^\n]*)/)||[''])[0].slice(0,110))}
+mode='empty';let r=await run(URLENV);assert.equal(r.status,0);assert.ok(!fs.existsSync('dist/learn/ssc-cgl'));console.log('TRUE EMPTY catalog from live-style URL: build passes, 0 SEO routes');
+mode='ok';r=await run(URLENV);assert.equal(r.status,0);assert.ok(fs.existsSync('dist/learn/ssc-cgl/reasoning/index.html'));console.log('URL source ok: routes built');
+r=await run({});assert.equal(r.status,0);console.log('no source configured (plain local build): skipped, passes');
+// stale: built with 3 Reasoning items, live catalog later has none -> page must turn noindex with no stale list
+await run(URLENV);mode='stale';
+const st=http.createServer((q,s)=>{const u=new URL(q.url,'http://x');if(u.pathname==='/api/learn/catalog'){s.setHeader('content-type','application/json');return s.end(JSON.stringify({notes:[],quizzes:cat.quizzes.filter(x=>!x.subjects.includes('Reasoning'))}))}let f='dist'+u.pathname;if(fs.existsSync(f)&&fs.statSync(f).isDirectory())f+='/index.html';if(!fs.existsSync(f))return s.writeHead(404).end();s.setHeader('content-type',{html:'text/html',js:'text/javascript',css:'text/css'}[f.split('.').pop()]||'application/octet-stream');s.end(fs.readFileSync(f))}).listen(5199);
+const b=await chromium.launch({executablePath:'/usr/bin/google-chrome-stable',args:['--no-sandbox']});
+try{const p=await b.newPage();const raw=await p.goto('http://127.0.0.1:5199/learn/ssc-cgl/reasoning');assert.ok((await raw.text()).includes('Reasoning Sectional Mock Test: Easy'),'built HTML had the item');
+ await p.getByRole('heading',{name:'No practice published here yet'}).waitFor();assert.equal(await p.locator('meta[name=robots]').getAttribute('content'),'noindex');assert.equal(await p.locator('link[rel=canonical]').count(),0);assert.equal(await p.getByText('Easy (original practice)').count(),0);console.log('STALE: item unpublished after build -> page shows no stale list, robots=noindex, canonical removed (client revalidation)');
+ const q=await b.newPage();await q.goto('http://127.0.0.1:5199/learn/ssc-cgl');await q.getByRole('heading',{level:1}).waitFor();await q.waitForTimeout(500);assert.ok(await q.getByText('mini sample').count()>0&&await q.getByText('Easy (original practice)').count()===0);console.log('STALE: exam page keeps still-published sample, drops unpublished Reasoning sets');
+}finally{await b.close();srv.close();st.close()}

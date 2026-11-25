@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useParams } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
 import { Analytics } from '@vercel/analytics/react'; // <-- 1. Import Analytics
 
@@ -15,6 +15,7 @@ import Seo from './Seo';
 import LearnerPortal from './pages/LearnerPortal';
 import LearnerDashboardPreview from './pages/LearnerDashboardPreview';
 import LearnerDashboard from './pages/LearnerDashboard';
+import LearnSeoPage from './LearnSeoPage.jsx';
 import { routeMetadata } from './routeMetadata.js';
 
 function NotFound() {
@@ -35,10 +36,12 @@ const page = (path, el) => (
   </>
 );
 
+function LearnSeoRoute(){const {exam,subject}=useParams();return <LearnSeoPage exam={exam} subject={subject}/>}
+
 function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
-  const isLearnerRoute=location.pathname==='/learn';
+  const isLearnerRoute=location.pathname==='/learn'||(location.pathname.startsWith('/learn/')&&!location.pathname.startsWith('/learn/dashboard'));
   const isOwnerTest=location.pathname==='/tutor-test';
   const tutorAccounts = import.meta.env.VITE_TUTOR_ACCOUNTS_ENABLED === 'true';
   const isAccountDashboard=tutorAccounts&&location.pathname==='/tutor';
@@ -57,6 +60,8 @@ function App() {
           <Route path="/learn/dashboard" element={<LearnerDashboard />} />
           <Route path="/learn/dashboard-preview" element={import.meta.env.VITE_TUTOR_PREVIEW==='true'?<LearnerDashboardPreview />:<NotFound />} />
           <Route path="/learn" element={page('/learn', <LearnerPortal />)} />
+          <Route path="/learn/:exam" element={<LearnSeoRoute />} />
+          <Route path="/learn/:exam/:subject" element={<LearnSeoRoute />} />
           <Route path="/terms" element={page('/terms', <Terms />)} />
           <Route path="*" element={<NotFound />} />
         </Routes>

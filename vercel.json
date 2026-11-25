@@ -59,6 +59,14 @@
     {
       "source": "/learn/dashboard",
       "destination": "/index.html"
+    },
+    {
+      "source": "/learn/:exam",
+      "destination": "/learn/:exam/index.html"
+    },
+    {
+      "source": "/learn/:exam/:subject",
+      "destination": "/learn/:exam/:subject/index.html"
     }
   ]
 }

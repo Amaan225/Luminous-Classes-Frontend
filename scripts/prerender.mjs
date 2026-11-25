@@ -1,6 +1,7 @@
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
 import { render } from '../.prerender/entry-server.js';
 import { SITE, routeMetadata } from '../src/routeMetadata.js';
+import { buildLearnRoutes } from '../src/learn-seo.js';
 
 const template = await readFile('dist/index.html', 'utf8');
 const escape = (s) => s.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
@@ -34,6 +35,53 @@ for (const [path, meta] of Object.entries(routeMetadata)) {
   await mkdir(directory, { recursive: true });
   await writeFile(`${directory}/index.html`, html);
   console.log(`Rendered ${path}`);
+}
+
+// Catalog-backed exam/subject pages: only real published items create a route.
+// Source: LEARN_CATALOG_FILE (private local fixtures) or LEARN_CATALOG_URL / the live public catalog on Vercel. Failure skips quietly.
+// Returns null only when no source is configured (plain local build). Any configured source that fails or returns a malformed
+// body FAILS THE BUILD, so an outage can never silently ship a site without its valid /learn routes. A valid empty catalog is fine.
+async function loadCatalog() {
+  const file = process.env.LEARN_CATALOG_FILE;
+  const url = process.env.LEARN_CATALOG_URL || (process.env.VERCEL ? `${SITE}/api/learn/catalog` : '');
+  if (!file && !url) { console.log('Learn SEO routes: no catalog source configured, skipped (local build).'); return null; }
+  let body, lastError;
+  if (file) body = JSON.parse(await readFile(file, 'utf8'));
+  else {
+    for (let attempt = 1; attempt <= 4 && !body; attempt++) {
+      try {
+        const r = await fetch(url, { signal: AbortSignal.timeout(60000) });
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        body = await r.json();
+        break;
+      } catch (e) { lastError = e; console.warn(`Learn catalog attempt ${attempt} failed: ${e.message}`); await new Promise((res) => setTimeout(res, Number(process.env.LEARN_CATALOG_RETRY_MS ?? 5000) * attempt)); }
+    }
+    if (!body) throw new Error(`Learn catalog fetch failed after retries (${lastError?.message}). Refusing to ship without its SEO routes.`);
+  }
+  const ok = body && Array.isArray(body.notes) && Array.isArray(body.quizzes) && [...body.notes, ...body.quizzes].every((x) => x && typeof x.id === 'string' && typeof x.title === 'string');
+  if (!ok) throw new Error('Learn catalog has an unexpected shape. Refusing to ship without validated SEO routes.');
+  return body;
+}
+const learnCatalog = await loadCatalog();
+const learnRoutes = learnCatalog ? buildLearnRoutes(learnCatalog) : [];
+if (learnRoutes.length) {
+  const data = { routes: learnRoutes.map(({ updatedAt, ...r }) => r) };
+  const blob = `<script type="application/json" id="learn-seo-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+  const page = (path, title, description) => template
+    .replace(/<title>[^<]*<\/title>/, `<title>${escape(title)}</title>`)
+    .replace(/<meta name="description" content="[^"]*" \/>/, `<meta name="description" content="${escape(description)}" />`)
+    .replace('</head>', `    <link rel="canonical" href="${SITE}${path}" />\n${social(path, title, description)}  </head>`)
+    .replace('<div id="root"></div>', `<div id="root">${render(path, data)}</div>${blob}`);
+  const learn = routeMetadata['/learn'];
+  await writeFile('dist/learn/index.html', page('/learn', learn.title, learn.description));
+  for (const r of learnRoutes) {
+    await mkdir(`dist${r.path}`, { recursive: true });
+    await writeFile(`dist${r.path}/index.html`, page(r.path, r.title, r.description));
+    console.log(`Rendered ${r.path} (${r.items.length} published items)`);
+  }
+  const base = await readFile('dist/sitemap.xml', 'utf8');
+  const extra = learnRoutes.map((r) => `  <url><loc>${SITE}${r.path}</loc>${r.updatedAt ? `<lastmod>${r.updatedAt.slice(0, 10)}</lastmod>` : ''}</url>\n`).join('');
+  await writeFile('dist/sitemap.xml', base.replace('</urlset>', `${extra}</urlset>`));
 }
 
 // Keep admin client-only and out of the index, even before JavaScript runs.

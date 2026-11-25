@@ -38,7 +38,7 @@ assert.match(parentHtml,/<input(?=[^>]*name="salary")(?=[^>]*min="0")[^>]*>/);
 const legacy=await readFile('dist/tutor-legacy/index.html','utf8');assert.ok(legacy.includes('noindex'));assert.ok(!legacy.includes('rel="canonical"'));
 console.log('Truthful Lucknow copy, preserved budget input and legacy noindex checks passed.');
 
-const learnHtml=await readFile('dist/learn/index.html','utf8');assert.ok(learnHtml.includes('Tell us what you are learning')||learnHtml.includes('the smarter way to learn'));assert.ok(homeHtml.includes('href="/learn"'));assert.ok((await readFile('dist/sitemap.xml','utf8')).includes('https://www.tutor49.in/learn'));
+const learnHtml=await readFile('dist/learn/index.html','utf8');assert.ok(learnHtml.includes('Tell us what you are learning'));assert.ok(homeHtml.includes('href="/learn"'));assert.ok((await readFile('dist/sitemap.xml','utf8')).includes('https://www.tutor49.in/learn'));
 
 // Share previews + structured data: one set per public page, canonical-matching og:url, honest Organization only on home.
 for (const [path, meta] of Object.entries(routeMetadata)) {
