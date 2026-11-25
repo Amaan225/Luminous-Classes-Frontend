@@ -116,3 +116,31 @@
 .learn-rank{margin:8px 0 0}.learn-rank b{font-weight:700}.learn-rank .learn-small{display:block;margin-top:2px}
 
 .learn-rank-off{color:#64748b;font-size:.9rem}
+
+/* Dark theme (preview). Applies only when the visitor picks Dark; the default stays Light. */
+html[data-site-theme=dark] .learn-shell{--learn-ink:#ecebf5;--learn-muted:#a5a2bd;--learn-line:#2c2a3d;--learn-fill:#1d1b2b;--learn-purple:#a994ff;background:#0f0e16;color:var(--learn-ink)}
+html[data-site-theme=dark] .learn-header{background:#0a0910;border-bottom:1px solid #22202e}
+html[data-site-theme=dark] .learn-profile,html[data-site-theme=dark] .learn-history,html[data-site-theme=dark] .learn-path,html[data-site-theme=dark] .learn-empty,html[data-site-theme=dark] .learn-test-bar,html[data-site-theme=dark] .learn-question,html[data-site-theme=dark] .learn-palette,html[data-site-theme=dark] .learn-result,html[data-site-theme=dark] .learn-review-item,html[data-site-theme=dark] .learn-select>summary,html[data-site-theme=dark] .learn-select-panel,html[data-site-theme=dark] .learn-seo-links a,html[data-site-theme=dark] .learn-confirm,html[data-site-theme=dark] .learn-clear-confirm{background:#171522;border-color:var(--learn-line);color:var(--learn-ink)}
+html[data-site-theme=dark] .learn-shell .learn-note,html[data-site-theme=dark] .learn-shell .learn-quiz,html[data-site-theme=dark] .learn-shell .ld-card,html[data-site-theme=dark] .learn-shell .ld-stats div{background:var(--learn-fill);color:var(--learn-ink)}
+html[data-site-theme=dark] .learn-shell .learn-note:hover,html[data-site-theme=dark] .learn-shell .learn-quiz:hover{background:#252337}
+html[data-site-theme=dark] .learn-shell .learn-quiz-list .learn-quiz:first-child{background:#b9a0f7}
+html[data-site-theme=dark] .learn-fields select,html[data-site-theme=dark] .learn-toolbar input,html[data-site-theme=dark] .learn-select-panel select{background:#0f0e16;color:var(--learn-ink);border-color:#3a3750}
+html[data-site-theme=dark] .learn-button{background:#f5c518;border-color:#f5c518;color:#111018}
+html[data-site-theme=dark] .learn-button.secondary,html[data-site-theme=dark] .learn-shell .learn-button.secondary{background:#171522;color:var(--learn-ink);border-color:#3a3750}
+html[data-site-theme=dark] .learn-tags span,html[data-site-theme=dark] .learn-sections span,html[data-site-theme=dark] .learn-kind span{background:#26233a;border-color:#363350;color:#d9d2f7}
+html[data-site-theme=dark] .learn-shell .learn-filter button,html[data-site-theme=dark] .learn-shell .learn-tabs button,html[data-site-theme=dark] .learn-filter button,html[data-site-theme=dark] .learn-tabs button{background:#26233a;color:#d9d2f7;border:1px solid #363350}
+html[data-site-theme=dark] .learn-answers button{background:#171522;color:var(--learn-ink);border-color:#3a3750}
+html[data-site-theme=dark] .learn-answers button[aria-checked=true]{background:#2a2350;border-color:#a994ff;color:#e9e3ff}
+html[data-site-theme=dark] .learn-numbers button,html[data-site-theme=dark] .learn-numbers .unseen,html[data-site-theme=dark] .learn-legend .lg{background:#171522;color:var(--learn-ink);border-color:#3a3750}
+html[data-site-theme=dark] .learn-numbers .answered{background:#f5c518;color:#111018;border-color:#f5c518}
+html[data-site-theme=dark] .learn-timer,html[data-site-theme=dark] .learn-resume,html[data-site-theme=dark] .learn-icon{background:#26233a;color:#d9d2f7;border-color:#363350}
+html[data-site-theme=dark] .learn-shell .learn-timer{background:#f5c518;color:#15131f}
+html[data-site-theme=dark] .learn-notice{background:#2c2410;border-color:#5a4a1c;color:#f1dfa6}
+html[data-site-theme=dark] .learn-result-label{background:#3a2418;color:#f3b48a}
+html[data-site-theme=dark] .learn-result-label.correct{background:#13312a;color:#7fd8b5}
+html[data-site-theme=dark] .learn-figure{background:#fff}
+html[data-site-theme=dark] .learn-zoom{background:#0f0e16}
+html[data-site-theme=dark] .learn-shell .learn-progress{background:#2c2a3d}
+html[data-site-theme=dark] .learn-header .learn-theme-btn{color:#e6e3f3}
+.learn-theme-btn{margin-right:2px}
+html[data-site-theme=dark] .learn-shell .ld-last{background:#1d1b2b;border:1px solid #2c2a3d}
