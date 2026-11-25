@@ -27,3 +27,7 @@ html[data-site-theme=dark] .t49-sd :is(.hover\:bg-indigo-50\/90:hover){backgroun
 html[data-site-theme=dark] .t49-sd .from-slate-800{--tw-gradient-from:#f4f1fc var(--tw-gradient-from-position);--tw-gradient-to:#c4bed7 var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#d9d4ea var(--tw-gradient-via-position),var(--tw-gradient-to)}
 html[data-site-theme=dark] .t49-sd img[src*="hero-skyline"],html[data-site-theme=dark] .t49-sd img[src*="hero-tutor-student"]{filter:brightness(.5) contrast(1.1);mix-blend-mode:screen;opacity:.55}
 html[data-site-theme=dark] .t49-sd .from-indigo-50\/80{--tw-gradient-from:rgba(98,70,206,.22) var(--tw-gradient-from-position);--tw-gradient-to:rgba(98,70,206,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+html[data-site-theme=dark] .t49-sd [class*="bg-indigo-200/"],html[data-site-theme=dark] .t49-sd [class*="bg-purple-200/"],html[data-site-theme=dark] .t49-sd [class*="bg-blue-200/"],html[data-site-theme=dark] .t49-sd [class*="bg-violet-200/"]{background-color:rgba(98,70,206,.16)}
+html[data-site-theme=dark] .t49-sd :is(.bg-amber-100,.bg-amber-200){background-color:#423315}
+html[data-site-theme=dark] .t49-sd :is(.bg-green-50,.bg-green-100){background-color:#113c35}
+html[data-site-theme=dark] .t49-sd :is(.bg-slate-300){background-color:#3a3450}
