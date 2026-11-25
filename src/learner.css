@@ -49,3 +49,4 @@
 /* keep the theme toggle clear of the bottom nav */
 
 .learn-header nav{align-items:center;gap:14px}.learn-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--learn-accent);flex-shrink:0}.learn-avatar-fallback{display:inline-flex;align-items:center;justify-content:center;background:#2a2838;color:#fff;font-weight:800;font-size:14px}.learn-icon-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;color:#d9d6e8}.learn-icon-btn:hover{background:#2a2838;color:#fff}.learn-header .learn-text-button{color:#d9d6e8}
+.learn-shell .learn-header nav a{color:#e6e3f3;font-weight:650;font-size:14px}.learn-shell .learn-header nav a:hover{color:var(--learn-accent)}
