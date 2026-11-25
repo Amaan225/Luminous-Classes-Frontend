@@ -5,3 +5,5 @@
 .tutor-theme-fab{position:fixed;right:16px;bottom:16px;z-index:40;display:flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--t-line);background:var(--t-surface);color:var(--t-purple);font-size:12px;font-weight:700;box-shadow:0 4px 14px #0002;cursor:pointer}.tutor-theme-fab:focus-visible{outline:2px solid var(--t-purple);outline-offset:2px}
 .tutor-theme-fab{width:48px;height:48px;min-height:48px;padding:0;justify-content:center;gap:0}
 .tutor-theme{padding-bottom:76px}
+
+.tutor-theme-btn{display:flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;border-radius:999px;border:1px solid var(--t-line);background:var(--t-surface);color:var(--t-purple);cursor:pointer;flex:none}.tutor-theme-btn:focus-visible{outline:2px solid var(--t-purple);outline-offset:2px}.tutor-theme:has(.tutor-theme-btn){padding-bottom:0}
