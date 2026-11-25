@@ -55,6 +55,10 @@
     {
       "source": "/learn",
       "destination": "/learn/index.html"
+    },
+    {
+      "source": "/learn/dashboard",
+      "destination": "/index.html"
     }
   ]
 }
