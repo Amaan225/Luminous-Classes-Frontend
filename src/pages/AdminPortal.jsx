@@ -270,6 +270,8 @@ function AdminPortal() {
     locked: unlocksReady ? unlockBase.length - unlockedCount : null,
   };
   const filtersActive = statusFilter !== 'all' || unlockFilter !== 'all';
+  const [ledgerVisible, setLedgerVisible] = useState(10);
+  useEffect(() => { setLedgerVisible(10); }, [searchQuery, statusFilter, unlockFilter]);
   const filteredActiveJobs = ledgerJobs
     .filter(job => matchesStatus(job, statusFilter) && matchesUnlock(job, unlockFilter) && matchesSearch(job))
     .sort((a, b) => {
@@ -621,7 +623,7 @@ function AdminPortal() {
                 {(searchQuery || filtersActive) ? "No records match your search or filters." : "No active jobs in the database."}
               </div>
             ) : (
-              filteredActiveJobs.map((job) => {
+              filteredActiveJobs.slice(0,ledgerVisible).map((job) => {
                 const jobUnlocks = approvedUnlocksForJob(unlocks, job._id);
                 const jobPurchases = purchases.filter(p => String(p.jobId) === job._id);
                 const isDirect = job.leadType === 'direct' || job.leadType === 'premium' || !job.leadType;
@@ -785,6 +787,7 @@ function AdminPortal() {
                 );
               })
             )}
+            {filteredActiveJobs.length>ledgerVisible&&<button type="button" onClick={()=>setLedgerVisible(v=>v+10)} className="w-full py-3 rounded-2xl border border-slate-200 bg-white font-bold text-indigo-700 hover:bg-indigo-50">Show 10 more ({filteredActiveJobs.length-ledgerVisible} remaining)</button>}
           </div>
         </section>
         )}
