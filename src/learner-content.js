@@ -1,6 +1,7 @@
+export const WHOLE_EXAM='Whole exam (no subject)';
 export const learnerLevels = {school:'School',college:'College',exam:'Exam preparation',skills:'Skills & self-learning'};
 export const learnerTargets = {school:['Class 1','Class 2','Class 3','Class 4','Class 5','Class 6','Class 7','Class 8','Class 9','Class 10','Class 11','Class 12'],college:['General foundation','Undergraduate'],exam:['SSC CGL','SSC CHSL','RRB NTPC','UPSSSC PET','Bank PO','Other exam'],skills:['Self-paced']};
-export const learnerSubjects = {school:['Mathematics','Science','English','General Science','General Studies (GS)','Reasoning','Quantitative Aptitude'],college:['Quantitative Aptitude','Reasoning','English','General Science','General Studies (GS)'],exam:['Quantitative Aptitude','Reasoning','English','General Awareness','General Science','General Studies (GS)'],skills:['Coding','Computer Basics']};
+export const learnerSubjects = {school:['Mathematics','Science','English','General Science','General Studies (GS)','Reasoning','Quantitative Aptitude'],college:['Quantitative Aptitude','Reasoning','English','General Science','General Studies (GS)'],exam:['Quantitative Aptitude','Reasoning','English','General Awareness','General Science','General Studies (GS)',WHOLE_EXAM],skills:['Coding','Computer Basics']};
 export const examLevelKinds=['full','pyq','sample'];
 export const kindLabels={full:'Full mock test',sectional:'Sectional mock test',pyq:'Previous year paper',sample:'Sample mock (shortened)',practice:'Practice set'};
 export const difficultyLabels={easy:'Easy',moderate:'Moderate',hard:'Hard'};
