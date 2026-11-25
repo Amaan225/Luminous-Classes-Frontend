@@ -3,7 +3,6 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import TutorAccountReview from './TutorAccountReview';
 import LearnerAdmin from './LearnerAdmin';
-import { approvedUnlocksForJob } from '../lib/unlocks';
 
 // Admin-only timestamps, always IST. Returns 'Not recorded' when the event time was never stored.
 const formatWhen = value => {
@@ -39,8 +38,7 @@ function AdminPortal() {
     setSession(null);
     setPasscode('');
     setJobs([]);
-    setUnlocks([]);
-    setUnlocksStatus('loading');
+    setLedger({ items: [], total: 0, page: 0, pages: 1, counts: { status: { all: 0, active: 0, hidden: 0 }, unlock: { all: 0, unlocked: 0, locked: 0 } } });
     setTutors([]);
     setEditingJobId(null);
     setEditLeadForm({});
@@ -98,8 +96,8 @@ function AdminPortal() {
 
   // --- YOUR EXISTING ADMIN STATE ---
   const [jobs, setJobs] = useState([]);
-  const [unlocks, setUnlocks] = useState([]);
-  const [unlocksStatus, setUnlocksStatus] = useState('loading');
+  const [ledger, setLedger] = useState({ items: [], total: 0, page: 0, pages: 1, counts: { status: { all: 0, active: 0, hidden: 0 }, unlock: { all: 0, unlocked: 0, locked: 0 } } });
+  const [ledgerLoading, setLedgerLoading] = useState(false);
   const [purchases, setPurchases] = useState([]);
   const [tutors, setTutors] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -118,25 +116,27 @@ function AdminPortal() {
   const [editingJobId, setEditingJobId] = useState(null);
   const [editLeadForm, setEditLeadForm] = useState({});
 
-  const fetchJobs = useCallback(async () => {
+  // Pending leads are few; the ledger is loaded 10 at a time from the server with its own search, filters and counts.
+  const fetchPending = useCallback(async () => {
     try {
-      const jobsRes = await adminApi.get('https://luminous-classes-backend.onrender.com/api/jobs');
-      setJobs(jobsRes.data);
+      const res = await adminApi.get('https://luminous-classes-backend.onrender.com/api/admin/jobs?view=pending');
+      setJobs(Array.isArray(res.data?.items) ? res.data.items : []);
     } catch (e) { console.error(e); }
   }, [adminApi]);
-
-  const fetchUnlocks = useCallback(async () => {
-    setUnlocksStatus('loading');
+  const ledgerReq = React.useRef(0);
+  const fetchLedger = useCallback(async (page = 1, append = false) => {
+    const req = ++ledgerReq.current;
+    setLedgerLoading(true);
     try {
-      const { data } = await adminApi.get('https://luminous-classes-backend.onrender.com/api/unlocks');
-      if (!Array.isArray(data)) throw new Error('Invalid unlock records response');
-      setUnlocks(data);
-      setUnlocksStatus('ready');
-    } catch (error) {
-      setUnlocksStatus('error');
-      console.error('Could not load unlock records', error);
-    }
-  }, [adminApi]);
+      const params = new URLSearchParams({ page: String(page), limit: '10', status: statusFilter, unlock: unlockFilter, q: searchQuery.trim() });
+      const res = await adminApi.get('https://luminous-classes-backend.onrender.com/api/admin/jobs?' + params.toString());
+      if (req !== ledgerReq.current) return;
+      const d = res.data;
+      setLedger(prev => ({ ...d, items: append ? [...prev.items, ...d.items] : d.items }));
+    } catch (e) { console.error(e); }
+    finally { if (req === ledgerReq.current) setLedgerLoading(false); }
+  }, [adminApi, statusFilter, unlockFilter, searchQuery]);
+  const fetchJobs = useCallback(async () => { await Promise.all([fetchPending(), fetchLedger(1)]); }, [fetchPending, fetchLedger]);
 
   // Verified dashboard purchases (new unlock flow). Older backend versions return no `purchases`
   // field; treat that as an empty list so this view works before the backend deploy lands.
@@ -152,10 +152,8 @@ function AdminPortal() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      fetchJobs();
-      fetchUnlocks();
+      fetchPending();
       fetchPurchases();
-
       const fetchRest = async () => {
         try {
           const tutorsRes = await adminApi.get('https://luminous-classes-backend.onrender.com/api/admin/tutors/pending');
@@ -164,12 +162,19 @@ function AdminPortal() {
       };
       fetchRest();
     }
-  }, [isAuthenticated, adminApi, fetchJobs, fetchUnlocks, fetchPurchases]);
+  }, [isAuthenticated, adminApi, fetchPending, fetchPurchases]);
+
+  // Ledger: first 10 on login, then again (debounced for typing) whenever search or a filter changes.
+  useEffect(() => {
+    if (!isAuthenticated) return undefined;
+    const t = setTimeout(() => fetchLedger(1), searchQuery ? 300 : 0);
+    return () => clearTimeout(t);
+  }, [isAuthenticated, fetchLedger, searchQuery]);
 
   const handleDeleteJob = async (id) => {
     if (window.confirm("Purge this record permanently?")) {
       await adminApi.delete(`https://luminous-classes-backend.onrender.com/api/jobs/${id}`);
-      setJobs(jobs.filter(job => job._id !== id));
+      fetchJobs();
     }
   };
 
@@ -237,53 +242,16 @@ function AdminPortal() {
   const pendingLeads = jobs.filter(job => job.status === 'pending');
   const pendingTutors = tutors.filter(t => t.status === 'pending');
 
-  // Unified Filtering and Sorting for Active Ledger
-  const ledgerJobs = jobs.filter(job => job.status === 'approved' || job.status === 'hidden' || !job.status);
-  const unlocksReady = unlocksStatus === 'ready';
-  const isUnlocked = job => unlocksReady && approvedUnlocksForJob(unlocks, job._id).length > 0;
-  const matchesSearch = job => {
-    if (!searchQuery) return true;
-    const query = searchQuery.toLowerCase().trim();
-    const displayIdMatch = (job.displayId && job.displayId.toLowerCase().includes(query)) ||
-                           (job.ticketId && job.ticketId.toLowerCase().includes(query));
-    const parentNameMatch = job.parentName && job.parentName.toLowerCase().includes(query);
-    const titleMatch = job.title && job.title.toLowerCase().includes(query);
-    return displayIdMatch || parentNameMatch || titleMatch;
-  };
-  const matchesStatus = (job, f) => f === 'all' || (f === 'hidden' ? job.status === 'hidden' : job.status !== 'hidden');
-  const matchesUnlock = (job, f) => {
-    if (f === 'all' || !unlocksReady) return true;
-    return f === 'unlocked' ? isUnlocked(job) : !isUnlocked(job);
-  };
-  // Facet counts follow the other active filters and the search, so each chip shows what it would yield.
-  const statusBase = ledgerJobs.filter(job => matchesSearch(job) && matchesUnlock(job, unlockFilter));
-  const statusCounts = {
-    all: statusBase.length,
-    active: statusBase.filter(job => job.status !== 'hidden').length,
-    hidden: statusBase.filter(job => job.status === 'hidden').length,
-  };
-  const unlockBase = ledgerJobs.filter(job => matchesSearch(job) && matchesStatus(job, statusFilter));
-  const unlockedCount = unlockBase.filter(isUnlocked).length;
-  const unlockCounts = {
-    all: unlockBase.length,
-    unlocked: unlocksReady ? unlockedCount : null,
-    locked: unlocksReady ? unlockBase.length - unlockedCount : null,
-  };
+  // Ledger rows, counts and facets all come from the server for the current search and filters.
+  const unlocksReady = true;
+  const statusCounts = ledger.counts.status;
+  const unlockCounts = ledger.counts.unlock;
   const filtersActive = statusFilter !== 'all' || unlockFilter !== 'all';
-  const [ledgerVisible, setLedgerVisible] = useState(10);
-  useEffect(() => { setLedgerVisible(10); }, [searchQuery, statusFilter, unlockFilter]);
-  const filteredActiveJobs = ledgerJobs
-    .filter(job => matchesStatus(job, statusFilter) && matchesUnlock(job, unlockFilter) && matchesSearch(job))
-    .sort((a, b) => {
-      // Stable sorting by creation date (Newest First) so sequence never scrambles
-      const dateA = new Date(a.createdAt || a._id).getTime();
-      const dateB = new Date(b.createdAt || b._id).getTime();
-      return dateB - dateA;
-    });
+  const filteredActiveJobs = ledger.items;
 
   // --- SECTION TABS (top navigation; only the selected section renders) ---
   const sections = [
-    { id: 'ledger', label: 'Active Ledger', count: filteredActiveJobs.length },
+    { id: 'ledger', label: 'Active Ledger', count: ledger.total },
     { id: 'pending', label: 'Pending Leads', count: pendingLeads.length },
     { id: 'tutors', label: 'Tutor Verification', count: pendingTutors.length },
     ...(import.meta.env.VITE_TUTOR_ACCOUNTS_ENABLED === 'true' ? [{id:'account-review',label:'Account recovery',count:null}] : []),
@@ -565,7 +533,7 @@ function AdminPortal() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-4">
             <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
               <ShieldCheck className="w-6 h-6 text-emerald-500" />
-              Active Job Ledger ({filteredActiveJobs.length})
+              Active Job Ledger ({ledger.total})
             </h2>
             <div className="w-full md:w-80 relative">
               <Search className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -607,24 +575,14 @@ function AdminPortal() {
             </div>
           </div>
 
-          {unlocksStatus === 'loading' && (
-            <LoadingState label="Loading unlock records..."/>
-          )}
-          {unlocksStatus === 'error' && (
-            <div role="alert" className="mb-4 rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
-              Unlock records unavailable, so "Unlocked By" is hidden and unlock filters are off.
-              <button type="button" onClick={fetchUnlocks} className="ml-2 font-semibold text-indigo-700 hover:underline">Retry</button>
-            </div>
-          )}
-
           <div className="flex flex-col gap-6">
             {requestsPending>0&&!filteredActiveJobs.length?null:filteredActiveJobs.length === 0 ? (
               <div className="bg-white rounded-2xl border border-slate-200 border-dashed p-12 text-center text-slate-500">
                 {(searchQuery || filtersActive) ? "No records match your search or filters." : "No active jobs in the database."}
               </div>
             ) : (
-              filteredActiveJobs.slice(0,ledgerVisible).map((job) => {
-                const jobUnlocks = approvedUnlocksForJob(unlocks, job._id);
+              filteredActiveJobs.map((job) => {
+                const jobUnlocks = job.approvedUnlocks || [];
                 const jobPurchases = purchases.filter(p => String(p.jobId) === job._id);
                 const isDirect = job.leadType === 'direct' || job.leadType === 'premium' || !job.leadType;
 
@@ -753,7 +711,7 @@ function AdminPortal() {
                         </div>
 
                         {/* Unlocks Panel: only for leads with at least one recorded unlock */}
-                        {unlocksStatus === 'ready' && (jobUnlocks.length > 0 || jobPurchases.length > 0) && (
+                        {(jobUnlocks.length > 0 || jobPurchases.length > 0) && (
                         <div className="w-full md:w-72 bg-slate-50 rounded-2xl p-5 border border-slate-200 shrink-0">
                           <h4 className="text-sm font-bold text-slate-900 mb-4 flex items-center justify-between">
                             Unlocked By
@@ -787,7 +745,7 @@ function AdminPortal() {
                 );
               })
             )}
-            {filteredActiveJobs.length>ledgerVisible&&<button type="button" onClick={()=>setLedgerVisible(v=>v+10)} className="w-full py-3 rounded-2xl border border-slate-200 bg-white font-bold text-indigo-700 hover:bg-indigo-50">Show 10 more ({filteredActiveJobs.length-ledgerVisible} remaining)</button>}
+            {ledger.page < ledger.pages && <button type="button" disabled={ledgerLoading} onClick={() => fetchLedger(ledger.page + 1, true)} className="w-full py-3 rounded-2xl border border-slate-200 bg-white font-bold text-indigo-700 hover:bg-indigo-50 disabled:opacity-60">{ledgerLoading ? 'Loading...' : `Show 10 more (${ledger.total - ledger.items.length} remaining)`}</button>}
           </div>
         </section>
         )}
