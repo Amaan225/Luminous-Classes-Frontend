@@ -10,5 +10,5 @@ function Hourglass({size}){
 // Only mount while a real request is pending. No artificial delay or blocked page overlay.
 export default function LoadingState({label='Loading...',inline=false}){
  if(inline)return <span role="status" aria-live="polite" aria-busy="true" className="t49-loading t49-loading-inline"><span className="t49-loading-line"><Hourglass size={30}/><span>{label}</span></span></span>;
- return <div role="status" aria-live="polite" aria-busy="true" className="t49-loading t49-loading-block t49-loading-full"><Hourglass size={140}/><span className="t49-sr">{label}</span></div>;
+ return <div role="status" aria-live="polite" aria-busy="true" className="t49-loading t49-loading-block t49-loading-full"><Hourglass size={280}/><span className="t49-sr">{label}</span></div>;
 }
