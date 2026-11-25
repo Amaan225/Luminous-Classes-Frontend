@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import TutorAccountReview from './TutorAccountReview';
+import LearnerAdmin from './LearnerAdmin';
 import { approvedUnlocksForJob } from '../lib/unlocks';
 
 // Admin-only timestamps, always IST. Returns 'Not recorded' when the event time was never stored.
@@ -280,6 +281,7 @@ function AdminPortal() {
     { id: 'tutors', label: 'Tutor Verification', count: pendingTutors.length },
     ...(import.meta.env.VITE_TUTOR_ACCOUNTS_ENABLED === 'true' ? [{id:'account-review',label:'Account recovery',count:null}] : []),
     { id: 'inject', label: 'Inject Lead', count: null },
+    {id:'learner',label:'Learner materials',count:null},
   ];
 
   // --- THE LOCK SCREEN UI ---
@@ -389,6 +391,7 @@ function AdminPortal() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-12">
 
         {/* SECTION 1: QUARANTINE ZONE (PENDING LEADS) */}
+        {activeTab === 'learner' && <LearnerAdmin adminApi={adminApi} />}
         {activeTab === 'account-review' && <TutorAccountReview adminApi={adminApi} />}
         {activeTab === 'pending' && (
         <section>

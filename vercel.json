@@ -13,6 +13,14 @@
       "destination": "https://luminous-classes-backend.onrender.com/api/admin/tutor-accounts/:path*"
     },
     {
+      "source": "/api/learn/:path*",
+      "destination": "https://luminous-classes-backend.onrender.com/api/learn/:path*"
+    },
+    {
+      "source": "/api/admin/learner/:path*",
+      "destination": "https://luminous-classes-backend.onrender.com/api/admin/learner/:path*"
+    },
+    {
       "source": "/",
       "destination": "/index.html"
     },
@@ -43,6 +51,10 @@
     {
       "source": "/tutor-legacy",
       "destination": "/tutor-legacy/index.html"
+    },
+    {
+      "source": "/learn",
+      "destination": "/learn/index.html"
     }
   ]
 }

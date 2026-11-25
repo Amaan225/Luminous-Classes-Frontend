@@ -12,6 +12,7 @@ import Terms from './pages/Terms';
 import TutorAccount from './pages/TutorAccount';
 import TutorAccountBoundary from './pages/TutorAccountBoundary';
 import Seo from './Seo';
+import LearnerPortal from './pages/LearnerPortal';
 import { routeMetadata } from './routeMetadata.js';
 
 function NotFound() {
@@ -35,6 +36,7 @@ const page = (path, el) => (
 function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const isLearnerRoute=location.pathname==='/learn';
   const isOwnerTest=location.pathname==='/tutor-test';
   const tutorAccounts = import.meta.env.VITE_TUTOR_ACCOUNTS_ENABLED === 'true';
   const isAccountDashboard=tutorAccounts&&location.pathname==='/tutor';
@@ -50,6 +52,7 @@ function App() {
           <Route path="/admin" element={<><Seo title="Admin | Tutor49" noindex /><AdminPortal /></>} />
           <Route path="/register" element={page('/register', <TutorRegistration />)} />
           <Route path="/tutor-legacy" element={<><Seo title="Tuition board | Tutor49" noindex /><TutorPortal /></>} />
+          <Route path="/learn" element={page('/learn', <LearnerPortal />)} />
           <Route path="/terms" element={page('/terms', <Terms />)} />
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -58,7 +61,7 @@ function App() {
       {!isOwnerTest && import.meta.env.VITE_TUTOR_PREVIEW !== 'true' && <Analytics />}
 
     {/* Floating WhatsApp Button (hidden on the admin console, where it covers records on mobile) */}
-{!isAdminRoute && !isOwnerTest && !isAccountDashboard && import.meta.env.VITE_TUTOR_PREVIEW !== 'true' && (
+{!isAdminRoute && !isOwnerTest && !isAccountDashboard && !isLearnerRoute && import.meta.env.VITE_TUTOR_PREVIEW !== 'true' && (
 <a
   href="https://wa.me/919838580939?text=Hi%20Tutor49%2C%20I%20have%20a%20question!"
   target="_blank"

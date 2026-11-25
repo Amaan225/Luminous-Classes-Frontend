@@ -1,0 +1,5 @@
+export const learnerLevels = {school:'School',college:'College',exam:'Exam preparation'};
+export const learnerTargets = {school:['Class 6','Class 7','Class 8','Class 9','Class 10','Class 11','Class 12'],college:['General foundation','Undergraduate'],exam:['SSC CGL','SSC CHSL','RRB NTPC','UPSSSC PET','Bank PO','Other exam']};
+export const learnerSubjects = {school:['Mathematics','Science','English'],college:['Quantitative Aptitude','Reasoning','English'],exam:['Quantitative Aptitude','Reasoning','English','General Awareness']};
+export function matchesProfile(item,p){return item.levels.includes(p.level)&&item.subjects.includes(p.subject)&&(!item.targets?.length||item.targets.includes(p.target));}
+export function scoreAttempt(items,answers){const correct=items.filter(q=>answers[q.id]===q.answer).length;const answered=items.filter(q=>Number.isInteger(answers[q.id])&&answers[q.id]>=0&&answers[q.id]<q.options.length).length;return {correct,answered,incorrect:answered-correct,unanswered:items.length-answered,total:items.length};}

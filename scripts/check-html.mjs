@@ -20,7 +20,7 @@ const notFound = await readFile('dist/404.html', 'utf8');
 assert.ok(notFound.includes('noindex'));
 assert.ok((await readFile('dist/robots.txt', 'utf8')).includes('/sitemap.xml'));
 assert.ok((await readFile('dist/sitemap.xml', 'utf8')).includes('<urlset'));
-console.log('Initial HTML checks passed for all five public pages, admin and crawl files.');
+console.log('Initial HTML checks passed for all public pages, admin and crawl files.');
 
 const ownerTest=await readFile('dist/tutor-test/index.html','utf8');
 assert.ok(ownerTest.includes('noindex,nofollow'));
@@ -37,3 +37,5 @@ assert.ok(!parentHtml.includes('We manually verify the ID of every tutor before 
 assert.match(parentHtml,/<input(?=[^>]*name="salary")(?=[^>]*min="0")[^>]*>/);
 const legacy=await readFile('dist/tutor-legacy/index.html','utf8');assert.ok(legacy.includes('noindex'));assert.ok(!legacy.includes('rel="canonical"'));
 console.log('Truthful Lucknow copy, preserved budget input and legacy noindex checks passed.');
+
+const learnHtml=await readFile('dist/learn/index.html','utf8');assert.ok(learnHtml.includes('Tell us what you are learning'));assert.ok(homeHtml.includes('href="/learn"'));assert.ok((await readFile('dist/sitemap.xml','utf8')).includes('https://www.tutor49.in/learn'));

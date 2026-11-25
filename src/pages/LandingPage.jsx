@@ -128,6 +128,7 @@ function LandingPage() {
           <div className="hidden md:flex items-center gap-8">
             <Link to="/parent" className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors">For Parents</Link>
             <Link to="/tutor" className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors">For Tutors</Link>
+            <Link to="/learn" className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors">Learn</Link>
             {/* UPDATED: Smooth Scroll Link */}
             <a href="#faq" onClick={scrollToFaq} className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition-colors cursor-pointer">FAQ</a>
           </div>
@@ -154,6 +155,7 @@ function LandingPage() {
           <div className="px-6 py-8 flex flex-col gap-6">
             <Link to="/parent" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-slate-700 hover:text-indigo-600">For Parents</Link>
             <Link to="/tutor" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-slate-700 hover:text-indigo-600">Browse Jobs</Link>
+            <Link to="/learn" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-slate-700 hover:text-indigo-600">Learn</Link>
             <Link to="/register" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-bold text-slate-700 hover:text-indigo-600">Register as Tutor</Link>
             {/* UPDATED: Mobile Smooth Scroll Link */}
             <a href="#faq" onClick={(e) => { setIsMobileMenuOpen(false); scrollToFaq(e); }} className="text-lg font-bold text-slate-700 hover:text-indigo-600 cursor-pointer">FAQ</a>
@@ -193,7 +195,7 @@ function LandingPage() {
             Find a home tutor in Lucknow
           </h1>
           
-          <div className="flex flex-col sm:flex-row gap-6 w-full max-w-3xl justify-center mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full max-w-5xl mb-16">
             <Link 
               to="/parent" 
               className="flex-1 bg-indigo-600 text-white rounded-2xl py-6 px-8 font-semibold shadow-xl shadow-indigo-600/20 hover:bg-indigo-700 hover:shadow-indigo-600/40 hover:-translate-y-1 transition-all duration-300"
@@ -209,6 +211,7 @@ function LandingPage() {
               <div className="text-2xl md:text-3xl font-bold mb-1.5">I am a Tutor</div>
               <div className="text-slate-500 text-sm md:text-base font-medium">Sign in to browse tuition leads</div>
             </Link>
+            <Link to="/learn" className="bg-violet-50/95 text-slate-800 border-2 border-violet-300 rounded-2xl py-6 px-8 font-semibold hover:bg-violet-100 hover:border-violet-500 transition-colors"><div className="text-2xl md:text-3xl font-bold mb-1.5">Learn</div><div className="text-slate-600 text-sm md:text-base font-medium">Notes and timed practice</div></Link>
           </div>
 
           <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">

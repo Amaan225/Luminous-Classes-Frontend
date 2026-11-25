@@ -17,6 +17,10 @@ export const routeMetadata = {
     title: 'Tutor Registration | Tutor49',
     description: 'Register as a home tutor on Tutor49.',
   },
+  '/learn': {
+    title: 'Learn with Tutor49 | Notes and Timed Practice',
+    description: 'Browse learning material published by Tutor49, download watermarked notes and practise with timed quizzes.',
+  },
   '/terms': {
     title: 'Terms and Conditions | Tutor49',
     description: 'Terms and conditions for using Tutor49.',
