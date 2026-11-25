@@ -14,10 +14,10 @@
   gtag('js', new Date());
 
   gtag('config', 'G-KGFPBXRHVL');
-  // Load the tag after the page has finished loading so it never competes with first paint. Events queued in dataLayer are sent when it arrives.
+  // Load the tag once the document is parsed and the browser is idle (at most 1.5 s), so early pageviews are still counted without competing with first paint. Events queued in dataLayer are sent when it arrives.
   (function(){function l(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-KGFPBXRHVL';document.head.appendChild(s)}
-  function w(){window.requestIdleCallback?requestIdleCallback(l,{timeout:4000}):setTimeout(l,2500)}
-  document.readyState==='complete'?w():window.addEventListener('load',w,{once:true})})();
+  function w(){window.requestIdleCallback?requestIdleCallback(l,{timeout:1500}):setTimeout(l,1000)}
+  document.readyState!=='loading'?w():document.addEventListener('DOMContentLoaded',w,{once:true})})();
 </script>
     <title>Tutor49 | Verified Home Tutors in Lucknow</title>
     <meta name="description" content="Zero-commission platform connecting Lucknow parents directly with Aadhar-verified university students for home tuition." />
