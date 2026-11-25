@@ -153,7 +153,6 @@ function AdminPortal() {
   useEffect(() => {
     if (isAuthenticated) {
       fetchPending();
-      fetchPurchases();
       const fetchRest = async () => {
         try {
           const tutorsRes = await adminApi.get('https://luminous-classes-backend.onrender.com/api/admin/tutors/pending');
@@ -162,7 +161,17 @@ function AdminPortal() {
       };
       fetchRest();
     }
-  }, [isAuthenticated, adminApi, fetchPending, fetchPurchases]);
+  }, [isAuthenticated, adminApi, fetchPending]);
+
+  // Purchases only decorate ledger cards, so load them once after the first ledger page has rendered (not in the login burst).
+  const purchasesAsked = React.useRef(false);
+  const ledgerReady = Array.isArray(ledger?.items) && ledger.items.length > 0;
+  useEffect(() => {
+    if (isAuthenticated && ledgerReady && !purchasesAsked.current) {
+      purchasesAsked.current = true;
+      fetchPurchases();
+    }
+  }, [isAuthenticated, ledgerReady, fetchPurchases]);
 
   // Ledger: first 10 on login, then again (debounced for typing) whenever search or a filter changes.
   useEffect(() => {
