@@ -9,7 +9,7 @@ const faqs = [
 
 export default function MawaiyyaTuition() {
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans py-12 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans pt-12 pb-28 pl-4 pr-16 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <nav aria-label="Breadcrumb" className="text-sm font-medium text-slate-500 mb-8">
           <Link to="/" className="hover:text-indigo-600 underline">Home</Link> <span aria-hidden="true">/</span> Home tuition in Mawaiyya

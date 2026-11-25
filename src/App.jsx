@@ -45,6 +45,7 @@ function App() {
   const isAdminRoute = location.pathname.startsWith('/admin');
   const isLearnerRoute=location.pathname==='/learn'||(location.pathname.startsWith('/learn/')&&!location.pathname.startsWith('/learn/dashboard'));
   const isOwnerTest=location.pathname==='/tutor-test';
+  const isLocalityPage=location.pathname==='/home-tuition-mawaiyya-lucknow';
   const tutorAccounts = import.meta.env.VITE_TUTOR_ACCOUNTS_ENABLED === 'true';
   const isAccountDashboard=tutorAccounts&&location.pathname==='/tutor';
   return (
@@ -78,7 +79,7 @@ function App() {
   href="https://wa.me/919838580939?text=Hi%20Tutor49%2C%20I%20have%20a%20question!"
   target="_blank"
   rel="noopener noreferrer"
-  className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-16 h-16 bg-[#25D366] text-white rounded-full shadow-lg hover:bg-[#20bd5a] hover:scale-110 hover:shadow-xl transition-all duration-300 group"
+  className={(isLocalityPage?"fixed bottom-4 right-3 md:right-auto md:bottom-6 md:left-6 w-12 h-12 md:w-16 md:h-16":"fixed bottom-6 left-6 w-16 h-16")+" z-50 flex items-center justify-center bg-[#25D366] text-white rounded-full shadow-lg hover:bg-[#20bd5a] hover:scale-110 hover:shadow-xl transition-all duration-300 group"}
   aria-label="Chat on WhatsApp"
 >
   {/* WhatsApp SVG Icon */}
