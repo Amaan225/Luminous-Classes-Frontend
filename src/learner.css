@@ -112,3 +112,5 @@
 @media(prefers-reduced-motion:reduce){.learn-shell .learn-progress i{transition:none}}
 .learn-seo-links{margin:22px 0}.learn-seo-links h2{font-size:16px;font-weight:750;margin-bottom:10px}.learn-seo-links ul{display:flex;flex-wrap:wrap;gap:10px;list-style:none;padding:0}.learn-seo-links a{display:inline-flex;align-items:center;min-height:44px;padding:8px 14px;border:1px solid var(--learn-line);border-radius:10px;background:#fff;color:var(--learn-purple);font-weight:650;font-size:13px}
 .learn-group>p{margin-top:20px}
+
+.learn-rank{margin:8px 0 0}.learn-rank b{font-weight:700}.learn-rank .learn-small{display:block;margin-top:2px}
