@@ -5,3 +5,4 @@
 
 .learn-profile .learn-section-head h2{font-size:clamp(22px,5.4vw,26px);letter-spacing:-.5px}
 .learn-chosen{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-bottom:6px}.learn-chosen .learn-tags{margin:12px 0}.learn-link{background:none;border:0;color:var(--learn-purple);font-weight:700;font-size:13px;text-decoration:underline;cursor:pointer;min-height:44px;padding:0 4px}.learn-next{width:100%;justify-content:center;display:inline-flex;align-items:center;gap:8px}@media(min-width:640px){.learn-next{width:auto}}
+.learn-sections{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.learn-sections span{background:#eeebf8;border:1px solid #e2dcf2;border-radius:12px;padding:6px 12px;font-size:12px;color:#514087}.learn-sections b{display:block;font-size:12px}
