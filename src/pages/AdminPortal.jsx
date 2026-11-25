@@ -1,3 +1,4 @@
+import LoadingState from '../components/LoadingState';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import TutorAccountReview from './TutorAccountReview';
@@ -22,6 +23,8 @@ function AdminPortal() {
   const [session, setSession] = useState(null);
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [requestsPending,setRequestsPending]=useState(0);
+  const [requestError,setRequestError]=useState('');
   useEffect(() => {
     // One-time handoff from a verified Google admin; the server minted this short-lived admin session.
     try {
@@ -44,6 +47,8 @@ function AdminPortal() {
   }, []);
   const adminApi = useMemo(() => {
     const client = axios.create();
+    client.interceptors.request.use(config=>{setRequestsPending(n=>n+1);setRequestError('');return config;});
+    client.interceptors.response.use(response=>{setRequestsPending(n=>Math.max(0,n-1));return response;},error=>{setRequestsPending(n=>Math.max(0,n-1));setRequestError('A request could not be completed. Please retry or reload to check the current state.');return Promise.reject(error);});
     if (import.meta.env.VITE_TUTOR_PREVIEW === 'true') client.interceptors.request.use(config => {
       config.url = config.url.replace('https://luminous-classes-backend.onrender.com', '');
       return config;
@@ -319,7 +324,7 @@ function AdminPortal() {
               type="submit"
               className="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all"
             >
-              {isLoggingIn ? 'Signing in...' : 'Unlock Console'}
+              {isLoggingIn ? <LoadingState inline label="Signing in..."/> : 'Unlock Console'}
             </button>
           </div>
         </form>
@@ -390,6 +395,8 @@ function AdminPortal() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-12">
 
+        {requestsPending>0&&<LoadingState label="Loading or updating console data..." skeleton/>}
+        {requestError&&<p role="alert" className="rounded-xl bg-amber-50 p-4 text-amber-900">{requestError}</p>}
         {/* SECTION 1: QUARANTINE ZONE (PENDING LEADS) */}
         {activeTab === 'learner' && <LearnerAdmin adminApi={adminApi} />}
         {activeTab === 'account-review' && <TutorAccountReview adminApi={adminApi} />}
@@ -405,7 +412,7 @@ function AdminPortal() {
             )}
           </div>
 
-          {pendingLeads.length === 0 ? (
+          {requestsPending>0&&!pendingLeads.length?null:pendingLeads.length === 0 ? (
             <div className="bg-white rounded-2xl border border-slate-200 border-dashed p-10 text-center">
               <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
               <p className="text-slate-500 font-medium">Quarantine is empty. All leads are processed.</p>
@@ -506,7 +513,7 @@ function AdminPortal() {
             </div>
 
             <button type="submit" disabled={isSubmitting} className="w-full md:w-auto px-8 py-4 bg-indigo-600 text-white rounded-xl font-bold shadow-md hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 transition-all disabled:opacity-70 flex justify-center items-center">
-              {isSubmitting ? 'Pushing to Database...' : 'Inject Live Lead'}
+              {isSubmitting ? <LoadingState inline label="Pushing to Database..."/> : 'Inject Live Lead'}
             </button>
           </form>
         </section>
@@ -521,7 +528,7 @@ function AdminPortal() {
               Tutor Verification Queue ({pendingTutors.length})
             </h2>
           </div>
-          {pendingTutors.length === 0 ? (
+          {requestsPending>0&&!pendingTutors.length?null:pendingTutors.length === 0 ? (
             <div className="bg-white rounded-2xl border border-slate-200 border-dashed p-8 text-center text-slate-500">
               No pending registrations.
             </div>
@@ -599,7 +606,7 @@ function AdminPortal() {
           </div>
 
           {unlocksStatus === 'loading' && (
-            <p className="mb-4 text-sm text-slate-500" role="status">Loading unlock records...</p>
+            <LoadingState label="Loading unlock records..."/>
           )}
           {unlocksStatus === 'error' && (
             <div role="alert" className="mb-4 rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
@@ -609,7 +616,7 @@ function AdminPortal() {
           )}
 
           <div className="flex flex-col gap-6">
-            {filteredActiveJobs.length === 0 ? (
+            {requestsPending>0&&!filteredActiveJobs.length?null:filteredActiveJobs.length === 0 ? (
               <div className="bg-white rounded-2xl border border-slate-200 border-dashed p-12 text-center text-slate-500">
                 {(searchQuery || filtersActive) ? "No records match your search or filters." : "No active jobs in the database."}
               </div>

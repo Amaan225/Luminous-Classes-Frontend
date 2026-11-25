@@ -1,3 +1,4 @@
+import LoadingState from '../components/LoadingState';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -227,7 +228,7 @@ function TutorRegistration() {
                   disabled={isSubmitting}
                   className="w-full py-4 bg-indigo-600 text-white rounded-xl text-lg font-semibold shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:shadow-indigo-600/30 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 flex justify-center items-center gap-2 mt-4"
                 >
-                  {isSubmitting ? 'Opening Payment Gateway...' : 'Pay ₹49 & Submit Application'}
+                  {isSubmitting ? <LoadingState inline label="Opening Payment Gateway..."/> : 'Pay ₹49 & Submit Application'}
                 </button>
                 <p className="text-center text-xs text-slate-500 mt-4">
                   By registering and paying, you agree to maintain professional conduct. We reserve the right to ban unverified accounts.

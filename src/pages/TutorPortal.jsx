@@ -1,3 +1,4 @@
+import LoadingState from '../components/LoadingState';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -243,8 +244,7 @@ function TutorPortal() {
         {/* JOB GRID */}
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-20">
-            <div className="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
-            <p className="text-slate-500 font-medium">Fetching verified leads...</p>
+            <LoadingState label="Fetching verified leads..." skeleton/>
           </div>
         ) : filteredJobs.length === 0 ? (
           <div className="bg-white rounded-2xl border border-slate-200 border-dashed p-12 text-center">
@@ -411,7 +411,7 @@ function TutorPortal() {
                   <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto w-full">
                     <button onClick={() => setIsModalOpen(false)} className="flex-1 py-4 text-slate-700 bg-white font-semibold rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors">Cancel</button>
                     <button onClick={handleRazorpayPayment} disabled={tutorPhone.length < 10 || paymentStatus === 'submitting'} className="flex-[2] py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/20 disabled:opacity-50 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all flex justify-center items-center">
-                      {paymentStatus === 'submitting' ? <div className="flex items-center gap-2"><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>Processing...</div> : <>Pay Securely via Razorpay</>}
+                      {paymentStatus === 'submitting' ? <LoadingState inline label="Processing..."/> : <>Pay Securely via Razorpay</>}
                     </button>
                   </div>
                 </>

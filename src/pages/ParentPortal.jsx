@@ -1,3 +1,4 @@
+import LoadingState from '../components/LoadingState';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -191,7 +192,7 @@ function ParentPortal() {
                   <div className="p-4 bg-red-50 text-red-700 rounded-xl text-sm font-medium border border-red-100">Something went wrong while posting your requirement. Please try again.</div>
                 )}
                 <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-indigo-600 text-white rounded-xl text-lg font-semibold shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 flex justify-center items-center gap-2 mt-4">
-                  {isSubmitting ? 'Securing your request...' : 'Post Requirement Free'}
+                  {isSubmitting ? <LoadingState inline label="Securing your request..."/> : 'Post Requirement Free'}
                 </button>
               </form>
             </div>
