@@ -17,7 +17,7 @@ await p.screenshot({path:`/downloads/m3-dash-whole-${w}.png`,fullPage:true});
 out(w,'notes card shown:',await p.getByRole('button',{name:/Relevant notes/}).count());
 await p.getByRole('button',{name:/Quiz & practice/}).click();await p.waitForTimeout(300);
 out(w,'A whole-exam list:',JSON.stringify((await p.locator('main').innerText()).match(/PREVIEW ONLY[^\n]*|Sample:[^\n]*/g)),'tabs:',await p.getByRole('tab').count());
-await p.screenshot({path:`/downloads/m3-list-whole-${w}.png`,fullPage:true});await c.close();
+await p.screenshot({path:`/downloads/m3-list-whole-${w}.png`,fullPage:true});out(w,'tags',await p.locator('.learn-tags').innerText());await c.close();
 // Journey B: Reasoning, zero Reasoning tests
 c=await b.newContext({viewport:{width:w,height:h}});p=await c.newPage();
 await p.route('**/api/learn/catalog',r=>r.fulfill({json:{notes:[],quizzes:full}}));
