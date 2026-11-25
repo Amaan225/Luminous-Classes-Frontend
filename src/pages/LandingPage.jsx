@@ -196,13 +196,7 @@ function LandingPage() {
           </h1>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full max-w-5xl mb-16">
-            <Link 
-              to="/parent" 
-              className="flex-1 bg-indigo-600 text-white rounded-2xl py-6 px-8 font-semibold shadow-xl shadow-indigo-600/20 hover:bg-indigo-700 hover:shadow-indigo-600/40 hover:-translate-y-1 transition-all duration-300"
-            >
-              <div className="text-2xl md:text-3xl font-bold mb-1.5">I am a Parent</div>
-              <div className="text-indigo-200 text-sm md:text-base font-medium">Post a requirement for review</div>
-            </Link>
+            <Link to="/learn" className="bg-black text-amber-400 border-2 border-amber-500 rounded-2xl py-6 px-8 font-semibold hover:bg-slate-900 hover:border-amber-400 transition-colors"><div className="text-2xl md:text-3xl font-bold mb-1.5 text-amber-400">I am a learner</div><div className="text-amber-300 text-sm md:text-base font-medium">Notes and timed practice</div></Link>
 
             <Link 
               to="/tutor" 
@@ -211,7 +205,13 @@ function LandingPage() {
               <div className="text-2xl md:text-3xl font-bold mb-1.5">I am a Tutor</div>
               <div className="text-slate-500 text-sm md:text-base font-medium">Sign in to browse tuition leads</div>
             </Link>
-            <Link to="/learn" className="bg-black text-amber-400 border-2 border-amber-500 rounded-2xl py-6 px-8 font-semibold hover:bg-slate-900 hover:border-amber-400 transition-colors"><div className="text-2xl md:text-3xl font-bold mb-1.5 text-amber-400">I am a learner</div><div className="text-amber-300 text-sm md:text-base font-medium">Notes and timed practice</div></Link>
+            <Link 
+              to="/parent" 
+              className="flex-1 bg-indigo-600 text-white rounded-2xl py-6 px-8 font-semibold shadow-xl shadow-indigo-600/20 hover:bg-indigo-700 hover:shadow-indigo-600/40 hover:-translate-y-1 transition-all duration-300"
+            >
+              <div className="text-2xl md:text-3xl font-bold mb-1.5">I am a Parent</div>
+              <div className="text-indigo-200 text-sm md:text-base font-medium">Post a requirement for review</div>
+            </Link>
           </div>
 
           <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
