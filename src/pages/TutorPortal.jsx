@@ -1,4 +1,5 @@
 import LoadingState from '../components/LoadingState';
+import { loadRazorpay, warmRazorpay } from '../lib/razorpay';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -64,6 +65,8 @@ function TutorPortal() {
       _id: 'phantom_2', displayId: 'TK-4562', subject: 'PCM', grade: '9', city: 'Lucknow', location: 'Hussainganj', salary: 13000, leadType: 'direct', isSoldOut: true, requirements: 'Need a tutor for my 9th-grade child to help with Physics, Chemistry, and Math. Prefer someone who can provide both online and offline sessions.'
     }
   ];
+
+  useEffect(() => warmRazorpay(), []);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -134,6 +137,7 @@ function TutorPortal() {
         modal: { ondismiss: function() { setPaymentStatus('idle'); } }
       };
 
+      await loadRazorpay();
       const rzp = new window.Razorpay(options);
       rzp.open();
 

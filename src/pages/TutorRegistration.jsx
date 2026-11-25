@@ -1,4 +1,5 @@
 import LoadingState from '../components/LoadingState';
+import { loadRazorpay, warmRazorpay } from '../lib/razorpay';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -18,13 +19,8 @@ function TutorRegistration() {
     preferredArea: ''
   });
 
-  // Load Razorpay Script dynamically if not present
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
+  // Razorpay loads when the form is first used (see lib/razorpay.js), and is awaited before checkout opens.
+  useEffect(() => warmRazorpay(), []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -88,6 +84,7 @@ function TutorRegistration() {
         }
       };
 
+      await loadRazorpay();
       const rzp = new window.Razorpay(options);
       rzp.open();
 
