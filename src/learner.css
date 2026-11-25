@@ -2,3 +2,6 @@
 
 .learn-intro{margin-bottom:26px}
 .learn-free{display:inline-block;padding:1px 12px 2px;margin-right:4px;border-radius:999px;background:linear-gradient(135deg,#ffd75e,#f5a312);color:#3a2500;font-weight:900;font-size:1.1em;letter-spacing:.14em;line-height:1.4;box-shadow:0 3px 10px rgba(245,163,18,.38),inset 0 1px 0 rgba(255,255,255,.55);vertical-align:baseline;transform:rotate(-2deg)}
+
+.learn-profile .learn-section-head h2{font-size:clamp(22px,5.4vw,26px);letter-spacing:-.5px}
+.learn-chosen{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-bottom:6px}.learn-chosen .learn-tags{margin:12px 0}.learn-link{background:none;border:0;color:var(--learn-purple);font-weight:700;font-size:13px;text-decoration:underline;cursor:pointer;min-height:44px;padding:0 4px}.learn-next{width:100%;justify-content:center;display:inline-flex;align-items:center;gap:8px}@media(min-width:640px){.learn-next{width:auto}}
