@@ -211,7 +211,7 @@ function LandingPage() {
               <div className="text-2xl md:text-3xl font-bold mb-1.5">I am a Tutor</div>
               <div className="text-slate-500 text-sm md:text-base font-medium">Sign in to browse tuition leads</div>
             </Link>
-            <Link to="/learn" className="bg-violet-50/95 text-slate-800 border-2 border-violet-300 rounded-2xl py-6 px-8 font-semibold hover:bg-violet-100 hover:border-violet-500 transition-colors"><div className="text-2xl md:text-3xl font-bold mb-1.5">Learn</div><div className="text-slate-600 text-sm md:text-base font-medium">Notes and timed practice</div></Link>
+            <Link to="/learn" className="bg-amber-400 text-slate-900 border-2 border-amber-500 rounded-2xl py-6 px-8 font-semibold hover:bg-amber-300 hover:border-amber-600 transition-colors"><div className="text-2xl md:text-3xl font-bold mb-1.5">I am a learner</div><div className="text-slate-700 text-sm md:text-base font-medium">Notes and timed practice</div></Link>
           </div>
 
           <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
