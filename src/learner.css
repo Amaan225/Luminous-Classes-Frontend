@@ -26,3 +26,24 @@
 .learn-figure-btn{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;text-align:left;position:relative}.learn-figure-btn .learn-figure{width:100%}.learn-figure-hint{display:inline-block;font-size:12px;color:var(--learn-purple);font-weight:700;margin:-6px 0 8px}
 .learn-zoom{position:fixed;inset:0;z-index:80;background:#fff;display:flex;flex-direction:column}.learn-zoom-bar{display:flex;justify-content:flex-end;padding:10px 14px;border-bottom:1px solid var(--learn-line)}.learn-zoom-body{flex:1;overflow:auto;padding:12px;-webkit-overflow-scrolling:touch}.learn-zoom-body img{display:block;width:max(1100px,100%);max-width:none;height:auto;margin:0 auto}
 .learn-zoom-bar{align-items:center;justify-content:space-between;gap:12px}.learn-zoom-hint{font-size:12px;color:var(--learn-muted)}
+
+/* Minimal Learn theme (2026-11): black, white, soft purple, yellow accent. CSS and layout only. */
+.learn-shell{--learn-purple:#6044cf;--learn-accent:#f5c518;--learn-ink:#16151f;--learn-line:#e9e6f3;background:#f6f5fb;font-family:Inter,system-ui,sans-serif}
+.learn-header{background:#111018;border-bottom:0;color:#fff}.learn-logo{color:#fff}.learn-logo span{color:var(--learn-accent)}.learn-header nav a,.learn-header nav .learn-text-button{color:#d9d6e8}.learn-header nav [aria-current]{color:var(--learn-accent)}
+.learn-main{padding-top:36px}.learn-main h1{font-weight:850;letter-spacing:-1.6px}.learn-eyebrow{color:#7a64e0}
+.learn-profile,.learn-history,.learn-path,.learn-note,.learn-quiz,.learn-question,.learn-palette,.learn-test-bar,.learn-empty,.ld-card,.ld-stats div{border-radius:24px;border-color:var(--learn-line);box-shadow:0 1px 2px #1110180a}
+.learn-path:hover,.learn-note:hover,.learn-quiz:hover{border-color:var(--learn-purple);box-shadow:0 8px 22px #6044cf14}
+.learn-icon{background:#f0ecfb;border-radius:14px}.learn-note-top{color:#6a55d6}
+.learn-button{border-radius:14px;background:#111018;border-color:#111018;color:#fff}.learn-button:hover{background:var(--learn-purple);border-color:var(--learn-purple)}.learn-button.secondary{background:#fff;color:#2b2940;border-color:#d9d5e8}
+.learn-filter button,.learn-tabs button,.ld-tabs button{border-radius:99px}.learn-filter button[aria-pressed=true],.learn-tabs button.on{background:#111018;border-color:#111018;color:#fff}
+.ld-tabs button.on{color:#111018;border-color:var(--learn-accent)}
+.learn-tags span{border-radius:99px;background:#fff;border-color:var(--learn-line);color:#3d3560}
+.learn-free{background:var(--learn-accent);color:#111018;border-radius:99px}
+.learn-fields select,.learn-toolbar input{border-radius:14px}
+.learn-answers button{border-radius:16px}.learn-answers button[aria-checked=true]{border-color:var(--learn-purple);background:#f3efff}
+.learn-numbers .answered{background:#111018;border-color:#111018}.learn-numbers .current{outline-color:var(--learn-purple)}
+.learn-resume{border-radius:20px}
+.learn-shell .learn-signin-card{background:#111018;color:#fff;border:0;border-radius:28px;box-shadow:0 18px 50px #11101830}.learn-shell .learn-signin-card h1{color:#fff}.learn-shell .learn-signin-card .learn-small{color:#bdb9d3}.learn-shell .learn-signin-card .learn-eyebrow{color:var(--learn-accent)}
+.learn-bottom-nav{display:none}
+@media(max-width:800px){.learn-shell{padding-bottom:84px}.learn-testing{padding-bottom:0}.learn-bottom-nav{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:30;background:#111018;border-radius:24px;padding:6px;box-shadow:0 10px 30px #11101840}.learn-bottom-nav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:52px;border-radius:18px;color:#bdb9d3;font-size:11px;font-weight:700;text-decoration:none}.learn-bottom-nav a[aria-current]{background:var(--learn-accent);color:#111018}}
+/* keep the theme toggle clear of the bottom nav */

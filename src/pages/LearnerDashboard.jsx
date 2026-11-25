@@ -1,5 +1,6 @@
 import React,{useCallback,useEffect,useState} from 'react';
 import {Link,useNavigate} from 'react-router-dom';
+import LearnBottomNav from '../components/LearnBottomNav';
 import Seo from '../Seo.jsx';
 import LoadingState from '../components/LoadingState';
 import {ACCOUNTS,api,useLearnerAccount} from '../learner-session';
@@ -18,4 +19,4 @@ export default function LearnerDashboard(){
   :acct.status==='out'?<section className="ld-empty"><h1>Sign in to see your dashboard</h1><p className="learn-small">Your results and progress are saved to your own account.</p><SignInGate title="Sign in with Google" onClose={()=>nav('/learn')} onSignedIn={acct.refresh}/></section>
   :err?<section className="ld-empty"><p role="alert" className="learn-notice">{err}</p><button className="learn-button" onClick={load}>Try again</button></section>
   :<View name={prof||acct.name} data={d} attempts={attempts} notes={notes} message={msg} deleteRequestedAt={pending} onOpenAttempt={id=>nav('/learn?view=results&attempt='+id)} onSignOut={async()=>{await acct.signOut();nav('/learn')}} onExport={exportData} onDeleteRequest={()=>act('/data/delete-request','Deletion requested. Your data stays hidden until it is processed. You can cancel.')} onDeleteCancel={()=>act('/data/delete-cancel','Deletion cancelled. Your data is back.')}/>}
-  </main></div>}
+  </main><LearnBottomNav current="progress"/></div>}
