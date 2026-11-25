@@ -8,13 +8,16 @@
     <meta name="theme-color" content="#4f46e5" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KGFPBXRHVL"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-KGFPBXRHVL');
+  // Load the tag after the page has finished loading so it never competes with first paint. Events queued in dataLayer are sent when it arrives.
+  (function(){function l(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-KGFPBXRHVL';document.head.appendChild(s)}
+  function w(){window.requestIdleCallback?requestIdleCallback(l,{timeout:4000}):setTimeout(l,2500)}
+  document.readyState==='complete'?w():window.addEventListener('load',w,{once:true})})();
 </script>
     <title>Tutor49 | Verified Home Tutors in Lucknow</title>
     <meta name="description" content="Zero-commission platform connecting Lucknow parents directly with Aadhar-verified university students for home tuition." />
