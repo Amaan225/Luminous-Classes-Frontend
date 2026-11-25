@@ -39,3 +39,15 @@ const legacy=await readFile('dist/tutor-legacy/index.html','utf8');assert.ok(leg
 console.log('Truthful Lucknow copy, preserved budget input and legacy noindex checks passed.');
 
 const learnHtml=await readFile('dist/learn/index.html','utf8');assert.ok(learnHtml.includes('Tell us what you are learning'));assert.ok(homeHtml.includes('href="/learn"'));assert.ok((await readFile('dist/sitemap.xml','utf8')).includes('https://www.tutor49.in/learn'));
+
+// Share previews + structured data: one set per public page, canonical-matching og:url, honest Organization only on home.
+for (const [path, meta] of Object.entries(routeMetadata)) {
+  const html = await readFile(path === '/' ? 'dist/index.html' : `dist${path}/index.html`, 'utf8');
+  assert.equal((html.match(/property="og:title"/g) || []).length, 1, `${path}: one og:title`);
+  assert.ok(html.includes(`property="og:url" content="${SITE}${path}"`), `${path}: og:url matches canonical`);
+  assert.ok(html.includes('name="twitter:card"'), `${path}: twitter card`);
+  assert.equal((html.match(/application\/ld\+json/g) || []).length, path === '/' ? 1 : 0, `${path}: JSON-LD only on home`);
+}
+const ld = JSON.parse((await readFile('dist/index.html', 'utf8')).match(/application\/ld\+json">([^<]*)</)[1]);
+assert.ok(ld['@graph'].some((x) => x['@type'] === 'Organization' && !x.address && !x.aggregateRating && !x.telephone), 'Organization has no invented address, rating or phone');
+console.log('Share-preview tags and honest Organization JSON-LD checks passed.');

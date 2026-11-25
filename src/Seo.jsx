@@ -34,6 +34,14 @@ export default function Seo({ title, description, path, noindex = false }) {
       robots.remove();
     }
 
+    const og = (prop, value, attr = 'property') => {
+      const el = document.head.querySelector(`meta[${attr}="${prop}"]`);
+      if (el && value) el.setAttribute('content', value);
+    };
+    og('og:title', title); og('twitter:title', title, 'name');
+    og('og:description', description); og('twitter:description', description, 'name');
+    if (path) og('og:url', SITE + path);
+
     const existing = document.head.querySelector('link[rel="canonical"]');
     if (path && !noindex) {
       const c = existing || document.createElement('link');
