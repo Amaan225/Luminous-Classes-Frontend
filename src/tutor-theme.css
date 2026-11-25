@@ -3,3 +3,4 @@
 .tutor-lead-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}.tutor-lead-filters button{min-height:44px;padding:9px 18px;border:1px solid var(--t-line);border-radius:12px;background:var(--t-surface);color:var(--t-muted);font-size:13px;font-weight:700}.tutor-lead-filters button[aria-pressed=true]{background:var(--t-purple);color:var(--t-surface);border-color:var(--t-purple)}
 
 .tutor-theme-fab{position:fixed;right:16px;bottom:16px;z-index:40;display:flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--t-line);background:var(--t-surface);color:var(--t-purple);font-size:12px;font-weight:700;box-shadow:0 4px 14px #0002;cursor:pointer}.tutor-theme-fab:focus-visible{outline:2px solid var(--t-purple);outline-offset:2px}
+.tutor-theme-fab{width:48px;height:48px;min-height:48px;padding:0;justify-content:center;gap:0}
