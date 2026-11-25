@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const faqs = [
-  ['Is posting a parent requirement free?', 'Yes. Parents can submit a requirement for free. Tutor registration and contact-unlock charges are separate. The parent and tutor agree the tuition fee directly.'],
+  ['Is posting a parent requirement free?', 'Yes. Parents can submit a requirement for free. Tutor registration and contact-unlock charges are separate. For a requirement posted online, the parent and tutor agree the tuition fee directly.'],
   ['Can I request a particular class, board or subject?', 'Describe it in the requirement, including any exam preparation or topics that need help. The team can review the request, but Tutor49 does not promise a teacher is available for every class or subject in Mawaiyya.'],
-  ['How much will home tuition cost?', 'The fee depends on the class, subjects, how often lessons happen, travel and the tutor. State a monthly budget and agree the final terms directly with the tutor. This page does not quote a local market price.'],
+  ['How much will home tuition cost?', 'The fee depends on the class, subjects, how often lessons happen, travel and the tutor. State a monthly budget. For a requirement posted online, you agree the final terms directly with the tutor. This page does not quote a local market price.'],
 ];
 
 export default function MawaiyyaTuition() {
@@ -30,12 +30,12 @@ export default function MawaiyyaTuition() {
         <section className="mb-10">
           <h2 className="text-2xl font-bold mb-3">Meet the Tutor49 team in Mawaiyya</h2>
           <p className="text-slate-700 leading-relaxed">
-            Tutor49 arranges managed tuition and also connects parents with tutors. The Tutor49 office is near Indian Bank at Mawaiyya tiraha, Lucknow 226004. Parents can meet the team there to discuss their requirements. Please make contact first so a visit can be scheduled. Use the requirement form on this page to get in touch.
+            Tutor49 arranges managed tuition and also connects parents with tutors. The Tutor49 office is near Indian Bank at Mawaiyya tiraha, Lucknow 226004. Parents can meet the team there to discuss their requirements. Please contact the team first so a visit can be arranged. The requirement form on this page posts a tuition requirement online. It does not book an office visit.
           </p>
         </section>
 
         <section className="mb-10">
-          <h2 className="text-2xl font-bold mb-3">How a parent requirement works</h2>
+          <h2 className="text-2xl font-bold mb-3">How an online parent requirement works</h2>
           <ol className="list-decimal pl-6 space-y-2 text-slate-700 leading-relaxed">
             <li>Post the class, subjects, locality, schedule and monthly budget through the free parent form.</li>
             <li>Tutor49 reviews the submission before it appears for tutors.</li>
