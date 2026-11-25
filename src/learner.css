@@ -144,3 +144,5 @@ html[data-site-theme=dark] .learn-shell .learn-progress{background:#2c2a3d}
 html[data-site-theme=dark] .learn-header .learn-theme-btn{color:#e6e3f3}
 .learn-theme-btn{margin-right:2px}
 html[data-site-theme=dark] .learn-shell .ld-last{background:#1d1b2b;border:1px solid #2c2a3d}
+
+.learn-shell .learn-signin-card .learn-notice{background:#3a1a22;color:#ffd9de;border:1px solid #8a3344}
