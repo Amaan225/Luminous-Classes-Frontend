@@ -142,3 +142,4 @@
 .ld-gate-box.learn-brief h2,.ld-gate-box.learn-brief .learn-small{flex:0 0 auto}
 .learn-test-bar{flex-wrap:wrap}.learn-test-bar .learn-test-title{flex:1 1 320px}.learn-test-bar .learn-secstatus{order:3;flex:0 0 100%;width:100%}
 .learn-bandbar{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}.learn-band{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--learn-line);background:#fff;color:var(--learn-ink);font-weight:700;cursor:pointer}.learn-band.on{background:#222139;color:#fff;border-color:#222139}
+.learn-revbar{display:flex;flex-direction:column;gap:10px;margin:0 0 16px}.learn-revbar>div{display:flex;flex-wrap:wrap;gap:8px}
