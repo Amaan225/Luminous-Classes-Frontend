@@ -32,3 +32,5 @@
 .ld-bars li>div{font-size:16px}.ld-bars small{font-size:13px;color:#3d3a52}
 .ld-card .learn-history-row b{font-size:16px}.ld-card .learn-history-row small{font-size:13px;color:#3d3a52}.ld-card .learn-history-row strong{font-size:16px}
 .ld-note b{font-size:16px}.ld-note small{font-size:14px;color:#3d3a52}
+
+.ld-card>.learn-small+.ld-bars{margin-top:14px}.ld-last .ld-sub{margin-top:6px;font-size:12px;color:#bdb9d3}
