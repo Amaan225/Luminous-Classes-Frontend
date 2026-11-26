@@ -120,3 +120,8 @@
 .learn-brief-list{margin:10px 0 14px;padding-left:22px;line-height:1.6;list-style:disc}.learn-brief-list li{display:list-item;list-style:disc;margin:4px 0}.learn-brief-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.learn-text-button{background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit;padding:8px}
 .ld-gate-box.learn-brief,.ld-gate-box.learn-brief h2,.ld-gate-box.learn-brief li,.ld-gate-box.learn-brief p,.ld-gate-box.learn-brief .learn-text-button{color:#222139}.ld-gate-box.learn-brief .learn-small{color:#4a4763}
 .ld-gate:has(.learn-brief){overflow-y:auto;align-items:flex-start;-webkit-overflow-scrolling:touch}.ld-gate-box.learn-brief{margin:auto;max-height:none}
+
+/* exam switch: large, obvious control */
+.learn-select>summary{min-height:56px;padding:0 22px;font-size:16px;border:2px solid var(--learn-purple);box-shadow:0 2px 10px #6044cf22}
+.learn-select>summary svg{width:20px;height:20px;color:var(--learn-purple)}
+.learn-select-panel label{font-size:14px}.learn-select-panel select{min-height:48px;font-size:16px}

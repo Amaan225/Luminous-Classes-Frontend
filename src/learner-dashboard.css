@@ -23,3 +23,12 @@
 .ld-row.lav{background:#b9a0f7;color:#1b1233}.ld-row.lav small{color:#2f2257}.ld-row.dark{background:#111018;color:#fff}.ld-row.dark small{color:#bdb9d3}
 .ld-account summary{cursor:pointer;list-style:none}.ld-account summary h2{margin:0;display:inline}.ld-account[open] summary{margin-bottom:14px}
 .ld-shell .ld-card,.ld-shell .ld-stats div{background:#f1f0f6;border:0;box-shadow:none}
+
+/* readability pass: larger, higher-contrast analysis text */
+.ld-card .learn-small,.ld-empty .learn-small{font-size:15px;line-height:1.6;color:#3d3a52}
+.ld-card h2{font-size:20px}
+.ld-stats span{font-size:14px;color:#3d3a52}
+.ld-week em{font-size:15px}.ld-week small{font-size:13px;color:#3d3a52}
+.ld-bars li>div{font-size:16px}.ld-bars small{font-size:13px;color:#3d3a52}
+.ld-card .learn-history-row b{font-size:16px}.ld-card .learn-history-row small{font-size:13px;color:#3d3a52}.ld-card .learn-history-row strong{font-size:16px}
+.ld-note b{font-size:16px}.ld-note small{font-size:14px;color:#3d3a52}
