@@ -7,7 +7,7 @@ export const kindLabels={full:'Full mock test',sectional:'Sectional mock test',p
 export const difficultyLabels={easy:'Easy',moderate:'Moderate',hard:'Hard'};
 export function isExamLevel(item){return examLevelKinds.includes(item?.kind)}
 export function matchesProfile(item,p){if(!item.levels.includes(p.level))return false;if(!(!item.targets?.length||item.targets.includes(p.target)))return false;return isExamLevel(item)||item.subjects.includes(p.subject);}
-export function markText(q){const m=typeof q?.marks==='number'?q.marks:1,n=typeof q?.negativeMarks==='number'?q.negativeMarks:0;return '+'+m+' correct · '+(n?'-'+(Math.abs(n-1/3)<1e-9?'1/3':Math.round(n*100)/100)+' wrong':'No negative marks')}
+export function markText(q){const m=typeof q?.marks==='number'?q.marks:1;if(q?.negativeMarks===null)return '+'+m+' correct';const n=typeof q?.negativeMarks==='number'?q.negativeMarks:0;return '+'+m+' correct · '+(n?'-'+(Math.abs(n-1/3)<1e-9?'1/3':Math.round(n*100)/100)+' wrong':'No negative marks')}
 export function fmt(n){return String(Math.round(n*100)/100)}
 export function scoreAttempt(items,answers,marks=1,negative=0){const correct=items.filter(q=>answers[q.id]===q.answer).length;const answered=items.filter(q=>Number.isInteger(answers[q.id])&&answers[q.id]>=0&&answers[q.id]<q.options.length).length;return {correct,answered,incorrect:answered-correct,unanswered:items.length-answered,total:items.length,score:correct*marks-(answered-correct)*negative,max:items.length*marks};}
 export function quizScore(quiz,answers,items=quiz.questions){return scoreAttempt(items,answers,typeof quiz.marks==='number'?quiz.marks:1,typeof quiz.negativeMarks==='number'?quiz.negativeMarks:0)}
