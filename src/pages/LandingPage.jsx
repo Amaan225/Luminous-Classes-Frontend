@@ -196,7 +196,7 @@ function LandingPage() {
           </h1>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full max-w-5xl mb-16">
-            <Link to="/learn" className="bg-black text-amber-400 border-2 border-amber-500 rounded-2xl py-6 px-8 font-semibold hover:bg-slate-900 hover:border-amber-400 transition-colors"><div className="text-2xl md:text-3xl font-bold mb-1.5 text-amber-400">I am a learner</div><div className="text-amber-300 text-sm md:text-base font-medium">Notes and timed practice</div></Link>
+            <Link to="/learn" className="bg-black text-amber-400 border-2 border-amber-500 rounded-2xl py-6 px-8 font-semibold hover:bg-slate-900 hover:border-amber-400 transition-colors"><div className="text-2xl md:text-3xl font-bold mb-1.5 text-amber-400">I am a learner</div><div className="text-emerald-400 text-sm md:text-base font-semibold">Free mocks and notes</div></Link>
 
             <Link 
               to="/tutor" 
