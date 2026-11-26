@@ -7,9 +7,9 @@ export const setCsrf=v=>{csrf=v};
 let sync=null;
 export const syncServer=ms=>{if(Number.isFinite(ms))sync={server:ms,perf:performance.now()}};
 export const serverNow=()=>sync?sync.server+(performance.now()-sync.perf):null;
-export async function api(path,{method='GET',body,root='/api/learn/me',raw=false}={}){
+export async function api(path,{method='GET',body,root='/api/learn/me',raw=false,force=false}={}){
  const r=await fetch(root+path,{method,credentials:'same-origin',headers:{'Content-Type':'application/json',...(csrf?{'X-CSRF-Token':csrf}:{})},...(body===undefined?{}:{body:JSON.stringify(body)})});
- {const sd=Date.parse(r.headers.get('Date')||'');if(Number.isFinite(sd)&&(!sync||performance.now()-sync.perf>300000))syncServer(sd+500)}
+ {const sd=Date.parse(r.headers.get('Date')||'');if(Number.isFinite(sd)&&(force||!sync||performance.now()-sync.perf>300000))syncServer(sd+500)}
  if(raw)return r;let d={};if(r.status!==204){try{d=await r.json()}catch{d={}}}
  if(!r.ok){const e=new Error(d.error||'Could not complete the request. Please retry.');e.status=r.status;e.data=d;throw e}return d}
 export function loadScript(src,id){return new Promise((resolve,reject)=>{const old=document.getElementById(id);if(old?.dataset.ready)return resolve();if(old){old.addEventListener('load',resolve,{once:true});old.addEventListener('error',reject,{once:true});return}const s=document.createElement('script');s.id=id;s.src=src;s.async=true;s.onload=()=>{s.dataset.ready='true';resolve()};s.onerror=reject;document.head.appendChild(s)})}
