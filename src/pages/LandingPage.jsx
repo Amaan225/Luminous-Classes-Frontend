@@ -452,6 +452,28 @@ function LandingPage() {
       </div>
     </a>
 
+
+    {/* YouTube Gradient Border Bar */}
+    <a
+      href="https://www.youtube.com/@tutor49official"
+      target="_blank"
+      rel="noreferrer"
+      className="group block p-[2px] rounded-3xl bg-gradient-to-r from-red-500 to-rose-600 shadow-sm hover:shadow-xl hover:shadow-red-500/20 hover:-translate-y-1 transition-all duration-300"
+    >
+      <div className="flex items-center gap-6 p-6 md:p-8 rounded-[22px] bg-white h-full w-full">
+        <div className="bg-red-50 p-4 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+          <svg viewBox="0 0 24 24" aria-hidden="true" className="w-8 h-8 md:w-10 md:h-10 text-red-600" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8ZM10 15V9l5.2 3L10 15Z"/></svg>
+        </div>
+        <div className="min-w-0">
+          <h3 className="text-2xl font-bold text-slate-900 tracking-wide mb-1">Watch on YouTube</h3>
+          <p className="text-red-600 text-lg md:text-xl font-semibold tracking-normal break-all">@tutor49official</p>
+        </div>
+        <div className="ml-auto opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
+          <span className="text-3xl font-light text-red-600">→</span>
+        </div>
+      </div>
+    </a>
+
   </div>
 </div>
 
