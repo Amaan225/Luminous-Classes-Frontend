@@ -171,13 +171,13 @@ function LandingPage() {
       {/* ========================================== */}
       {/* 1. HERO SECTION                            */}
       {/* ========================================== */}
-      <div className="relative overflow-hidden border-b border-slate-200 min-h-screen flex flex-col justify-center pt-24">
+      <div className="hero-resp relative overflow-hidden border-b border-slate-200 min-h-screen flex flex-col justify-center pt-24">
         {/* Decorative tutor/student illustration, fitted into existing hero whitespace. */}
         <HeroSideDoodles />
-        <img src="/hero-tutor-student.svg" alt="" aria-hidden="true" width="500" height="190" className="pointer-events-none select-none absolute top-[5.25rem] left-1/2 -translate-x-1/2 w-60 h-auto" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-gradient-to-b from-indigo-50/80 to-transparent -z-10 rounded-full blur-3xl opacity-80"></div>
         
-        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center relative z-10 w-full py-20">
+        <div className="hero-in max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center relative z-10 w-full py-20">
+          <img src="/hero-tutor-student.svg" alt="" aria-hidden="true" width="500" height="190" className="hero-doodle pointer-events-none select-none absolute left-1/2 -translate-x-1/2" />
 
           {/* Lucknow skyline artwork behind the hero content */}
           <img src="/hero-skyline.webp" srcSet="/hero-skyline-1100.webp 1100w, /hero-skyline.webp 2172w" sizes="(min-width: 768px) 1024px, 704px" width="2172" height="724" fetchPriority="high" decoding="async" alt="" aria-hidden="true" className="pointer-events-none select-none absolute left-1/2 top-32 md:top-24 -translate-x-1/2 w-[44rem] md:w-[64rem] max-w-none object-contain -z-10" />
