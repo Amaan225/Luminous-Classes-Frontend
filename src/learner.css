@@ -126,3 +126,5 @@
 .learn-select>summary svg{width:20px;height:20px;color:var(--learn-purple)}
 .learn-select-panel label{font-size:14px}.learn-select-panel select{min-height:48px;font-size:16px}
 @media(max-width:600px){.learn-select{display:block}.learn-select>summary{display:flex;border-radius:18px;padding:10px 16px;width:100%;box-sizing:border-box}.learn-select>summary span{white-space:normal;overflow:visible;text-overflow:clip;flex:1;line-height:1.35}.learn-select>summary svg{flex-shrink:0}.learn-select-panel{width:calc(100vw - 40px)}}
+
+.learn-sec-label{grid-column:1/-1;margin:8px 0 0;font-size:13px;font-weight:800;color:#3d3a52}.learn-sec-label.on{color:var(--learn-purple)}.learn-numbers button.locked{opacity:.4;cursor:not-allowed}.learn-secfinish{margin:14px 0;display:flex;flex-wrap:wrap;gap:10px;align-items:center}.learn-secfinish p{font-size:14px;flex-basis:100%}
