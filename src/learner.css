@@ -125,3 +125,4 @@
 .learn-select>summary{min-height:56px;padding:0 22px;font-size:16px;border:2px solid var(--learn-purple);box-shadow:0 2px 10px #6044cf22}
 .learn-select>summary svg{width:20px;height:20px;color:var(--learn-purple)}
 .learn-select-panel label{font-size:14px}.learn-select-panel select{min-height:48px;font-size:16px}
+@media(max-width:600px){.learn-select{display:block}.learn-select>summary{display:flex;border-radius:18px;padding:10px 16px;width:100%;box-sizing:border-box}.learn-select>summary span{white-space:normal;overflow:visible;text-overflow:clip;flex:1;line-height:1.35}.learn-select>summary svg{flex-shrink:0}.learn-select-panel{width:calc(100vw - 40px)}}
