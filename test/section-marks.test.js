@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {markText,quizScore} from '../src/learner-content.js';
+const mk=(sec,n)=>Array.from({length:n},(_,i)=>({id:sec+i,section:sec,options:['a','b','c','d'],answer:1}));
+const quiz={marks:1,negativeMarks:0,sectionMarks:[30,30,40],negativeRatio:0.25,questions:[...mk('English',30),...mk('Quant',35),...mk('Reasoning',35)]};
+test('all correct totals exactly 100',()=>{const a={};quiz.questions.forEach(q=>a[q.id]=1);const r=quizScore(quiz,a);assert.equal(r.score,100);assert.equal(r.max,100)});
+test('one wrong in each section costs a quarter of that section per-question marks',()=>{const a={};quiz.questions.forEach(q=>a[q.id]=1);a.English0=0;a.Quant0=0;a.Reasoning0=0;const r=quizScore(quiz,a);const exp=(29*1+34*30/35+34*40/35)-(0.25*1+0.25*30/35+0.25*40/35);assert.ok(Math.abs(r.score-exp)<1e-4,r.score+' vs '+exp);assert.equal(r.max,100)});
+test('skipped questions cost nothing',()=>{const r=quizScore(quiz,{});assert.equal(r.score,0);assert.equal(r.max,100)});
+test('mark text shows section totals, practice-weight disclosure and the ratio',()=>{const t=markText(quiz);assert.match(t,/not an official score/);assert.match(t,/English 30 \+ Quant 30 \+ Reasoning 40 = 100 marks/);assert.match(t,/1\/4/)});
+test('quizzes without section marks are unchanged',()=>{assert.equal(markText({marks:2,negativeMarks:0.5}),'+2 correct · -0.5 wrong')});
