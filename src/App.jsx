@@ -1,5 +1,8 @@
 import React from 'react';
 import { Routes, Route, useLocation, useParams } from 'react-router-dom';
+import SiteThemeButton from './components/SiteThemeButton';
+import { useSiteTheme } from './site-theme';
+import './site-dark.css';
 import ScrollToTop from './ScrollToTop';
 import { Analytics } from '@vercel/analytics/react'; // <-- 1. Import Analytics
 
@@ -42,6 +45,8 @@ function LearnSeoRoute(){const {exam,subject}=useParams();return <LearnSeoPage e
 
 function App() {
   const location = useLocation();
+  useSiteTheme();
+  const siteDarkRoute=['/','/parent','/register','/terms','/admin'].includes(location.pathname.replace(/\/$/,'')||'/');
   const isAdminRoute = location.pathname.startsWith('/admin');
   const isLearnerRoute=location.pathname==='/learn'||(location.pathname.startsWith('/learn/')&&!location.pathname.startsWith('/learn/dashboard'));
   const isOwnerTest=location.pathname==='/tutor-test';
@@ -50,7 +55,8 @@ function App() {
   const isAccountDashboard=tutorAccounts&&location.pathname==='/tutor';
   return (
     // Your modern premium wrapper
-    <div className="min-h-screen font-sans text-slate-900 bg-slate-50 selection:bg-indigo-100 selection:text-indigo-900">
+    <div className={"min-h-screen font-sans text-slate-900 bg-slate-50 selection:bg-indigo-100 selection:text-indigo-900"+(siteDarkRoute?" t49-sd":"")}>
+        {siteDarkRoute&&!isAdminRoute&&<SiteThemeButton />}
         <ScrollToTop />
         <Routes>
           <Route path="/" element={page('/', <LandingPage />)} />

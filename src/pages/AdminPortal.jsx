@@ -1,4 +1,5 @@
 import LoadingState from '../components/LoadingState';
+import SiteThemeButton from '../components/SiteThemeButton';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import TutorAccountReview from './TutorAccountReview';
@@ -340,7 +341,7 @@ function AdminPortal() {
               <ArrowLeft className="w-4 h-4" /> Exit
             </button>
             <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight text-center whitespace-nowrap">Command Center</h1>
-            <div aria-hidden="true" />
+            <div className="justify-self-end"><SiteThemeButton inline /></div>
           </div>
         </div>
 
